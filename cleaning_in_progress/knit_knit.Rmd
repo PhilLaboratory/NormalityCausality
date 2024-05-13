@@ -1,0 +1,2102 @@
+---
+title: "Normal Causation"
+author: "| Songzhi Wu, Catherine Holland and others and \n| Jonathan Phillips\n"
+date: "2024"
+output:
+  pdf_document:
+    fig_caption: true
+  html_document:
+    number_sections: true
+    global_numbering: false
+    fig_caption: false
+    #pandoc_args: ["--lua-filter", "figure_caption_patch.lua"]
+#mainfont: Times New Roman
+header-includes:
+ \usepackage{float}
+shorttitle: Normal Causation
+bibliography: r-references.bib
+csl: apa.csl
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.pos = 'H')
+# knitr::opts_knit$set('/Users/erawu/Dropbox (Dartmouth College)/Research./causalityNormality/Cleaning (ESW)')
+# knitr::opts_knit$set(root.dir = '/tmp')
+```
+
+```{r load_pkg, include=FALSE}
+
+#install.packages("wesanderson", repos = "http://cran.us.r-project.org")
+#install.packages("lme4", repos = "http://cran.us.r-project.org")
+#install.packages("gridExtra", repos = "http://cran.us.r-project.org")
+#install.packages("mediation", repos = "http://cran.us.r-project.org")
+#install.packages("bookdown")
+#install.packages("tinytex")
+#install.packages("Matrix", repos = "http://cran.us.r-project.org")
+library(wesanderson)
+library(lme4)
+library(gridExtra)
+library(mediation)
+library(tidyverse)
+library(tinytex)
+library(apa)
+library(dplyr)
+library(emmeans)
+library(lmerTest)
+library(pbkrtest)
+library(utils)
+library(bookdown)
+library(mediation)
+```
+
+# Intro:
+
+In the critically acclaimed sitcom *Arrested Development*, Lucille Bluth's thirty-two year-old son, Buster, went swimming in the ocean in a brief moment of rebellion against his mother, after he discovered that she had been hiding the true identity of his father from him. In the ocean, Buster encountered a loose seal that had been freed by his magician brother, Gob, after a failed magic show. During this encounter, the seal bit off Buster's left hand. In such a case, one may have many questions, such as: what was the cause of Buster losing his hand? One may attribute Buster’s loss of hand to his imprudent behavior of going into the ocean, the fact that his mother never told him who his true father was, or perhaps the improbable chance encounter with a loose seal. Just like this, we perform causal selection in our daily life.
+
+There are two types of norms that are important to causal cognition: descriptive and prescriptive norms. Descriptive norms refer to how people generally behave while prescriptive norms refer to how people believe we should behave. Prior research has found that both types of norms affect how we think of the cause of an outcome. There has been a number of competing explanations for this effect. For descriptive norms, most researchers believe that the effect is best accounted for by the standard processes of causal reasoning. However, for prescriptive norms, opinions differ. Some believe that the effect simply stems from the responsibility judgment, especially when the outcome is adverse, while others have argued for a more general account emphasizing the general role of normality in causal judgments for both descriptive and prescriptive norms.
+
+We bring in new perspectives to the debate. First, we compare two kinds of prescriptive norms: rationality and morality. Second, we investigate the importance of whether the agent is knowledgeable about violating a norm. Third, unlike prior work, we separate the normality of the action and the valence of the outcome, and we ask whether the effect of the former changes depending on the latter. Fourth, we examine whether descriptive normality of the outcome impacts causal judgments. Accordingly, we add four new findings to the field. First, our studies provide evidence in favor of the general normality account as the two prescriptive norms - rational norms and moral norms - exert similar influence in causal judgment. Second, agent's ignorance about norm violation affects both kinds of norms similarly. Third, both effects are moderated by the valence of the outcome as well as the descriptive normality of the outcome. Fourth, both effects discussed above can be explained by the counterfactual judgment, which provides further support to the theory that normality affects causal judgments by affecting counterfactuals.
+
+## Descriptive Norms
+
+Descriptive norms, including statistical norms, shape judgments of causal selection; specifically, events which violate descriptive norms (e.g., low probability events) are often selected as the cause of later events that depended on their occurrence. It has long been discussed that causal judgments may be sensitive to norm violations or expectations about what will occur (Gorovitz, 1965; Hart & Honoré, 1985; Hilton & Slugoski, 1986; Kahneman & Miller,1986). More recent studies delve into the mechanisms of statistical norm violation in cognition and several models have been proposed to account for the effect. For instance, the counterfactual simulation model (CSM) constructed by Gerstenberg and colleagues shows that the difference between the counterfactual considered and what in fact happened factors into people's causal judgment (2014). Later, researchers expanded the model, arguing that when an unexpected action led to a favorable outcome, the actor would be given credit but when an unexpected action led to an unfavorable outcome, the actor would be assigned blame (Stephan et al., 2017). Furthermore, more credit would be given or more blame would be assigned to agents who are believed to be dispositionally good or bad at acting optimally because when predicting future behavior, people make inferences about agents based on the action history of the latter (Gerstenberg et al., 2017). More specifically, researchers have argued that statistical normality exerts influence on people's causal judgment through probabilistic sampling (Hitchcock & Knobe, 2009). And people's understanding of norms, such as the strength of norm violation, also plays an important role in the causal calculation (Icard et al., 2017). A key concept, counterfactual potency, is constructed to measure the "strength and impact of counterfactual" and has performed well in predicting the impact of counterfactual reasoning in causal judgments (Petrocelli et al., 2011). In addition, the effect of assigning more causation to low probability events is present regardless of the valence of the outcome and it also affects causal attribution to other agents, while higher frequency of norm violation are associated with increased causal attribution (Kominsky et al., 2015; Kirfel & Lagnado, 2017).
+
+## Prescriptive Norms
+
+Prescriptive norms, including moral norms and rational norms, have been shown to have similar effects as descriptive norms on causal selection: immoral actions, for example, tend to be selected as the causes of later events that depended on their occurrence (Alicke, 1992). Moreover, moral judgments have been shown to exert influence on causal cognition, instead of only the other way around (Knobe & Fraser, 2008; Knobe, 2010). Important models proposed for moral norms include the culpable control model, the counterfactual reasoning in causal selection model and the accountability hypothesis (Alicke, 2000; Samland & Waldmann, 2016). The three models attempt to decipher the causal attribution by, respectively, referring to people's exaggeration of the causal strength of moral norm violation, tendency to consider abnormal counterfactuals over normal ones, and propensity to consider factors that are present in moral reasoning generally (Samland & Waldmann, 2016). However, there is no consensus in sight on which account is the most favorable. And as in the case of descriptive norms, the relevance of moral norms is quite important in the causal reasoning process (Phillips et al., 2015).
+
+## Normality
+
+Central to constructing a unified account for causal judgment is the concept of normality. In the current context, normality means alignment with norms, either descriptive or prescriptive (Halpern & Hitchcock, 2015; Icard et al., 2017). Descriptive normality concerns the probability of the event's occurrence while prescriptive normality may concern the righteousness, legality or reasonableness of the action, depending on the relevant prescriptive norm in the given situation. Actions that are not in accordance with either descriptive or prescriptive norms are thus termed "abnormal". In our experiments below, we will investigate the impact of normality in causal cognition across different types of norms by way of affecting the counterfactuals that come to people's minds.
+
+## Ongoing Debate
+
+There is an ongoing debate about whether the two effects discussed above should be understood as arising from the normal process by which people make causal judgments. On the one hand, many have argued that they should not, and that the effect of moral norms or statistical norms are not part of the process of causal reasoning in the first place. Rather, the significant element in the causal reasoning is the valence of the situation or ascription of responsibility (Samland & Waldman, 2016; Alicke et al., 2011; Livengood et al., 2017). On the other hand, a number of researchers have argued that the impact of both descriptive and prescriptive norms should be understood as part of the normal process of causal judgments and counterfactual structure by appealing to the role of counterfactuals in causal cognition. Supporters of the second theory suggest that people's consideration of relevant counterfactuals may be the basis of a unified account of causal judgments (Phillips et al., 2015; Phillips & Knobe, 2018).
+
+Using empirical experiments reported below, we contribute to the existing debate in several ways. First, we consider a new kind of norm violations, rational norm violations, and find that they have a similar impact as moral norm violations on causal selection (see Johnson & Rips, 2015 and Halpern & Hitchcock, 2015 for previous work on what effect violating rational norms has on causal judgments). Second, we replicate the previously demonstrated outcome moderation effects where negative outcomes are more associated with causal attribution than positive outcomes. but also find that they occur for rational norm violations, further prompting the search for a theory that is not specific to moral norm violations. Third, we find that all of the above-mentioned effects are mediated by participants' counterfactual judgments. Fourth, we Fifth, we demonstrate that these outcome effects are not driven by the valence of the outcome but rather by the normality of the outcome by showing that the same pattern is more frequently observed in the cases of abnormal outcomes than normal outcomes. Finally, we test three different accounts of these effects, one that depends only on the morality of the events, one that depends only on the probability of the events, and one that depends on the normality of the events. We find that the normality accounts best captures people's causal judgments, which calls for a unifying model of causal judgments that is grounded in the normality of relevant events.
+
+# Experiment 1: Characterizing moral norm violations in causal chains
+
+As seen in the following experiments, this paper made several unique contributions. The first one is the use of causal chains. We constructed events that had clear causal relationships with one another, which is crucial in understanding participants' perception regarding causation and counterfactuals. Second, on top of replicating past work that examined agents who knowingly contributed to moral norm violations, we included ignorant agents and inanimate objects to examine the role of knowledge in causal selection. Furthermore, we no longer confine ourselves to studying moral norm violations; instead, we systematically manipulated valence of outcomes to understand causal judgments under varying circumstances. 
+
+In Experiment 1, we used 24 scenarios where agents with different knowledge status contributed to different outcomes. More specifically, all vignettes involved a distal cause, an immediate outcome that is at the same time a proximal cause, and a final outcome. We varied the type of cause (knowledgeable human agent, ignorant human agent, or inanimate object) and the valence of the final outcome (good or bad). We then asked participants to 1) rate how causal the distal cause was to the outcome, 2) between distal and proximal cause, choose the one that could have resulted in a different outcome.
+
+```{r, illustration1, echo=FALSE, warning=FALSE, message=FALSE, out.width = '100%', fig.cap="Study design for Experiment 1."}
+knitr::include_graphics("StudyIllustration/studyStructureFigures/Slide2.png")
+```
+
+## Methods
+
+We report all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
+
+### Participants
+
+```{r study1 participants, echo=FALSE, warning=FALSE, message=FALSE}
+d1demo <- read.csv("../data/d2demo.csv") 
+# remember that we aren't including the first study with only 3 vignettes
+d1demo$age[d1demo$age==1993] <- NA ## one person entered their age as 1993 (presumably the year that they were born) 
+d1demo$gender <- factor(c("Male","Female")[d1demo$gender])
+d1demo$edu <- factor(c("Grammar School","Highschool or Equivalent","Vocational/Technical School",
+                                 "Some College","College Graduate (4 years)","Master's Degree",
+                                 "Doctoral Degree (PhD)","Professional Degree (JD,MD,etc.)","Other")[d1demo$edu])
+##Age and Gender
+d1.age <- matrix(c("mean",mean(d1demo$age,na.rm=T),"sd",sd(d1demo$age,na.rm=T),"n",length(d1demo$age)),ncol = 3)
+
+d1.ageMean <- mean(d1demo$age, na.rm=T)
+  
+d1.gender <- table(d1demo$gender, exclude=NULL)
+
+###Education
+d1.education <- table(d1demo$edu)
+```
+
+Since we did not have a priori assumptions, we collected data from 118 participants recruited through Amazon Mechanical Turk (<http://www.mturk.com>) in Experiment 1. `r d1.age[2,3]` participants (*M*~age~=`r round(mean(d1demo$age, na.rm=T),digits=2)`, *SD*~age~=`r round(sd(d1demo$age, na.rm=T),digits=2)`; `r d1.gender[[1]]` females) finished the whole study.
+
+### Materials
+
+Participants completed 24 trials which each involved reading a brief vignette about a causal chain that was initiated by a distal cause, which led to some immediate outcome. This immediate outcome was then the more proximal cause a second, further outcome. This final outcome was either positive or negative, and the distal cause was either a knowledgeable agent (who knew that his action would lead to the occurrence of the further outcome), or an ignorant agent (who did not know that his action would lead to the occurrence of the final outcome) or an inanimate object (see Figure 1). Thus, for example, participants may have read a vignette in which an agent acted with the knowledge that the action in question would result in the occurrence of a bad outcome:
+
+> **Knowledgeable Agent / Bad Outcome**:A farmer plans to clear a plot of land near a forest of rare trees to expand the area in which he can grow his cash crops. As he is clearing this area, an environmentalist sees him and tells him that if he clears this plot of land, he'll actually kill the rare trees in the forest by getting rid of a vine that has been protecting the trees' roots. The farmer replies that he does not care at all about the trees, he just wants to make more money by planting cash crops. He finishes clearing the land and makes more money selling his new crops just like he planned. Not long after the vine is removed, the trees lose all their leaves.
+
+To continue to illustrate with this example, we also altered this vignette in the Ignorant Agent conditions so that the agent simply had no way of knowing that clearing the land would lead the trees to be damaged. In the Inanimate Object conditions, we replaced the farmer with a flood that cleared the same plot of land. Finally, in the conditions where the action eventuated in a Good Outcome, the vine was described as having been damaging the tree's roots and thus removing the vine actually caused the trees to grow new leaves. Conditions were varied across scenarios.
+
+### Procedure
+
+After reading each vignette, participants answered two questions about the events that had occurred. The first asked them to rate their agreement with a statement about the distal agent causing the outcome, as in the following example:
+
+> *Causal question*: The farmer caused the trees to lose all their leaves.
+
+\noindent Participants responded to each of these questions on a scale from 1 ("Completely disagree") to 7 ("Completely agree"). The second question asked participants to complete a counterfactual question, as in the following example:
+
+> *Counterfactual question*: If only $\underline{\hspace{3cm}}$ had been different, the trees wouldn't have lost their leaves.
+
+> a.  The farmer
+> b.  The vine
+
+\noindent After completing all 24 trials, participants were asked to complete some optional demographic questions.
+
+### Data analysis
+
+No participants were excluded from the analyses as long as they completed the entire study. The primary analyses were conducted with linear mixed-effects models and included random effects for both participnts and scenarios. These analyses were carried out using the the lme4 pacakage in $\textsf{R}$ [@bates2014lme4]. The significance of an effect for particular factor is calculated by comparing two linear mixed-effects models that vary only in whether factor in question was included in the fixed-effects structure. to the extent that the models differ significantly in their fit, this provides evidence that the factor in question signficantly affected participants' responses.
+
+## Results
+
+### Causal judgments
+```{r study1 Cause analyses, echo=FALSE, warning=FALSE, message=FALSE}
+d1 <- read.csv("../data/Study2.csv")
+
+d1$Agent <- factor(c("Knowledge","Ignorance","Object")[d1$Agent])
+d1$Agent <- factor(d1$Agent, levels=c("Object", "Ignorance","Knowledge"))
+d1$Outcome <- factor(c("Good","Bad")[d1$Outcome])
+d1$Outcome <- factor(d1$Outcome, levels=c("Good","Bad"))
+
+#d1$causeS <- scale(d1$Cause)
+d1$causeS <- d1$Cause
+
+
+### Interaction:
+# lmr1.0 <- lmer(causeS ~ Agent * Outcome + (Agent*Outcome|Vignette) + (1|Subj), data=d1,
+            # control = lmerControl(optimizer ='optimx', optCtrl=list(method='nlminb')))
+# lmr1.1 <- lmer(causeS ~ Agent + Outcome + (Agent*Outcome|Vignette) + (1|Subj), data=d1,
+#                control = lmerControl(optimizer ='optimx', optCtrl=list(method='nlminb'))) #uncon
+# lmr1.i <- anova(lmr1.0,lmr1.1)
+# saveRDS(lmr1.i,"models/lmr1i.rds")
+lmr1.i <- readRDS("models/lmr1i.rds")
+
+### Main effect of agent (significant <.001)
+# lmr1.2 <- lmer(causeS ~ Outcome + (Agent*Outcome|Vignette) + (1|Subj), data=d1,
+#                control = lmerControl(optimizer ='optimx', optCtrl=list(method='nlminb')))
+# lmr1.a <- anova(lmr1.1,lmr1.2)
+# saveRDS(lmr1.a,"models/lmr1a.rds")
+lmr1.a <- readRDS("models/lmr1a.rds")
+
+### Main effect of outcome (significant 0.007602) (allcom?)
+# lmr1.3 <- lmer(causeS ~ Agent + (Agent*Outcome|Vignette) + (1|Subj), data=d1,
+#                control = lmerControl(optimizer ='optimx', optCtrl=list(method='nlminb')))
+# lmr1.o <- anova(lmr1.1,lmr1.3)
+# saveRDS(lmr1.o,"models/lmr1o.rds")
+lmr1.o <- readRDS("models/lmr1o.rds")
+
+
+### d1 causal estimated marginal means
+
+# d1.emsumA <- summary(emmeans::emmeans(lmr1.0, ~ Agent))
+# saveRDS(d1.emsumA,"models/d1.emsumA.rds")
+d1.emsumA <- readRDS("models/d1.emsumA.rds")
+# d1.empairA <- summary(pairs(emmeans(lmr1.0, ~ Agent)))
+# saveRDS(d1.empairA,"models/d1.empairA.rds")
+d1.empairA <- readRDS("models/d1.empairA.rds")
+
+# d1.emsumO <- summary(emmeans::emmeans(lmr1.0, ~ Outcome))
+# saveRDS(d1.emsumO,"models/d1.emsumO.rds")
+d1.emsumO <- readRDS("models/d1.emsumO.rds")
+# d1.empairO <- summary(pairs(emmeans(lmr1.0, ~ Outcome)))
+# saveRDS(d1.empairO,"models/d1.empairO.rds")
+d1.empairO <- readRDS("models/d1.empairO.rds")
+
+# d1.emsumAO <- summary(emmeans::emmeans(lmr1.0, ~ Agent*Outcome))
+# saveRDS(d1.emsumAO,"models/d1.emsumAO.rds")
+d1.emsumAO <- readRDS("models/d1.emsumAO.rds")
+# d1.empairAO <- summary(emmeans::emmeans(lmr1.0, pairwise ~ Agent*Outcome))$contrasts
+# saveRDS(d1.empairAO,"models/d1.empairAO.rds")
+d1.empairAO <- readRDS("models/d1.empairAO.rds")
+
+
+# d1.sumA <- d1 %>%
+#   select(Agent,Cause,Subj) %>%
+#   group_by(Agent,Subj) %>%
+#   summarise(CauseM = mean(Cause),na.rm=TRUE) %>%
+#   group_by(Agent) %>%
+#   summarise(N = length(CauseM),
+#             mean = mean(CauseM, na.rm=TRUE),
+#             sd = sd(CauseM,na.rm=TRUE),
+#             se = sd / sqrt(N))
+# 
+# d1.sumO <- d1 %>% 
+#   select(Outcome,Cause,Subj) %>%
+#   group_by(Outcome,Subj) %>%
+#   summarise(CauseM = mean(Cause),na.rm=TRUE) %>%
+#   group_by(Outcome) %>%
+#   summarise(N = length(CauseM),
+#             mean = mean(CauseM, na.rm=TRUE),
+#             sd = sd(CauseM,na.rm=TRUE),
+#             se = sd / sqrt(N))
+
+d1.sum <- d1 %>% 
+  select(Agent,Outcome,Cause,Subj) %>%
+  group_by(Agent,Outcome,Subj) %>%
+  summarise(CauseM = mean(Cause),na.rm=TRUE) %>%
+  group_by(Agent,Outcome) %>%
+  summarise(N = length(CauseM),
+            mean = mean(CauseM, na.rm=TRUE),
+            sd = sd(CauseM,na.rm=TRUE),
+            se = sd / sqrt(N))
+
+```
+
+We first analyzed participants' causal judgments, which revealed a main effect of the kind of *Agent* involved, $\chi^2(2)$ = `r round(lmr1.a$Chisq[2],digits=2)`, *p* $<$ .001, such that ignorant agents were overall seen as the least causal (*M* = `r round(d1.emsumA$emmean[2],digits=2)`, 95% CI = [`r round(d1.emsumA$lower.CL[2],digits=2)`, `r round(d1.emsumA$upper.CL[2],digits=2)`]), even less than inanimate objects (*M* = `r sprintf("%.2f", d1.emsumA$emmean[1])`, 95% CI = [`r round(d1.emsumA$lower.CL[1],digits=2)`, `r round(d1.emsumA$upper.CL[1],digits=2)`]), *t*(`r round(d1.empairA$df[1])`) = `r round(d1.empairA$t.ratio[1], digits=2)`, *p* = `r round(d1.empairA$p.value[1], digits=3)`. Knowledgeable agents, on the other hand, were deemed more causal than the ignorant ones (*M* = `r round(d1.emsumA$emmean[3],digits=2)`, 95% CI = [`r round(d1.emsumA$lower.CL[3],digits=2)`, `r round(d1.emsumA$upper.CL[3],digits=2)`]), *t*(`r round(d1.empairA$df[3])`) = `r round(d1.empairA$t.ratio[3], digits=2)`, *p* < .001). We also observed a main effect of the kind of *Outcome* that eventuated, $\chi^2(1)$ = `r round(lmr1.o$Chisq[2],digits=2)`, *p* = `r round(lmr1.o$'Pr(>Chisq)'[2],digits=3)`, suggesting that participants assigned more causality to the distal event when the outcome was bad (*M* = `r round(d1.emsumO$emmean[2],digits=2)`, 95% CI = [`r round(d1.emsumO$lower.CL[2],digits=2)`, `r round(d1.emsumO$upper.CL[2],digits=2)`]) than when it turned out to be good (*M* = `r round(d1.emsumO$emmean[1],digits=2)`, 95% CI = [`r round(d1.emsumO$lower.CL[1],digits=2)`, `r round(d1.emsumO$upper.CL[1],digits=2)`]), *t*(`r round(d1.empairO$df[1])`) = `r round(d1.empairO$t.ratio[1], digits=2)`, *p* = `r round(d1.empairO$p.value[1], digits=3)`. Furthermore, these main effects were qualified by an *Agent* $\times$ *Outcome* interaction, $\chi^2(2)$ = `r round(lmr1.i$Chisq[2],digits=2)`, *p* $<$ .001.
+
+We further decomposed this interaction and found that when agents knew about the outcome that may come as a consequence of their action (*t*(`r round(d1.empairAO$df[12])`) = `r round(d1.empairAO$t.ratio[12], digits=2)`, *p* <.001), they were judged as much more causal for bad outcomes (*M* = `r round(d1.emsumAO$emmean[6],digits=2)`, 95% CI = [`r round(d1.emsumAO$lower.CL[6],digits=2)`, `r round(d1.emsumAO$upper.CL[6],digits=2)`]) than for good outcomes (*M* = `r round(d1.emsumAO$emmean[3],digits=2)`, 95% CI = [`r round(d1.emsumAO$lower.CL[3],digits=2)`, `r round(d1.emsumAO$upper.CL[3],digits=2)`]). In contrast, when agents were oblivious about the outcome (*t*(`r round(d1.empairAO$df[8])`) = `r round(d1.empairAO$t.ratio[8], digits=2)`, *p* = `r round(d1.empairAO$p.value[8], digits=3)`), they were not judged to be much more causal for bad outcomes (*M* = `r round(d1.emsumAO$emmean[5],digits=2)`, 95% CI = [`r round(d1.emsumAO$lower.CL[5],digits=2)`, `r round(d1.emsumAO$upper.CL[5],digits=2)`]) than good outcomes (*M* = `r round(d1.emsumAO$emmean[2],digits=2)`, 95% CI = [`r round(d1.emsumAO$lower.CL[2],digits=2)`, `r round(d1.emsumAO$upper.CL[2],digits=2)`]). Similarly, causal judgments about non-agentic objects (*t*(`r round(d1.empairAO$df[3])`) = `r round(d1.empairAO$t.ratio[3], digits=2)`, *p* = `r round(d1.empairAO$p.value[3], digits=3)`) did not differentiate much between bad outcomes (*M* = `r round(d1.emsumAO$emmean[4],digits=2)`, 95% CI = [`r round(d1.emsumAO$lower.CL[4],digits=2)`, `r round(d1.emsumAO$upper.CL[4],digits=2)`]) and good outcomes (*M* = `r round(d1.emsumAO$emmean[1],digits=2)`, 95% CI = [`r round(d1.emsumAO$lower.CL[1],digits=2)`, `r round(d1.emsumAO$upper.CL[1],digits=2)`]). In short, the valence of the outcome only affected participants' causal judgments when the agent at the beginning of the causal chain *knew* about the valence of the outcome (see *Figure* 2).
+
+### Counterfactual judgments
+
+```{r study1 counterfactual analyses, echo=FALSE, warning=FALSE, message=FALSE}
+  
+d1$Counterfactual <- factor(d1$Counterfactual)
+
+## Interaction (significant <.001)
+glmr1.0 <- glmer(Counterfactual ~ Agent * Outcome + (Agent*Outcome|Vignette) + (1|Subj), data=d1, family = "binomial",
+                 control=glmerControl(optimizer="bobyqa", optCtrl=list(maxfun=100000)))
+# glmr1.1 <- glmer(Counterfactual ~ Agent + Outcome + (Agent*Outcome|Vignette) + (1|Subj), data=d1, family = "binomial",
+#                  control=glmerControl(optimizer="bobyqa", optCtrl=list(maxfun=100000)))
+# glmr1.i <- anova(glmr1.0,glmr1.1)
+# saveRDS(glmr1.i,"models/glmr1i.rds")
+glmr1.i <- readRDS("models/glmr1i.rds")
+
+## Main effect of agent (significant <.001, 0.0003983)
+# glmr1.2 <- glmer(Counterfactual ~ Outcome + (Agent*Outcome|Vignette) + (1|Subj), data=d1, family = "binomial",
+#                  control=glmerControl(optimizer="bobyqa", optCtrl=list(maxfun=100000)))
+# glmr1.a <- anova(glmr1.1,glmr1.2)
+# saveRDS(glmr1.a,"models/glmr1a.rds")
+glmr1.a <- readRDS("models/glmr1a.rds")
+
+# Main effect of outcome (significant 0.00119)
+# glmr1.3 <- glmer(Counterfactual ~ Agent + (Agent*Outcome|Vignette) + (1|Subj), data=d1, family = "binomial",
+#                  control=glmerControl(optimizer="bobyqa", optCtrl=list(maxfun=100000)))
+# glmr1.o <- anova(glmr1.1,glmr1.3)
+# saveRDS(glmr1.o,"models/glmr1o.rds")
+glmr1.o <- readRDS("models/glmr1o.rds")
+
+### d1 counterfactual estimated marginal means
+
+d1.cfsumA <- summary(emmeans::emmeans(glmr1.0, ~ Agent))
+saveRDS(d1.cfsumA,"models/d1.cfsumA.rds")
+d1.cfsumA <- readRDS("models/d1.cfsumA.rds")
+d1.cfpairA <- summary(pairs(emmeans(glmr1.0, ~ Agent)))
+saveRDS(d1.cfpairA,"models/d1.cfpairA.rds")
+d1.cfpairA <- readRDS("models/d1.cfpairA.rds")
+
+d1.cfsumO <- summary(emmeans::emmeans(glmr1.0, ~ Outcome))
+saveRDS(d1.cfsumO,"models/d1.cfsumO.rds")
+d1.cfsumO <- readRDS("models/d1.cfsumO.rds")
+d1.cfpairO <- summary(pairs(emmeans(glmr1.0, ~ Outcome)))
+saveRDS(d1.cfpairO,"models/d1.cfpairO.rds")
+d1.cfpairO <- readRDS("models/d1.cfpairO.rds")
+
+d1.cfsumAO <- summary(emmeans::emmeans(glmr1.0, ~ Agent*Outcome))
+saveRDS(d1.cfsumAO,"models/d1.cfsumAO.rds")
+d1.cfsumAO <- readRDS("models/d1.cfsumAO.rds")
+d1.cfpairAO <- summary(pairs(emmeans(glmr1.0, ~ Agent*Outcome)))
+saveRDS(d1.cfpairAO,"models/d1.cfpairAO.rds")
+d1.cfpairAO <- readRDS("models/d1.cfpairAO.rds")
+
+
+d1.tabA <- data.frame(aggregate(Counterfactual ~ Agent, FUN=table,data=d1))
+d1.tabO <- data.frame(aggregate(Counterfactual ~ Outcome, FUN=table,data=d1))
+d1.tabI <- data.frame(aggregate(Counterfactual ~ Outcome * Agent, FUN=table,data=d1))
+
+#, such that ignorant agents were overall less frequently selected as the more relevant focus of counterfactuals (*M* = `r round(d1.sumA_cf$mean[d1.sumA$Agent=="Ignorance"],digits=2)`, *SD* = `r round(d1.sumA$sd[d1.sumA$Agent=="Ignorance"],digits=2)`) than knowledgeable agents (*M* = `r round(d1.sumA$mean[d1.sumA$Agent=="Knowledge"],digits=2)`, *SD* = `r round(d1.sumA$sd[d1.sumA$Agent=="Knowledge"],digits=2)`), or inanimae objects (*M* = `r round(d1.sumA$mean[d1.sumA$Agent=="Object"],digits=2)`, *SD* = `r round(d1.sumA$sd[d1.sumA$Agent=="Object"],digits=2)`).
+```
+
+We next analyzed participants' counterfactul judgments using generalized linear mixed-effects models. These analyses again revealed a main effect of the kind of *Agent* the distal event involved, $\chi^2(2)$ = `r round(glmr1.a$Chisq[2],digits=2)`, $p$ $<$ `r max(.001,round(glmr1.a$'Pr(>Chisq)'[2],digits=3))`, such that ignorant agents were less frequently selected as the focus of the most relevant counterfactual (`r 100*(round(d1.tabA$Counterfactual[2,1][[1]]/(d1.tabA$Counterfactual[2,2][[1]]+d1.tabA$Counterfactual[2,1][[1]]), digits=2))`%), than knowledgeable agents were (`r 100*(round(d1.tabA$Counterfactual[3,1][[1]]/(d1.tabA$Counterfactual[3,2][[1]]+d1.tabA$Counterfactual[3,1][[1]]), digits=2))`%),  *z* = `r round(d1.cfpairA$z.ratio[3], digits=2)`, *p* < .001. Ignorant agents were also likely to be selected as the counterfactual focus than objects (`r 100*(round(d1.tabA$Counterfactual[1,1][[1]]/(d1.tabA$Counterfactual[1,2][[1]]+d1.tabA$Counterfactual[1,1][[1]]), digits=2))`%), *z* = `r round(d1.cfpairA$z.ratio[1], digits=2)`, *p* < .001. In addition, we observed a main effect of *Outcome valence* once more, $\chi^2(1)$ = `r round(glmr1.o$Chisq[2],digits=2)`, *p* = `r round(glmr1.o$'Pr(>Chisq)'[2],digits=3)`, such that the distal agent was more selected as the focus of the most relevant counterfactual for bad outcomes (`r (round((d1.tabO$Counterfactual[2,2][[1]]/(d1.tabO$Counterfactual[2,2][[1]]+d1.tabO$Counterfactual[2,1][[1]])), digits=2))*100` %) than for good outcomes (`r (round((d1.tabO$Counterfactual[1,2][[1]]/(d1.tabO$Counterfactual[1,2][[1]]+d1.tabO$Counterfactual[1,1][[1]])), digits=2))*100`%), *z* = `r round(d1.cfpairO$z.ratio[1], digits=2)`, *p* < .001. More importantly, we again observed a significant *Agent* $\times$ *Object* interaction effect, $\chi^2(2)$ = `r round(glmr1.i$Chisq[2],digits=2)`, *p* $<$ `r max(.001,round(glmr1.i$'Pr(>Chisq)'[2],digits=3))`.
+
+Mirroring participants' causal judgments, we found that outcome valence strongly affected participants' counterfactual judgments when the agent was knowledgeable, such that the distal agent was the focus of counterfactuals more for bad outcomes (`r 100*(round(d1.tabI$Counterfactual[6,1][[1]]/(d1.tabI$Counterfactual[6,2][[1]]+d1.tabI$Counterfactual[6,1][[1]]), digits=2))`%), than for good outcomes (`r 100*(round(d1.tabI$Counterfactual[5,1][[1]]/(d1.tabI$Counterfactual[5,2][[1]]+d1.tabI$Counterfactual[5,1][[1]]), digits=2))`%), *z* = `r round(d1.cfpairAO$z.ratio[12], digits=2)`, *p* < .001. In contrast, when the agent was ignorant of the outcome, there was little difference in their tendency to focous on the distal agent in their counterfactual judgments in cases with bad (`r 100*(round(d1.tabI$Counterfactual[4,1][[1]]/(d1.tabI$Counterfactual[4,2][[1]]+d1.tabI$Counterfactual[4,1][[1]]), digits=2))`%) or good outcomes (`r 100*(round(d1.tabI$Counterfactual[3,1][[1]]/(d1.tabI$Counterfactual[3,2][[1]]+d1.tabI$Counterfactual[3,1][[1]]), digits=2))`%), *z* = `r round(d1.cfpairAO$z.ratio[8], digits=2)`, *p* = `r round(d1.cfpairAO$p.value[8], digits=3)`. That remains true for non-agentic objects in bad outcomes (`r 100*(round(d1.tabI$Counterfactual[2,1][[1]]/(d1.tabI$Counterfactual[2,2][[1]]+d1.tabI$Counterfactual[2,1][[1]]), digits=2))`%) versus good outcomes (`r 100*(round(d1.tabI$Counterfactual[1,1][[1]]/(d1.tabI$Counterfactual[1,2][[1]]+d1.tabI$Counterfactual[1,1][[1]]), digits=2))`%),  *z* = `r round(d1.cfpairAO$z.ratio[3], digits=2)`, *p* = `r round(d1.cfpairAO$p.value[3], digits=3)`.
+
+In short, participants' counterfactual judgments were only affected by the valence of the outcome when the agent acted with knowledge of the valence (see *Figure* 2).
+
+```{r, d1Fig, fig.pos="H", fig.width=8.5, fig.height=10, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Participants' causal and counterfactual judgments as a function of both the kind of agent who initiated the causal chain and the valence of the outcome that eventuated. Error bars indicate +/- 1 *SEM*."}
+
+d1plot <- d1 %>%
+  dplyr::select(Subj, Cause, Agent, Outcome) %>%
+  group_by(Subj, Agent, Outcome) %>% 
+  summarise(N = length(Cause),
+            mean = mean(as.numeric(Cause), na.rm=TRUE)) %>%
+  dplyr::rename(causeN = N) %>%
+  rename(causeMean = mean)
+
+d1plot.sum <- d1plot %>%
+  group_by(Agent, Outcome) %>%
+  summarise(N = length(causeMean),
+            mean = mean(as.numeric(causeMean), na.rm=TRUE),
+            sd = sd(as.numeric(causeMean),na.rm=TRUE),
+            se = sd / sqrt(N)) %>%
+  dplyr::rename(causeN = N) %>%
+  rename(causeMean = mean) %>%
+  rename(causesumSD = sd) %>%
+  rename(causesumSE = se)
+
+d1.plot1 <- ggplot(data=d1plot, aes(x=Agent, y=causeMean, fill=Outcome)) +
+  geom_violin(alpha=.6, linewidth=.1) +
+  scale_fill_manual(values=c("#bdd7e7", "#2171b5")) + ###bdd7e7 #6baed6
+  geom_point(stat="identity",position=position_jitterdodge(jitter.width=.1,dodge.width=.9),alpha=.05, color="black") +
+  geom_point(data=d1plot.sum, aes(x=Agent, y=causeMean, fill=Outcome), shape=16, size=2,position=position_dodge(.9), color="black") +
+  geom_line(data=d1plot.sum, aes(x=Agent, y=causeMean), size=1) +
+  geom_errorbar(data=d1plot.sum,aes(ymin=causeMean-causesumSE, ymax=causeMean+causesumSE), width=.2, position=position_dodge(.9),color="black") +
+  ylab("Causation rating") +
+  xlab("") +
+  theme_bw() +
+  theme(
+    plot.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    strip.text.x = element_text(size=rel(2)),
+    strip.text.y = element_text(size=rel(2)),
+    legend.title=element_blank(),
+    #legend.text=element_text(size=rel(1)),
+    legend.text=element_text(size=10),
+    legend.position="right",
+    legend.justification=c(1,1),
+    legend.key.width = unit(0.8, "cm"),
+    legend.key.height = unit(0.4, "cm"),
+    # axis.text.y=element_text(size=rel(1)),
+    # axis.title.y=element_text(size=rel(2),vjust=.9),
+    axis.text.y = element_text(size=12),
+    axis.title.y = element_text(size=14, vjust=.9),
+    axis.title.x=element_blank(),
+    axis.text.x=element_text(size=rel(1.5)),
+    axis.ticks = element_blank()) +
+    scale_y_continuous(breaks=c(1, 3, 5, 7))
+#ggsave("d1.plot1.pdf", width=8, height=12, path="figures")
+
+
+d1$Counterfactual <- factor(c("Distal","Proximal")[d1$Counterfactual])
+d1$Counterfactual <- factor(d1$Counterfactual, levels=c("Proximal","Distal"))
+
+d1.plot2 <- ggplot(d1,aes(x=Outcome, fill=Counterfactual)) +
+  geom_bar(position="stack") +
+  ylab("Counterfactual focus") +
+  xlab("") +
+  #scale_fill_manual("Event:",values=wes_palette("Chevalier1",2)) + 
+  scale_fill_manual(values=c("#bdd7e7", "#2171b5")) +
+  facet_grid( ~ Agent) +
+  theme_bw() +
+  theme(
+    plot.background = element_blank()
+    ,panel.grid.major = element_blank()
+    ,panel.grid.minor = element_blank(),
+    # ,legend.text=element_text(size=rel(1))
+    # ,axis.text.y=element_text(size=rel(1))
+    # ,axis.text.x=element_text(size=rel(1))
+    # ,axis.title.y=element_text(vjust=.9)
+    legend.text = element_text(size = 10),
+    axis.text.y = element_text(size = 12),
+    axis.text.x = element_text(size = 12),
+    axis.title.y = element_text(size=14, vjust=.9),
+    axis.ticks = element_blank()
+    ,axis.title=element_text(size=rel(1))
+    ,strip.text=element_text(size=rel(.9))
+    ,legend.position = "right",
+    legend.justification = "right",
+    legend.box.margin = margin(0, 0, 5, 0)
+  )
+
+grid.arrange(d1.plot1, d1.plot2, nrow=2)
+
+```
+
+### Relationship between causal and counterfactual judgments
+
+```{r study1 correlation and mediation, echo=FALSE, message=FALSE}
+
+## correlation at the level of participants
+d1.sumCorSub <- d1 %>% 
+  select(Agent,Outcome,Cause,Counterfactual,Subj,Vignette) %>%
+  group_by(Agent,Outcome,Subj,Vignette) %>%
+  summarise(CauseM = mean(Cause,na.rm=TRUE),
+            CntrfM = mean(as.numeric(Counterfactual)))
+
+d1.corSub <- cor.test(d1.sumCorSub$CauseM,d1.sumCorSub$CntrfM)
+
+## correlation at the level of scenario
+d1.sumCorVign <- d1 %>% 
+  select(Agent,Outcome,Cause,Counterfactual,Vignette) %>%
+  group_by(Agent,Outcome,Vignette) %>%
+  summarise(CauseM = mean(Cause,na.rm=TRUE),
+            CntrfM = mean(as.numeric(Counterfactual)))
+
+d1.corVign <- cor.test(d1.sumCorVign$CauseM,d1.sumCorVign$CntrfM)
+
+# SO FAR THIS IS STILL NOT WORKING
+# d1.m <- d1[d1$Agent!="Object",]
+# 
+# #lm1.m1 <- lmer(causeS ~ Counterfactual + Agent*Outcome + (Agent*Outcome|Subj) + (1|Vignette), data=d1.m)
+# #lm1.m2 <- lmer(causeS ~ Counterfactual + Agent + Outcome + (Agent*Outcome|Subj) + (1|Vignette), data=d1.m)
+# #anova(lm1.m1,lm1.m2)
+#   
+# d1.m$Interaction[d1.m$Agent=="Knowledge" & d1.m$Outcome=="Bad"] <- -1
+# d1.m$Interaction[d1.m$Agent=="Knowledge" & d1.m$Outcome=="Good"] <- 1
+# d1.m$Interaction[d1.m$Agent=="Ignorance" & d1.m$Outcome=="Bad"] <- 1
+# d1.m$Interaction[d1.m$Agent=="Ignorance" & d1.m$Outcome=="Good"] <- -1
+# 
+# #d1$Interaction <- factor(d1$Interaction)
+# d1.m$Counterfactual <- as.numeric(as.character(d1.m$Counterfactual))
+# d1.m$Agent <- as.numeric(as.character(d1.m$Agent))
+# 
+# med.fit <- glm(Counterfactual ~ Agent, data=d1.m, family="binomial")
+# out.fit <- lm(Cause ~ Counterfactual + Agent, data=d1.m)
+# 
+# med.out <- mediate.sed("causeS", "Counterfactual", boot=TRUE, treat="Agent", SI=TRUE,data=d1.m)
+# 
+
+# library(arm)
+# d1.m$Subj <- factor(d1.m$Subj)
+# med.fit <- glmer(Counterfactual ~ Interaction + Agent + Outcome + (1|Subj), family=binomial(link="logit"), data=d1.m)
+# out.fit <- lmer(causeS ~ Interaction + Counterfactual + Agent + Outcome + (Agent*Outcome|Subj), data=d1.m)
+# med.out <- mediate(med.fit, out.fit, sims=1000, treat="Interaction", mediator="Counterfactual")
+
+# Recode levels of Counterfactual, Agent, Outcome
+# Convert factors to numeric outside the models 
+# Construct an interaction variable
+
+# 
+# d1.m <- d1[d1$Agent!="Object",]
+# 
+# d1.m$Counterfactual <- as.factor(d1.m$Counterfactual)
+# levels(d1.m$Counterfactual) <- c(0, 1)
+# d1.m$Counterfactual_num <- as.numeric(as.character(d1.m$Counterfactual))
+# 
+# d1.m$agent <- as.factor(d1.m$Agent)
+# d1.m$agent <- factor(d1.m$Agent, levels = c("Ignorance","Knowledge"), labels = c(0, 1))
+# d1.m$outcome <- as.factor(d1.m$Outcome)
+# levels(d1.m$outcome) <- c(0,1)
+# d1.m$interaction <- interaction(d1.m$agent, d1.m$outcome)
+# d1.m$interaction_num <- as.numeric(as.character(d1.m$interaction))
+# 
+# # Fit models using these numeric variables
+# d1med.fit <- glmer(as.factor(Counterfactual) ~ agent + outcome + interaction_num + (1|Subj), family="binomial", data=d1.m)
+# d1out.fit <- lmer(causeS ~ Counterfactual_num + interaction_num + (1|Subj), data=d1.m)
+# d1med.out <- mediate(d1med.fit, d1out.fit, sims=1000, treat="interaction_num", mediator="Counterfactual_num")
+# d1med <- summary(d1med.out)
+
+d1.m <- d1[d1$Agent!="Object",]
+
+d1.m$Counterfactual <- as.factor(d1.m$Counterfactual)
+levels(d1.m$Counterfactual) <- c(0, 1)
+d1.m$Counterfactual_num <- as.numeric(as.character(d1.m$Counterfactual))
+d1.m$agent <- as.factor(d1.m$Agent)
+d1.m$agent <- factor(d1.m$Agent, levels = c("Ignorance","Knowledge"), labels = c(0, 1))
+d1.m$outcome <- as.factor(d1.m$Outcome)
+d1.m$outcome <- factor(d1.m$Outcome, levels = c("Bad","Good"), labels = c(0, 1))
+
+d1.m$Interaction[d1.m$Agent=="Knowledge" & d1.m$Outcome=="Bad"] <- 0
+d1.m$Interaction[d1.m$Agent=="Knowledge" & d1.m$Outcome=="Good"] <- 1
+d1.m$Interaction[d1.m$Agent=="Ignorance" & d1.m$Outcome=="Bad"] <- 1
+d1.m$Interaction[d1.m$Agent=="Ignorance" & d1.m$Outcome=="Good"] <- 0
+d1med.fit <- glmer(as.factor(Counterfactual_num) ~ agent + outcome + Interaction + (1|Subj), family="binomial", data=d1.m)
+d1out.fit <- lmer(causeS ~ Counterfactual_num + agent + outcome + Interaction + (1|Subj), data=d1.m)
+d1med.out <- mediate(d1med.fit, d1out.fit, sims=1000, treat="Interaction", mediator="Counterfactual_num")
+d1med <- summary(d1med.out)
+```
+
+Finally, we considered the relationship between participants' causal and counterfactual judgments, and found that they were highly correlated both when considered at the level of each participants' judgments ($r =$ `r sprintf("%.2f", d1.corSub$estimate[[1]])`, $p$ $<$ `r max(.001,round(d1.corSub$p.value, digits = 3))`, and at the level of each the different scenarios ($r =$ `r round(d1.corVign$estimate[[1]], digits=2)`, $p$ $<$ `r max(.001, round(d1.corVign$p.value, digits = 3))`) (see *Figure* 3). We also asked whether the counterfactual judgments mediated the observed Knowledge $\times$ Outcome interaction effect observed for ignorant agents, and found that they did: counterfactual selection mediated the relationship between causal judgment and the interaction between *Agent* and *Outcome* , with an average causal mediation effect (ACME) of -0.11, (95% CI = [-0.18, -0.04], *p* = 0.002). Controlling for the main effect of agent and knowledge, the proportion mediated is 0.307 (95% CI = [0.14, 0.54], *p* = 0.002).
+
+```{r fig.width=8.5, echo=FALSE, message=FALSE, fig.cap="Depiction of the relationship between participants' causal and counterfactual judgments for each of the scenarios. Shape depicts the valence of the outcome; color indicates the kind of agent involved in the distal event; and the number indicates which of the 24 vignettes the judgments were about."}
+
+d1.sumCorGraph <- d1 %>% 
+  select(Agent,Outcome,Cause,Counterfactual,Vignette) %>%
+  group_by(Agent,Outcome,Vignette) %>%
+  summarise(CauseM = mean(Cause,na.rm=TRUE),
+            CauseN = length(Cause),
+            CauseSD = sd(Cause,na.rm=TRUE),
+            CauseSE =  CauseSD / sqrt(CauseN),
+            CntrfM = mean(as.numeric(Counterfactual)),
+            CntrfN = length(Counterfactual),
+            CntrfSD = sd(as.numeric(Counterfactual),na.rm=TRUE),
+            CntrfSE =  CntrfSD / sqrt(CntrfN)) %>%
+  select(Agent,Outcome,Vignette,CauseM,CauseSE,CntrfM,CntrfSE) %>%
+  gather("JudgmentSE","SE",c("CauseSE","CntrfSE")) %>%
+  mutate(CntrfMr = (CntrfM-1))
+
+
+d1.plot3 <- ggplot(d1.sumCorGraph, aes(y=CauseM, x=CntrfMr,color=Outcome))+
+                  geom_smooth(method=lm, formula = y ~ x) +
+                  geom_point(aes(color=Outcome, shape=Outcome),size=3) +
+                  geom_text(aes(label=Vignette),size=1.5,color="black") +
+                  facet_grid(~Agent) + 
+                  #geom_errorbar(aes(ymax=CauseM - SE, ymin=CauseM-SE)) +
+                  #geom_errorbarh(aes(xmax=CntrfMr - SE, xmin=CntrfMr-SE)) +
+                  xlab("Average Counterfactual Prefence for the distal agent per Scenario") +
+                  ylab("Average Causal Judgment per Scenario") +
+                  scale_color_manual("Outcome", values=wes_palette("Royal1",2)) + 
+                  theme_bw() +
+                  theme(
+                    plot.background = element_blank()
+                    ,panel.grid.major = element_blank()
+                    ,panel.grid.minor = element_blank()
+                    ,legend.text=element_text(size=rel(1))
+                    #,legend.position=c(.9,.25)
+                    ,axis.text.y=element_text(size=rel(1))
+                    ,axis.text.x=element_text(size=rel(1))
+                    ,axis.title.y=element_text(vjust=.9)
+                    ,axis.ticks = element_blank()
+                    ,axis.title=element_text(size=rel(1))
+                    ,strip.text=element_text(size=rel(.9))
+                  )
+
+plot(d1.plot3)
+```
+
+## Discussion
+
+Experiment 1 investigated participants' causal and counterfactual judgments in a simple causal chain which eventuates in either good or bad outcomes. We found that agents who started this causal chain with knowledge of the outcome that their action would lead to were judged to be more causal of bad than good outcomes. By comparison, agents who were ignorant about the outcome that would eventually occur were not judged to be more causal of bad (v.s. good) outcomes. A similar pattern was also observed for inanimate objects which initiated the causal chain.
+
+The interaction effect observed in participants' causal judgments was mirrored by a similar pattern in their counterfactual judgments: in cases where the agent *knew* about the outcome, participants were inclined to judge that the bad (v.s. good) outcome would not have occurred if the agent had acted differently. This effect was again not seen for agents who acted in ignorance of the outcome, or for inanimate objects. More generally, we also found that participants' causal and counterfactual judgments were tightly correlated in each of these conditions.
+
+This experiment helps to establish the effect of norm violations in causal chains across many scenarios by manipulating what information the agent had access to. Interestingly, inanimate objects were judged in a somewhat similar way as ignorant human agents, suggesting that knowledge is indeed a factor in both causal judgment and counterfactual cognition. However, the experiment suffers from a confound that persists throughout the empirical work on this topic: the morality of the agent's action is always confounded with the goodness or badness of the outcome (see @hitchcock2009cause and @kominsky2015superseding for two exceptions). In the next series of studies, we systematically and independently vary both the valence of the outcome and the morality of the agents' actions and ask how they contribute to participants' causal judgments independently.
+
+
+
+# Experiment 2a: Causal judgment in cases of bad outcomes and prescriptive norm violations
+
+In Experiment series 2, we innovate in two areas: first, by studying both types of prescriptive norms, moral norm and rational norm; second, by separating primary and secondary outcomes. The motivation is to expand the scope of causation attribution so that it broadens the scope beyond fixation on moral violations and addresses the challenge raised by researchers who argue that causal selection is driven disproportionately by the immorality of actions. Additionally, we aim to draw a distinction between (prescriptive) norm violations and valence of outcomes, concepts that have often been conflated in existing studies, by holding fixed the secondary outcome as negative and always having the agent be ignorant of the fact that this outcome would occur when acting. 
+
+In order to do so and to address the limitations of Experiment 1, we teased apart the prescriptive normality of the agent's action and the valence of outcome by having the action eventuating in two separate outcomes: one results in harm to the agent her-/himself or others, the other results in an objectively good or bad outcome as Experiment 1. Embedded in this design is our attempt to test whether the pattern of causal judgment remains the same between scenarios where a rational norm was violated and those where a moral norm was violated. As aforementioned, we set out with the goal to study both types of prescriptive norms: rational ane moral. More specifically, rational norm violation occurs when an agent performs an action that is not in her/his benefit while a moral norm violation occurs when an agent performs an action that brings harm to someone else.
+
+The main causal chain in Experiment series 2 remains the same as the one in Experiment 1: we used scenarios where an agent (i.e., the distal cause) performed an action that became the proximal cause for a secondary outcome. On top of this, agents in Experiment series 2 would at the same time, either knowingly or ignorantly, bring about harm to others or themselves. The distal cause thus could be a knowing agent or an ignorant agent for this detrimental primary outcome. We then asked for participants' causal judgments on the *secondary outcome*. For Experiment 2a particularly, we kept the valence of the secondary outcome to always be negative. The overall study design described here is summarized in *Fig.* 4.
+
+```{r illustration 2, echo=FALSE, fig.cap="Study design for Experiment series 2", out.width = '100%'}
+knitr::include_graphics("StudyIllustration/studyStructureFigures/Slide3.png")
+```
+
+## Methods
+
+### Participants
+
+```{r study2a participants, echo=FALSE}
+d2ademo <- read.csv("../data/d4demo.csv") # remember that we aren't including the first study with only 3 vignettes
+#d2demo$age[d1demo$age==1993] <- NA ## one person entered their age as 1993 (presumably the year that they were born) 
+d2ademo$gender <- factor(c("Male","Female")[d2ademo$gender])
+d2ademo$edu <- factor(c("Grammar School","Highschool or Equivalent","Vocational/Technical School",
+                                 "Some College","College Graduate (4 years)","Master's Degree",
+                                 "Doctoral Degree (PhD)","Professional Degree (JD,MD,etc.)","Other")[d2ademo$edu])
+##Age and Gender
+d2a.age <- matrix(c("mean",mean(d2ademo$age,na.rm=T),"sd",sd(d2ademo$age,na.rm=T),"n",length(d2ademo$age)),ncol = 3)
+d2a.gender <- table(d2ademo$gender, exclude=NULL)
+
+###Education
+d2.education <- table(d2ademo$edu)
+
+```
+
+In Experiment 2a, `r d2a.age[2,3]` participants (*M*~age~=`r round(mean(d2ademo$age, na.rm=T),digits=2)`, *SD*~age~=`r round(sd(d2ademo$age, na.rm=T),digits=2)`; `r d2a.gender[[1]]` females) were recruited through Amazon Mechanical Turk (<http://www.mturk.com>).
+
+### Materials
+
+Participants completed 16 trials which each involved reading a brief vignette about a causal chain. The causal chain started with a distal agent who knowingly or ignorantly caused harm upon other people or themself. Separate from this event and unbeknownst to the agent, their action led to some immediate outcome that eventually resulted in a second outcome. In this particular experiment, the secondary outcome was invariably negative. Consider the following example from one of the scenarios we used:
+
+> **Scenario 8 / Other-Harm / Ignorant Agent**: Harry was a fisherman applying for a license to fish in a certain coastal area. The government said that Harry could have a license to fish in this area or in a second area. They failed to tell him that choosing to fish in the first area would cause him to put a single working mother out of business. Without this information, Harry chose the license to fish in the area he initially wanted. He fished in this area every day, significantly reducing the local fish population. As a result of the lower fish population, the coral reef along the coast shrunk by several meters in every direction.
+
+In this specific version, the agent did not know that his action (fishing in the first location) would harm another person (putting a single mother out of work). Additionally, not knowing any side effects, the agent fished at that location, which directly resulted in the intermediate event (the reduction of the fish population) that led to the occurrence of a final negative outcome (the coral reef shrinking). In the version of a knowledgeable agent, Harry was told that fishing in the area would put a single mother out of business but decided to do so anyway.
+
+In a different version of the same scenario, the agent did something that was not to his advantage (i.e., choosing to fish at a dangerous place rather than a safer one). Consider the following example:
+
+> **Scenario 8 / Self-Harm / Knowledgeable Agent** Harry was a fisherman applying for a license to fish in a certain coastal area. The government said that Harry could have a license to fish in this area, but that fishing there would be very difficult due to dangerous conditions. They recommended that he accept a license to fish in a second area that was much safer. Harry chose the license to fish in the area he initially wanted. He fished in this area every day, until a large wave knocked him into the rocks and he injured his leg. As a result of the lower fish population, the coral reef along the coast shrunk by several meters in every direction.
+
+Systematically manipulating these factors resulted in an overall 2 (Harm Type) $\times$ 2 (Agent Knowledge) $\times$ 16 (Scenario) design, that was administered in a mixed within- and between-subjects fashion, such that participants saw all 16 scenarios, and on each trial were randomly assigned to read one of the 4 different versions of that scenario.
+
+### Procedure
+
+After reading each vignette, participants rated their agreement with a statement about the distal agent causing the outcome, as in the following example:
+
+> *Causal question*: Harry caused the coral reef to shrink by several meters in every direction.
+
+\noindent Participants responded to each of these questions on a scale from 1 ("Completely disagree") to 7 ("Completely agree"). After completing all 16 trials, participants were asked to complete some optional demographic questions.
+
+### Data analysis
+
+No participants were excluded from the analyses as long as they completed the entire study. The primary analyses were conducted with linear mixed-effects models and included random intercepts for both participants and scenarios as well as a random slope that measures how the impact of knowledge, harm type and their interaction may vary across scenarios.
+
+## Results
+
+```{r study2a causeAnalyses, echo=FALSE, warning=FALSE, message=FALSE}
+
+d2a <- read.csv("../data/irrationalityBadLong.csv")
+
+d2a$knowledge <- factor(d2a$knowledge, levels=c("Ignorance","Knowledge"))
+d2a$norm <- factor(d2a$norm)
+d2a <- d2a %>%
+  mutate(norm = case_when(norm =="Rationality" ~ "Rational Norm",
+                          norm == "Morality" ~ "Moral Norm"))
+d2a$causeS <- d2a$cause
+
+
+## Interaction (insignificant)
+# lmr2a.0 <- lmer(causeS ~ knowledge * norm + (knowledge*norm|vign) + (1|subj), data=d2a,
+#                  control = lmerControl(optimizer = "bobyqa"))
+# lmr2a.1 <- lmer(causeS ~ knowledge + norm + (knowledge*norm|vign) + (1|subj), data=d2a, 
+#                 control = lmerControl(optimizer = "bobyqa"))
+# lmr2a.i <- anova(lmr2a.0,lmr2a.1)
+# saveRDS(lmr2a.i,"models/lmr2ai.rds")
+lmr2a.i <- readRDS("models/lmr2ai.rds")
+
+# main effect of knowledge (significant, <.001)
+# lmr2a.2 <- lmer(causeS ~ norm + (knowledge*norm|vign) + (1|subj), data=d2a,
+#                 control = lmerControl(optimizer = "bobyqa"))
+# lmr2a.k <- anova(lmr2a.1,lmr2a.2)
+# saveRDS(lmr2a.k,"models/lmr2ak.rds")
+lmr2a.k <- readRDS("models/lmr2ak.rds")
+
+
+
+# no main effect of norm
+# lmr2a.3 <- lmer(causeS ~ knowledge + (knowledge*norm|vign) + (1|subj), data=d2a,
+#                 control = lmerControl(optimizer = "bobyqa"))
+# lmr2a.n <- anova(lmr2a.1,lmr2a.3)
+# saveRDS(lmr2a.n,"models/lmr2an.rds")
+lmr2a.n <- readRDS("models/lmr2an.rds")
+
+## 2a estimated marginal means
+# d2a.emsumK <- summary(emmeans::emmeans(lmr2a.0, ~ knowledge))
+# saveRDS(d2a.emsumK,"models/d2a.emsumK.rds")
+d2a.emsumK <- readRDS("models/d2a.emsumK.rds")
+# d2a.empairK <- summary(pairs(emmeans(lmr2a.0, ~ knowledge)))
+# saveRDS(d2a.empairK,"models/d2a.empairK.rds")
+d2a.empairK <- readRDS("models/d2a.empairK.rds")
+
+# d2a.emsumN <- summary(emmeans::emmeans(lmr2a.0, ~ norm))
+# saveRDS(d2a.emsumN,"models/d2a.emsumN.rds")
+d2a.emsumN <- readRDS("models/d2a.emsumN.rds")
+# d2a.empairN <- summary(pairs(emmeans(lmr2a.0, ~ norm)))
+# saveRDS(d2a.empairN,"models/d2a.empairN.rds")
+d2a.empairN <- readRDS("models/d2a.empairN.rds")
+
+# d2a.sumK <- d2a %>% 
+#   select(knowledge,cause,subj) %>%
+#   group_by(knowledge,subj) %>%
+#   summarise(CauseM = mean(cause),na.rm=TRUE) %>%
+#   group_by(knowledge) %>%
+#   summarise(N = length(CauseM),
+#             mean = mean(CauseM, na.rm=TRUE),
+#             sd = sd(CauseM,na.rm=TRUE),
+#             se = sd / sqrt(N))
+# 
+# d2a.sumN <- d2a %>% 
+#   select(norm,cause,subj) %>%
+#   group_by(norm,subj) %>%
+#   summarise(CauseM = mean(cause),na.rm=TRUE) %>%
+#   group_by(norm) %>%
+#   summarise(N = length(CauseM),
+#             mean = mean(CauseM, na.rm=TRUE),
+#             sd = sd(CauseM,na.rm=TRUE),
+#             se = sd / sqrt(N))
+
+d2a.sum <- d2a %>% 
+  select(knowledge,norm,cause,subj) %>%
+  group_by(knowledge,norm,subj) %>%
+  summarise(CauseM = mean(cause),na.rm=TRUE) %>%
+  group_by(knowledge,norm) %>%
+  summarise(N = length(CauseM),
+            mean = mean(CauseM, na.rm=TRUE),
+            sd = sd(CauseM,na.rm=TRUE),
+            se = sd / sqrt(N))
+```
+
+We analyzed participants' causal judgments, which revealed a main effect of *Knowledge*, $\chi^2(1)$ = `r round(lmr2a.k$Chisq[2],digits=2)`, *p* $<$ .001, such that agents knowingly bringing about harm were seen as more causal (*M* = `r round(d2a.emsumK$emmean[2],digits=2)`, 95% CI = [`r round(d2a.emsumK$lower.CL[2],digits=2)`, `r round(d2a.emsumK$upper.CL[2],digits=2)`]) than those who did so ignorantly  (*M* = `r round(d2a.emsumK$emmean[1],digits=2)`, 95% CI = [`r round(d2a.emsumK$lower.CL[1],digits=2)`, `r round(d2a.emsumK$upper.CL[1],digits=2)`]) regardless of the victim, *t*(`r round(d2a.empairK$df[1], digits=2)`) = `r sprintf("%.2f", d2a.empairK$t.ratio[1])`, *p* < .001, because we observed neither a main effect of *Harm Type*, $\chi^2(1)$ = `r round(lmr2a.n$Chisq[2],digits=2)`, *p* = `r round(lmr2a.n$'Pr(>Chisq)'[2],digits=3)`, nor a *Knowledge* $\times$ *Harm Type* interaction effect, $\chi^2(1)$ = `r round(lmr2a.i$Chisq[2],digits=2)`, *p* = `r round(lmr2a.i$'Pr(>Chisq)'[2],digits=3)`. In other words, causal judgments did not differ between harm to self (*M* = `r round(d2a.emsumN$emmean[2],digits=2)`, 95% CI = [`r round(d2a.emsumN$lower.CL[2],digits=2)`, `r round(d2a.emsumN$upper.CL[2],digits=2)`]) and harm to others (*M* = `r round(d2a.emsumK$emmean[2],digits=2)`, 95% CI = [`r round(d2a.emsumK$lower.CL[2],digits=2)`, `r round(d2a.emsumK$upper.CL[2],digits=2)`]), *t*(`r round(d2a.empairN$df[1], digits=2)`) = `r round(d2a.empairN$t.ratio[1], digits=2)`, *p* = `r sprintf("%.3f", d2a.empairN$p.value[1])`. Taken together, findings suggest that other-harm and self-harm do not differentiate in regard to impact on causal judgments (*Fig*. 5).
+
+```{r 2aFig, fig.pos="H", fig.width=8.5, fig.height=6, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Participants' causal judgments as a function of both the knowledge of the agent who initiated the causal chain and the kind of norm that governed the agent's action, for both bad outcomes. Error bars indicate +/- 1 *SEM*."}
+d2a.plot <- d2a %>%
+  dplyr::select(subj, cause, norm, knowledge) %>%
+  group_by(subj, knowledge, norm) %>% 
+  summarise(N = length(cause),
+            mean = mean(as.numeric(cause), na.rm=TRUE)) %>%
+  dplyr::rename(causeN = N) %>%
+  rename(causeMean = mean)
+
+d2a.plotsum <- d2a.plot %>%
+  group_by(knowledge,norm) %>% 
+  summarise(N = length(causeMean),
+            mean = mean(as.numeric(causeMean), na.rm=TRUE),
+            sd = sd(as.numeric(causeMean),na.rm=TRUE),
+            se = sd / sqrt(N)) %>%
+  dplyr::rename(causeN = N) %>%
+  rename(causeMean = mean) %>%
+  rename(causesumSD = sd) %>%
+  rename(causesumSE = se)
+  
+d2a.fig <- ggplot(data=d2a.plot, aes(x=knowledge, y=causeMean, fill=knowledge)) +
+  geom_violin(alpha=.6, linewidth=.1) +
+  scale_fill_manual(values=c("#bdd7e7", "#2171b5")) + ###bdd7e7 #6baed6
+  geom_point(stat="identity",position=position_jitterdodge(jitter.width=.1,dodge.width=.9),alpha=.05, color="black") +
+  geom_point(data=d2a.plotsum, aes(x=knowledge, y=causeMean, fill=knowledge), shape=17, size=2,position=position_dodge(.9), color="black") +
+  geom_line(data=d2a.plotsum, aes(x=knowledge, y=causeMean, group=norm),size=1) +
+  geom_errorbar(data=d2a.plotsum,aes(ymin=causeMean-causesumSE, ymax=causeMean+causesumSE), width=.2, position=position_dodge(.9),color="black") +
+  facet_grid(~norm) +
+  ylab("Causation rating") +
+  xlab("") +
+  theme_bw() +
+  theme(
+    plot.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    strip.text.x = element_text(size=rel(2)),
+    strip.text.y = element_text(size=rel(2)),
+    legend.title=element_blank(),
+    legend.text=element_text(size=rel(1)),
+    legend.justification=c(1,1),
+    legend.position="right",
+    legend.key.width = unit(0.8, "cm"),
+    legend.key.height = unit(0.4, "cm"),
+    axis.text.y=element_text(size=rel(2)),
+    axis.title.y=element_text(size=rel(2),vjust=.9),
+    axis.title.x=element_blank(),
+    axis.text.x=element_text(size=rel(2)),
+    axis.ticks = element_blank()) +
+  scale_y_continuous(breaks=c(1, 3, 5, 7))
+#ggsave("d2a.fig.pdf", width=8, height=12, path="figures")
+d2a.fig
+
+```
+
+## Discussion
+
+Experiment 2a revealed two significant insights that have not been widely documented in the literature: first, agents who knowingly preformed actions that were detrimental to selves or others were judged as more causal of the subsequent negative outcome, even when the immorality or irrationality of the action was completely independent of the eventual secondary outcome, while causal judgments about agents who were ignorant that their action did any harm saw no such effect; second, for causation, what matters is knowledge about norm violation in primary outcomes, not knowledge about valence of secondary outcomes. 
+
+That moral norm violation does not render a different effect from rational norm violation also implies that the underlying mechanism for causal selection may be the same for different types of prescriptive norms. Next, we went on to test if the findings apply in cases where the secondary outcomes are good in valence.
+
+
+# Experiment 2b: Causal judgment in cases of good outcomes and prescriptive norm violations
+Some previous work has found an effect of moral norm violations even in good outcomes, while others argue that this effect is attenuated or even nonexistent (e.g., Alicke, Rose & Bloom, 2011). To investigate this exact question – whether the effect we see in Experiment 2a manifests in positive outcomes as well, such that knowledgeable agents are ascribed more causation than ignorant ones – we designed Experiment 2b which differs from Experiment 2a in only one way: the secondary outcome resulted from the intermediate event was always positive in this study. Again, we asked for participants' causal judgments on the *secondary outcome*.
+
+## Methods
+
+
+### Participants
+
+```{r study2b participants, echo=FALSE}
+d2bdemo <- read.csv("../data/d5demo.csv") # remember that we aren't including the first study with only 3 vignettes
+#d2demo$age[d1demo$age==1993] <- NA ## one person entered their age as 1993 (presumably the year that they were born) 
+d2bdemo$gender <- factor(c("Male","Female")[d2bdemo$gender])
+d2bdemo$edu <- factor(c("Grammar School","Highschool or Equivalent","Vocational/Technical School",
+                                 "Some College","College Graduate (4 years)","Master's Degree",
+                                 "Doctoral Degree (PhD)","Professional Degree (JD,MD,etc.)","Other")[d2bdemo$edu])
+##Age and Gender
+d2b.age <- matrix(c("mean",mean(d2bdemo$age,na.rm=T),"sd",sd(d2bdemo$age,na.rm=T),"n",length(d2bdemo$age)),ncol = 3)
+d2b.gender <- table(d2bdemo$gender, exclude=NULL)
+
+###Education
+d2b.education <- table(d2bdemo$edu)
+
+```
+
+In Experiment 2b, `r d2b.age[2,3]` participants (*M*~age~=`r round(mean(d2bdemo$age, na.rm=T),digits=2)`, *SD*~age~=`r round(sd(d2bdemo$age, na.rm=T),digits=2)`; `r d2b.gender[[1]]` females) were recruited through Amazon Mechanical Turk (<http://www.mturk.com>).
+
+### Materials
+
+Participants completed 16 trials, each of which involved reading a brief vignette about two causal chains. As in the previous study, the agent acted, with or without knowledge, in a way that adversely impacted someone else or themself. Simultaneously, the action led to some intermediate outcome that in the end resulted in a second, final outcome that was positive, of which the distal agent was completely ignorant. Consider the following variation from a scenario we used:
+
+> **Scenario 8 / Rational Norm / Knowledgeable Agent** Harry was a fisherman applying for a license to fish in a certain coastal area. The government said that Harry could have a license to fish in this area, but that fishing there would be very difficult due to dangerous conditions. They recommended that he accept a license to fish in a second area that was much safer. Harry chose the license to fish in the area he initially wanted. He fished in this area every day, until a large wave knocked him into the rocks and he injured his leg. As a result of the lower fish population, the coral reef along the coast grew by several meters in every direction.
+
+This design, again, resulted in an overall 2 (Harm Type) $\times$ 2 (Agent Knowledge) $\times$ 16 (Scenario) design, that was administered in a mixed within- and between-subjects fashion, such that participants saw all 16 scenarios, and on each trial were randomly assigned to read one of the 4 different versions of that scenario.
+
+### Procedure
+
+After reading each vignette, participants rated their agreement with a statement about the distal agent causing the outcome, as in the following example:
+
+> *Causal question*: Harry caused the coral reef to grow by several meters in every direction.
+
+\noindent Participants responded to each of these questions on a scale from 1 ("Completely disagree") to 7 ("Completely agree"). After completing all 16 trials, participants were asked to complete some optional demographic questions.
+
+### Data analysis
+
+No participants were excluded from the analyses as long as they completed the entire study. The primary analyses were conducted with linear mixed-effects models and included random intercepts for both participants and scenarios as well as a random slope that measures how the impact of knowledge, harm type and their interaction may vary across scenarios.
+
+## Results
+
+```{r study2b causeAnalyses, echo=FALSE, warning=FALSE, message=FALSE}
+
+d2b <- read.csv("../data/irrationalityGoodLong.csv")
+
+
+d2b$knowledge <- factor(d2b$knowledge)
+d2b$knowledge <- factor(d2b$knowledge, levels=c("Ignorance","Knowledge"))
+d2b$norm <- factor(d2b$norm)
+d2b <- d2b %>%
+  mutate(norm = case_when(norm =="Rationality" ~ "Rational Norm",
+                          norm == "Morality" ~ "Moral Norm"))
+d2b$causeS <- d2b$cause
+
+## Interaction (insignificant)
+# lmr2b.0 <- lmer(causeS ~ knowledge * norm + (knowledge*norm|vign) + (1|subj), data=d2b,
+#                 control = lmerControl(optimizer = "bobyqa"))
+# lmr2b.1 <- lmer(causeS ~ knowledge + norm + (knowledge*norm|vign) + (1|subj), data=d2b,
+#                 control = lmerControl(optimizer = "bobyqa"))
+# lmr2b.i <- anova(lmr2b.0,lmr2b.1)
+# saveRDS(lmr2b.i,"models/lmr2bi.rds")
+lmr2b.i <- readRDS("models/lmr2bi.rds")
+
+# no main effect of knowledge 
+# lmr2b.2 <- lmer(causeS ~ norm + (knowledge*norm|vign) + (1|subj), data=d2b,
+#                 control = lmerControl(optimizer = "bobyqa"))
+# lmr2b.k <- anova(lmr2b.1,lmr2b.2)
+# saveRDS(lmr2b.k,"models/lmr2bk.rds")
+lmr2b.k <- readRDS("models/lmr2bk.rds")
+
+# no main effect of norm
+# lmr2b.3 <- lmer(causeS ~ knowledge + (knowledge*norm|vign) + (1|subj), data=d2b,
+#                 control = lmerControl(optimizer = "bobyqa"))
+# lmr2b.n <- anova(lmr2b.1,lmr2b.3)
+# saveRDS(lmr2b.n,"models/lmr2bn.rds")
+lmr2b.n <- readRDS("models/lmr2bn.rds")
+
+
+
+## 2b estimated marginal means
+# d2b.emsumK <- summary(emmeans::emmeans(lmr2b.0, ~ knowledge))
+# saveRDS(d2b.emsumK,"models/d2b.emsumK.rds")
+d2b.emsumK <- readRDS("models/d2b.emsumK.rds")
+# d2b.empairK <- summary(pairs(emmeans(lmr2b.0, ~ knowledge)))
+# saveRDS(d2b.empairK,"models/d2b.empairK.rds")
+d2b.empairK <- readRDS("models/d2b.empairK.rds")
+
+# d2b.emsumN <- summary(emmeans::emmeans(lmr2b.0, ~ norm))
+# saveRDS(d2b.emsumN,"models/d2b.emsumN.rds")
+d2b.emsumN <- readRDS("models/d2b.emsumN.rds")
+# d2b.empairN <- summary(pairs(emmeans(lmr2b.0, ~ norm)))
+# saveRDS(d2b.empairN,"models/d2b.empairN.rds")
+d2b.empairN <- readRDS("models/d2b.empairN.rds")
+
+
+# d2b.sumK <- d2b %>% select(knowledge,cause,subj) %>%
+#   group_by(knowledge,subj) %>%
+#   summarise(CauseM = mean(cause),na.rm=TRUE) %>%
+#   group_by(knowledge) %>%
+#   summarise(N = length(CauseM),
+#             mean = mean(CauseM, na.rm=TRUE),
+#             sd = sd(CauseM,na.rm=TRUE),
+#             se = sd / sqrt(N))
+# 
+# d2b.sumN <- d2b %>% 
+#   select(norm,cause,subj) %>%
+#   group_by(norm,subj) %>%
+#   summarise(CauseM = mean(cause),na.rm=TRUE) %>%
+#   group_by(norm) %>%
+#   summarise(N = length(CauseM),
+#             mean = mean(CauseM, na.rm=TRUE),
+#             sd = sd(CauseM,na.rm=TRUE),
+#             se = sd / sqrt(N))
+
+d2b.sum <- d2b %>% 
+  select(knowledge,norm,cause,subj) %>%
+  group_by(knowledge,norm,subj) %>%
+  summarise(CauseM = mean(cause),na.rm=TRUE) %>%
+  group_by(knowledge,norm) %>%
+  summarise(N = length(CauseM),
+            mean = mean(CauseM, na.rm=TRUE),
+            sd = sd(CauseM,na.rm=TRUE),
+            se = sd / sqrt(N))
+
+```
+
+We analyzed participants' causal judgments, which did not reveal any main effects or interaction, including agents' *Knowledge* about the direct consequence of their action, $\chi^2(1)$ = `r round(lmr2b.k$Chisq[2],digits=2)`, *p* = `r round(lmr2b.k$'Pr(>Chisq)'[2],digits=3)`, the *Harm Type*, $\chi^2(1)$ = `r round(lmr2b.n$Chisq[2],digits=2)`, *p* = `r round(lmr2b.n$'Pr(>Chisq)'[2],digits=3)`, and the *Knowledge* $\times$ *Norm* interaction $\chi^2(1)$ = `r round(lmr2b.i$Chisq[2],digits=2)`, *p* = `r round(lmr2b.i$'Pr(>Chisq)'[2],digits=3)` (*Fig*. 6). That is, when the final outcome was good, knowledgeable agents were not deemed more causal (*M* = `r round(d2b.emsumK$emmean[2],digits=2)`, 95% CI = [`r round(d2b.emsumK$lower.CL[2],digits=2)`, `r sprintf("%.2f", d2b.emsumK$upper.CL[2])`]) than ignorant ones (*M* = `r round(d2b.emsumK$emmean[1],digits=2)`, 95% CI = [`r round(d2b.emsumK$lower.CL[1],digits=2)`, `r round(d2b.emsumK$upper.CL[1],digits=2)`]), *t*(`r round(d2b.empairK$df[1], digits=2)`) = `r round(d2b.empairK$t.ratio[1], digits=2)`, *p* = `r sprintf("%.3f", d2b.empairK$p.value[1])`, no matter if the harm incurred at the same time affected the agents themselves (*M* = `r round(d2b.emsumN$emmean[2],digits=2)`, 95% CI = [`r round(d2b.emsumN$lower.CL[2],digits=2)`, `r sprintf("%.2f",d2b.emsumN$upper.CL[2])`]) or others (*M* = `r round(d2b.emsumN$emmean[1],digits=2)`, 95% CI = [`r round(d2b.emsumN$lower.CL[1],digits=2)`, `r sprintf("%.2f",d2b.emsumN$upper.CL[1])`]), *t*(`r round(d2b.empairN$df[1], digits=2)`) = `r round(d2b.empairN$t.ratio[1], digits=2)`, *p* = `r sprintf("%.3f", d2b.empairN$p.value[1])`.
+
+
+```{r 2bFig, fig.pos="H", fig.width=8.5, fig.height=6, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Participants' causal judgments as a function of both the knowledge of the agent who initiated the causal chain and the kind of norm that governed the agent's action, for good outcomes. Error bars indicate +/- 1 *SEM*."}
+
+d2b.plot <- d2b %>%
+  dplyr::select(subj, cause, norm, knowledge) %>%
+  group_by(subj, knowledge, norm) %>% 
+  summarise(N = length(cause),
+            mean = mean(as.numeric(cause), na.rm=TRUE)) %>%
+  dplyr::rename(causeN = N) %>%
+  rename(causeMean = mean)
+
+d2b.plotsum <- d2b.plot %>%
+  group_by(knowledge,norm) %>% 
+  summarise(N = length(causeMean),
+            mean = mean(as.numeric(causeMean), na.rm=TRUE),
+            sd = sd(as.numeric(causeMean),na.rm=TRUE),
+            se = sd / sqrt(N)) %>%
+  dplyr::rename(causeN = N) %>%
+  rename(causeMean = mean) %>%
+  rename(causesumSD = sd) %>%
+  rename(causesumSE = se)
+
+d2b.fig <- ggplot(data=d2b.plot, aes(x=knowledge, y=causeMean, fill=knowledge)) +
+  geom_violin(alpha=.6, linewidth=.1) +
+  scale_fill_manual(values=c("#bdd7e7", "#2171b5")) + ###bdd7e7 #6baed6
+  geom_point(stat="identity",position=position_jitterdodge(jitter.width=.1,dodge.width=.9),alpha=.05, color="black") +
+  geom_point(data=d2b.plotsum, aes(x=knowledge, y=causeMean, fill=knowledge), shape=17, size=2,position=position_dodge(.9), color="black") +
+  geom_line(data=d2b.plotsum, aes(x=knowledge, y=causeMean, group=norm),size=1) +
+  geom_errorbar(data=d2b.plotsum,aes(ymin=causeMean-causesumSE, ymax=causeMean+causesumSE), width=.2, position=position_dodge(.9),color="black") +
+  facet_grid(~norm) +
+  ylab("Causation rating") +
+  xlab("") +
+  theme_bw() +
+  theme(
+    plot.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    strip.text.x = element_text(size=rel(2)),
+    strip.text.y = element_text(size=rel(2)),
+    legend.title=element_blank(),
+    legend.text=element_text(size=rel(1)),
+    legend.justification=c(1,1),
+    legend.position="right",
+    legend.key.width = unit(0.8, "cm"),
+    legend.key.height = unit(0.4, "cm"),
+    axis.text.y=element_text(size=rel(2)),
+    axis.title.y=element_text(size=rel(2),vjust=.9),
+    axis.title.x=element_blank(),
+    axis.text.x=element_text(size=rel(2)),
+    axis.ticks = element_blank()) +
+  scale_y_continuous(breaks=c(1, 3, 5, 7))
+#ggsave("d2b.fig.pdf", width=8, height=12, path="figures")
+d2b.fig
+```
+
+## Discussion
+
+Compared to when the outcome was negative, in cases where secondary outcomes were positive, causal judgment was not affected by the type of prescriptive norm violated or whether the causing agent is informed about the consequence. Taken together, Experiment 2a and 2b suggest that agents' knowledge factors into causal attribution only when the secondary outcome is negative. In the upcoming study, we will be exploring this interaction by directly varying outcome valence.
+
+
+# Experiment 2c: Causal judgment in cases of bad/good outcomes and prescriptive norm violations
+
+In Experiment 2a and 2b, we investigated causal cognition in bad and good outcomes separately. Now, we would like to replicate these findings in a within-subjects design as we systematically manipulated the outcome valence. Based on prior results, we expected to see in varied outcomes an interaction effect between knowledge status and secondary outcome valence. In the current Experiment 2c, study design differs from that of 2a and 2b in one way only: the outcome may be positive or negative (see *Fig.* 4). 
+
+## Methods
+
+### Participants
+
+```{r study2c participants, echo=FALSE, message=FALSE, warning=FALSE}
+d2cdemo <- read.csv("../data/d6demo.csv") 
+d2cdemo$gender <- factor(c("Male","Female")[d2cdemo$gender])
+d2cdemo$edu <- factor(c("Grammar School","Highschool or Equivalent","Vocational/Technical School",
+                                 "Some College","College Graduate (4 years)","Master's Degree",
+                                 "Doctoral Degree (PhD)","Professional Degree (JD,MD,etc.)","Other")[d2cdemo$edu])
+##Age and Gender
+d2c.age <- matrix(c("mean",mean(d2cdemo$age,na.rm=T),"sd",sd(d2cdemo$age,na.rm=T),"n",length(d2cdemo$age)),ncol = 3)
+d2c.gender <- table(d2cdemo$gender, exclude=NULL)
+
+###Education
+d2c.education <- table(d2cdemo$edu)
+
+```
+
+In Experiment 2c, `r d2c.age[2,3]` participants (*M*~age~=`r round(mean(d2cdemo$age, na.rm=T),digits=2)`, *SD*~age~=`r round(sd(d2cdemo$age, na.rm=T),digits=2)`; `r d2c.gender[[1]]` females) were recruited through Amazon Mechanical Turk (<http://www.mturk.com>).
+
+### Materials
+
+Participants completed 16 trials which each involved reading a brief vignette about events in two separate causal chains. The general design remains the same as that in Experiment 2a and 2b except that the secondary outcome resulting from the intermediate outcome of the agent's action was either negative or positive. 
+
+This design resulted in an overall 2 (Harm Type) $\times$ 2 (Agent Knowledge) $\times$ 2 (Outcome Valence) $\times$ 16 (Scenario) design, that was administered in a mixed within- and between-subjects fashion, such that participants saw all 16 scenarios, and on each trial were randomly assigned to read one of the 8 different versions of that scenario.
+
+### Procedure
+
+After reading each vignette, participants rated their agreement with a statement about the distal agent causing the final secondary outcome as before by responding on a scale of 1 ("Completely disagree") to 7 ("Completely agree"), and were asked to complete some optional demographic questions after rating all 16 scenarios.
+
+### Data analysis
+
+No participants were excluded from the analyses as long as they completed the entire study. The primary analyses were conducted with linear mixed-effects models and included random intercepts for both participants and scenarios as well as a random slope that measures how the impact of knowledge, outcome and their interaction may vary across scenarios.
+
+## Results
+
+```{r study2c causeAnalyses, echo=FALSE, message=FALSE, warning=FALSE}
+
+d2c <- read.csv("../data/irrationalityWithin-subjsLong.csv")
+
+d2c$knowledge <- factor(d2c$knowledge, levels=c("Ignorance","Knowledge"))
+d2c$norm <- factor(d2c$norm)
+d2c <- d2c %>%
+  mutate(norm = case_when(norm =="Rationality" ~ "Rational Norm",
+                          norm == "Morality" ~ "Moral Norm"))
+d2c$outcome <- factor(d2c$outcome)
+d2c$causeS <- d2c$cause
+
+## 2c Main effects (knowledge significant <.001 0.0002386)
+# lmr2c.main <- lmer(causeS ~ knowledge + outcome + norm  + (knowledge*outcome|vign) + (1|subj), data=d2c,
+#                    control = lmerControl(optimizer = "bobyqa"))
+# 
+# lmr2c.outcome <- lmer(causeS ~ knowledge + norm + (knowledge*outcome|vign) + (1|subj),data=d2c,
+#                       control = lmerControl(optimizer = "bobyqa"))
+# lmr2c.outcome <- anova(lmr2c.main,lmr2c.outcome)
+# saveRDS(lmr2c.outcome,"models/lmr2c.outcome.rds")
+lmr2c.outcome <- readRDS("models/lmr2c.outcome.rds")
+
+# lmr2c.knowledge <- lmer(causeS ~ outcome + norm + (knowledge*outcome|vign) + (1|subj), data=d2c,
+#                         control = lmerControl(optimizer = "bobyqa"))
+# lmr2c.knowledge <- anova(lmr2c.main,lmr2c.knowledge)
+# saveRDS(lmr2c.knowledge,"models/lmr2c.knowledge.rds")
+lmr2c.knowledge <- readRDS("models/lmr2c.knowledge.rds")
+
+# lmr2c.norm <- lmer(causeS ~ outcome + knowledge + (knowledge*outcome|vign) + (1|subj), data=d2c,
+#                    control = lmerControl(optimizer = "bobyqa"))
+# lmr2c.norm <- anova(lmr2c.main,lmr2c.norm)
+# saveRDS(lmr2c.norm,"models/lmr2c.norm.rds")
+lmr2c.norm <- readRDS("models/lmr2c.norm.rds")
+
+
+## 2c Interactions (only Outcome x Knowledge significant 0.002199)
+### 3-way interactions
+# lmr2c.0 <- lmer(causeS ~ knowledge * norm * outcome + (knowledge*outcome|vign) + (1|subj), data=d2c,
+#                 control = lmerControl(optimizer = "bobyqa"))
+# lmr2c.1 <- lmer(causeS ~ (knowledge * norm) + (outcome * knowledge) + (outcome * norm) + (knowledge*outcome|vign) + (1|subj), data=d2c,
+#                 control = lmerControl(optimizer = "bobyqa"))
+# lmr2c.i3x <- anova(lmr2c.0,lmr2c.1)
+# saveRDS(lmr2c.i3x,"models/lmr2ci3x.rds")
+lmr2c.i3x <- readRDS("models/lmr2ci3x.rds")
+
+### Norm x Knowledge interaction (insignificant)
+# lmr2c.NK <- lmer(causeS ~ (knowledge * outcome) + (outcome * norm) + (knowledge*outcome|vign) + (1|subj), data=d2c,
+#                 control = lmerControl(optimizer = "bobyqa"))
+# lmr2c.NxK <- anova(lmr2c.NK,lmr2c.1)
+# saveRDS(lmr2c.NxK,"models/lmr2cNxK.rds")
+lmr2c.NxK <- readRDS("models/lmr2cNxK.rds")
+
+### Norm x Outcome interaction (insignificant)
+# lmr2c.NO <- lmer(causeS ~ (knowledge * outcome) + (knowledge * norm) + (knowledge*outcome|vign) + (1|subj), data=d2c,
+#                 control = lmerControl(optimizer = "bobyqa"))
+# lmr2c.NxO <- anova(lmr2c.NO,lmr2c.1)
+# saveRDS(lmr2c.NxO,"models/lmr2cNxO.rds")
+lmr2c.NxO <- readRDS("models/lmr2cNxO.rds")
+
+### Outcome x Knowledge interaction (significant 0.002199)
+# lmr2c.OK <- lmer(causeS ~ (knowledge * norm) + (outcome * norm) + (knowledge*outcome|vign) + (1|subj), data=d2c,
+#                 control = lmerControl(optimizer = "bobyqa"))
+# lmr2c.OxK <- anova(lmr2c.OK,lmr2c.1)
+# saveRDS(lmr2c.OxK,"models/lmr2cOxK.rds")
+lmr2c.OxK <- readRDS("models/lmr2cOxK.rds")
+
+
+### 2c estimated marginal means
+# d2c.emsumK <- summary(emmeans::emmeans(lmr2c.0, ~ knowledge, pbkrtest.limit = 3419))
+# saveRDS(d2c.emsumK,"models/d2c.emsumK.rds")
+d2c.emsumK<- readRDS("models/d2c.emsumK.rds")
+# d2c.empairK <- summary(pairs(emmeans(lmr2c.0, ~ knowledge, pbkrtest.limit = 3419)))
+# saveRDS(d2c.empairK,"models/d2c.empairK.rds")
+d2c.empairK <- readRDS("models/d2c.empairK.rds")
+
+# d2c.emsumOK <- summary(emmeans::emmeans(lmr2c.0, ~ outcome*knowledge, pbkrtest.limit = 3419))
+# saveRDS(d2c.emsumOK,"models/d2c.emsumOK.rds")
+d2c.emsumOK <- readRDS("models/d2c.emsumOK.rds")
+# d2c.empairOK <- summary(emmeans::emmeans(lmr2c.0, pairwise ~ outcome*knowledge, pbkrtest.limit = 3419))$contrasts
+# saveRDS(d2c.empairOK,"models/d2c.empairOK.rds")
+d2c.empairOK <- readRDS("models/d2c.empairOK.rds")
+
+# ## (Discard?) decomposing the interaction effect, by asking about the effect of knowledge for both bad and good outcomes:
+# 
+# ## Bad outcomes
+# # lmr2c.4b1 <- lmer(causeS ~ knowledge + norm + (knowledge*norm|subj) + (1|vign), data=d2c[d2c$outcome=="Bad Outcome",])
+# # lmr2c.4b2 <- lmer(causeS ~ norm + (knowledge*norm|subj) + (1|vign), data=d2c[d2c$outcome=="Bad Outcome",])
+# # lmr2c.K_B <- anova(lmr2c.4b1,lmr2c.4b2)
+# # saveRDS(lmr2c.K_B,"models/lmr2cK_B.rds")
+# lmr2c.K_B <- readRDS("models/lmr2cK_B.rds")
+# 
+# ### Good outcomes
+# # lmr2c.4g1 <- lmer(causeS ~ knowledge + norm + (knowledge*norm|subj) + (1|vign), data=d2c[d2c$outcome=="Good Outcome",])
+# # lmr2c.4g2 <- lmer(causeS ~ norm + (knowledge*norm|subj) + (1|vign), data=d2c[d2c$outcome=="Good Outcome",])
+# # lmr2c.K_G <- anova(lmr2c.4g1,lmr2c.4g2)
+# # saveRDS(lmr2c.K_G,"models/lmr2cK_G.rds")
+# lmr2c.K_G <- readRDS("models/lmr2cK_G.rds")
+# 
+# d2c.sumOK <- d2c %>% select(knowledge,outcome,cause,subj) %>%
+#   group_by(knowledge,outcome,subj) %>%
+#   summarise(CauseM = mean(cause),na.rm=TRUE) %>%
+#   group_by(knowledge,outcome) %>%
+#   summarise(N = length(CauseM),
+#             mean = mean(CauseM, na.rm=TRUE),
+#             sd = sd(CauseM,na.rm=TRUE),
+#             se = sd / sqrt(N))
+
+d2c.sum <- d2c %>% 
+  select(knowledge,norm,outcome,cause,subj) %>%
+  group_by(knowledge,norm,outcome,subj) %>%
+  summarise(CauseM = mean(cause),na.rm=TRUE) %>%
+  group_by(knowledge,norm,outcome) %>%
+  summarise(N = length(CauseM),
+            mean = mean(CauseM, na.rm=TRUE),
+            sd = sd(CauseM,na.rm=TRUE),
+            se = sd / sqrt(N))
+```
+
+We analyzed participants' causal judgments. To start with, we found a significant main effect in *Knowledge*, $\chi^2(1)$ = `r sprintf("%.2f", lmr2c.knowledge$Chisq[2])`, *p* <.001, where knowledgeable agents were deemed more causal (*M* = `r sprintf("%.2f", d2c.emsumK$emmean[2])`, 95% CI = [`r round(d2c.emsumK$lower.CL[2],digits=2)`, `r round(d2c.emsumK$upper.CL[2],digits=2)`]) than ignorant agents (*M* = `r round(d2c.emsumK$emmean[1],digits=2)`, 95% CI = [`r round(d2c.emsumK$lower.CL[1],digits=2)`, `r round(d2c.emsumK$upper.CL[1],digits=2)`]) for the secondary outcome, *t*(`r round(d2c.empairK$df[1], digits=2)`) = `r round(d2c.empairK$t.ratio[1], digits=2)`, *p* < .001. No significant results came from analysis on main effects of *Harm Type*, $\chi^2(1)$ = `r round(lmr2c.norm$Chisq[2],digits=2)`, *p* = `r round(lmr2c.norm$'Pr(>Chisq)'[2],digits=3)` or the valence of *Outcome*, $\chi^2(1)$ = `r round(lmr2c.outcome$Chisq[2],digits=2)`, *p* = `r round(lmr2c.outcome$'Pr(>Chisq)'[2],digits=3)`. Moreover, we saw a significant *Knowledge* $\times$ *Outcome* interaction effect that ties back to the results of Study 2a and 2b, $\chi^2(1)$ = `r round(lmr2c.OxK$Chisq[2],digits=2)`, *p* = `r round(lmr2c.OxK$'Pr(>Chisq)'[2],digits=3)`, such that when secondary outcomes were bad, participants attributed more causation to knowledgeable agents (*M* = `r sprintf("%.2f", d2c.emsumOK$emmean[3])`, 95% CI = [`r sprintf("%.2f", d2c.emsumOK$lower.CL[3])`, `r sprintf("%.2f",d2c.emsumOK$upper.CL[3])`]) than ignorant agents (*M* = `r round(d2c.emsumOK$emmean[1],digits=2)`, 95% CI = [`r round(d2c.emsumOK$lower.CL[1],digits=2)`, `r round(d2c.emsumOK$upper.CL[1],digits=2)`]), *t*(`r round(d2c.empairOK$df[2])`) = `r sprintf("%.2f", d2c.empairOK$t.ratio[2])`, *p* <.001. But when secondary outcomes turned out to be good, the causal ratings differed less between agents who caused harm knowingly (*M* = `r round(d2c.emsumOK$emmean[4],digits=2)`, 95% CI = [`r round(d2c.emsumOK$lower.CL[4],digits=2)`, `r round(d2c.emsumOK$upper.CL[4],digits=2)`]) and those who did so obliviously (*M* = `r sprintf("%.2f", d2c.emsumOK$emmean[2])`, 95% CI = [`r round(d2c.emsumOK$lower.CL[2],digits=2)`, `r round(d2c.emsumOK$upper.CL[2],digits=2)`]), *t*(`r round(d2c.empairOK$df[5])`) = `r round(d2c.empairOK$t.ratio[5], digits=2)`, *p* = `r round(d2c.empairOK$p.value[5], digits=3)` (*Fig*. 7). There was no significant *Knowledge* $\times$ *Norm* $\times$ *Outcome* interaction effect, $\chi^2(1)$ = `r round(lmr2c.i3x$Chisq[2],digits=2)`, *p* = `r round(lmr2c.i3x$'Pr(>Chisq)'[2],digits=3)`, *Norm* $\times$ *Outcome* interaction effect, $\chi^2(1)$ = `r round(lmr2c.NxO$Chisq[2],digits=2)`, *p* = `r round(lmr2c.NxO$'Pr(>Chisq)'[2],digits=3)`, or *Norm* $\times$ *Knowledge* interaction effect, $\chi^2(1)$ = `r round(lmr2c.NxK$Chisq[2],digits=2)`, *p* = `r round(lmr2c.NxK$'Pr(>Chisq)'[2],digits=3)`.
+
+```{r 2cFig, fig.pos="H", fig.width=8.5, fig.height=7.5, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Participants' causal judgments as a function of both the knowledge of the agent who initiated the causal chain and the kind of norm that governed the agent's action, for both bad outcomes (left) and good outcomes (right). Error bars indicate +/- 1 *SEM*."}
+d2c.plot <- d2c %>%
+  dplyr::select(subj, cause, norm, knowledge, outcome) %>%
+  group_by(subj, knowledge, norm, outcome) %>% 
+  summarise(N = length(cause),
+            mean = mean(as.numeric(cause), na.rm=TRUE)) %>%
+  dplyr::rename(causeN = N) %>%
+  rename(causeMean = mean)
+
+d2c.plotsum <- d2c.plot %>%
+  group_by(knowledge,norm,outcome) %>% 
+  summarise(N = length(causeMean),
+            mean = mean(as.numeric(causeMean), na.rm=TRUE),
+            sd = sd(as.numeric(causeMean),na.rm=TRUE),
+            se = sd / sqrt(N)) %>%
+  dplyr::rename(causeN = N) %>%
+  rename(causeMean = mean) %>%
+  rename(causesumSD = sd) %>%
+  rename(causesumSE = se)
+
+d2c.fig <- ggplot(data=d2c.plot, aes(x=knowledge, y=causeMean, fill=knowledge)) +
+  geom_violin(alpha=.6, linewidth=.1) +
+  scale_fill_manual(values=c("#bdd7e7", "#2171b5")) + ###bdd7e7 #6baed6
+  geom_point(stat="identity",position=position_jitterdodge(jitter.width=.1,dodge.width=.9),alpha=.05, color="black") +
+  geom_point(data=d2c.plotsum, aes(x=knowledge, y=causeMean, fill=knowledge), shape=17, size=2,position=position_dodge(.9), color="black") +
+  geom_line(data=d2c.plotsum, aes(x=knowledge, y=causeMean, group=norm),size=1) +
+  geom_errorbar(data=d2c.plotsum,aes(ymin=causeMean-causesumSE, ymax=causeMean+causesumSE), width=.2, position=position_dodge(.9),color="black") +
+  facet_grid(outcome~norm) +
+  ylab("Causation rating") +
+  xlab("") +
+  theme_bw() +
+  theme(
+    plot.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    strip.text.x = element_text(size=rel(2)),
+    strip.text.y = element_text(size=rel(2)),
+    legend.title=element_blank(),
+    legend.text=element_text(size=rel(1)),
+    legend.justification=c(1,1),
+    legend.position="right",
+    legend.key.width = unit(0.8, "cm"),
+    legend.key.height = unit(0.4, "cm"),
+    axis.text.y=element_text(size=rel(2)),
+    axis.title.y=element_text(size=rel(2),vjust=.9),
+    axis.title.x=element_blank(),
+    axis.text.x=element_text(size=rel(2)),
+    axis.ticks = element_blank()) +
+  scale_y_continuous(breaks=c(1, 3, 5, 7))
+#ggsave("d2c.fig.pdf", width=8, height=12, path="figures")
+d2c.fig
+```
+
+## Discussion
+
+Besides replicating the knowledge effect, the most substantial finding of Experiment 2c is the interaction between knowledge and outcome, such that more causation was attributed to knowledgeable agents than ignorant ones only when the secondary outcome was negative rather than positive. This interaction occurs in both moral norm violations (i.e., harming others) and rational norm violations (i.e., harming selves), suggesting that the it is unlikely to be explained by polysemy or the motivation to judge someone harshly because she/he did something bad. Put differently, if participants were confused by the multiple meanings embedded in the word "cause" or were inclined to have a lower opinion about someone who harmed others, we would see a differentiation in causal judgment between moral norm violation and rational norm violation. Therefore, we can say that causal selection works in a similar manner across different types of prescriptive norms.
+
+However, if not explained by confusion or moral aversion, what is the underlying mechanism for this interaction effect? One previously undiscussed feature of outcome valence is that it is often tied with normality: good outcomes are perceived as more normal than bad outcomes (Bear & Knobe, 2017). In studies conducted so far, positive outcomes have been generally more descriptively likely than negative outcomes. We need to further dissect the phenomenon by disentangling descriptive normality and prescriptive normality, as we will do shortly (in Experiment series 3).
+
+
+# Experiment 2d: Combined analyses and new ratings on morality and rationality
+checking variance by asking for morality and rationality ratings
+counterfactual: to see what's driving this effect
+
+## Methods
+
+
+### Participants
+
+```{r study2d participants, echo=FALSE}
+
+# morality and rationality ratings of the agent's actions: 
+d2da_demo <- read.csv("../data/d8demo.csv")
+d2da_demo$gender <- factor(c("Male","Female")[d2da_demo$gender])
+d2da_demo$edu <- factor(c("Grammar School","Highschool or Equivalent","Vocational/Technical School",
+                                 "Some College","College Graduate (4 years)","Master's Degree",
+                                 "Doctoral Degree (PhD)","Professional Degree (JD,MD,etc.)","Other")[d2da_demo$edu])
+##Age and Gender
+d2da.age <- matrix(c("mean",mean(d2da_demo$age,na.rm=T),"sd",sd(d2da_demo$age,na.rm=T),"n",length(d2da_demo$age)),ncol = 3)
+d2da.gender <- table(d2da_demo$gender, exclude=NULL)
+
+###Education
+d2da.education <- table(d2da_demo$edu)
+
+# counterfactual ratings: 
+d2dc_demo <- read.csv("../data/d9demo.csv")
+d2dc_demo$gender <- factor(c("Male","Female")[d2dc_demo$gender])
+d2dc_demo$edu <- factor(c("Grammar School","Highschool or Equivalent","Vocational/Technical School",
+                                 "Some College","College Graduate (4 years)","Master's Degree",
+                                 "Doctoral Degree (PhD)","Professional Degree (JD,MD,etc.)","Other")[d2dc_demo$edu])
+##Age and Gender
+d2dc.age <- matrix(c("mean",mean(d2dc_demo$age,na.rm=T),"sd",sd(d2dc_demo$age,na.rm=T),"n",length(d2dc_demo$age)),ncol = 3)
+d2dc.gender <- table(d2dc_demo$gender, exclude=NULL)
+
+###Education
+d2dc.education <- table(d2dc_demo$edu)
+```
+
+For ratings of the morality and rationality of the agent's actions, `r d2da.age[2,3]` participants (*M*~age~=`r round(mean(d2da_demo$age, na.rm=T),digits=2)`, *SD*~age~=`r round(sd(d2da_demo$age, na.rm=T),digits=2)`; `r d2da.gender[[1]]` females) were recruited. For ratings of which counterfactual choices were relevant, `r d2dc.age[2,3]` participants (*M*~age~=`r round(mean(d2dc_demo$age, na.rm=T),digits=2)`, *SD*~age~=`r round(sd(d2dc_demo$age, na.rm=T),digits=2)`; `r d2dc.gender[[1]]` females) were recruited. All participants were recruited through Amazon Mechanical Turk (<http://www.mturk.com>).
+
+### Materials
+
+In both studies, participants completed 16 trials which each involved reading the brief vignettes about causal chains as in the previous studies. As in Study 2c, the design for both studies was a 2 (Harm Type) $\times$ 2 (Agent Knowledge) $\times$ 2 (Outcome Valence) $\times$ 16 (Scenario) design that was administered in a mixed within- and between-subjects fashion, such that participants saw all 16 scenarios and on each trial were randomly assigned to read 1 of the 8 different versions of that scenario.
+
+### Procedure
+
+For the ratings of the morality and rationality, participants first read the brief vignette and then answered two questions about the morality and rationality of the agent's action. In the example scenario we have been using throughout, these questions read as follows:
+
+> *Morality Question*: Was it immoral for Harry to choose the lisence to fish in the area he initially wanted?
+
+> *Rationality Question*: Was it irrational for Harry to choose the lisence to fish in the area he initially wanted?
+
+Participants answered both questions on a 7-point Likert scale from 1 ('Not at all') to 7 ('Completely'), with a midpoint of 4 ('In between').
+
+For the counterfactual question, participants selected the best way to complete a counterfactual statement about the prevention of the outcome from two options. For example, in the good outcome versions of the scenario with Harry, this question reads as follows:
+
+> *Counterfactual Question*: If only $\underline{\hspace{3cm}}$ had been different, the coral reef would not have grown by several meters in every direction.\
+> a. Harry\
+> b. the fish population
+
+Participants were asked to complete a brief demographic questionnaire after completing all 16 trials.
+
+### Data analysis
+
+No participant was excluded from the analyses as long as the entire study was completed. For analyses involving causal judgments, we used data collected in Studies 2a-2c. We then combined and analyzed all relevant data at the level of the various scenarios. Besides... 
+
+## Results
+
+```{r study2d morality & rationality analyses, echo=FALSE, message=FALSE, warning=FALSE}
+
+## load data from studies 2a-2c
+d2a$outcome <- "Bad Outcome"
+d2b$outcome <- "Good Outcome"
+d2 <- rbind(d2a,d2b,d2c)
+d2.sums <- d2 %>% 
+  group_by(knowledge,norm,outcome,vign) %>% 
+  summarise(N.cause = length(cause),
+            mean.cause = mean(cause, na.rm=TRUE),
+            sd.cause = sd(cause,na.rm=TRUE),
+            se.cause = sd.cause / sqrt(N.cause))
+
+## load data for morality and rationality ratings
+d2da <- read.csv("../data/d8data.csv")
+d2da$norm <- factor(d2da$norm)
+d2da$norm <- factor(c("Moral Norm","Rational Norm")[d2da$norm])
+d2da$quest <- factor(d2da$quest)
+d2da$quest <- factor(c("Morality","Rationality")[d2da$quest])
+
+d2da$valueS[d2da$quest=="Morality"] <- d2da$value[d2da$quest=="Morality"]
+d2da$valueS[d2da$quest=="Rationality"] <- d2da$value[d2da$quest=="Rationality"]
+
+### in vignette 1 RKB+MKG+MIG, the likert scale was mistakenly coded as 1,8,2,3,4,5,6
+### fixing it here
+fixed <- d2da %>%
+  filter(vign == "1") %>%
+  filter(cond=='RKB' | cond=='MKG' | cond=='MIG') %>%
+  mutate(valueS = case_when(valueS == 1 ~ 1,
+                            valueS == 8 ~ 2,
+                            valueS == 2 ~ 3,
+                            valueS == 3 ~ 4,
+                            valueS == 4 ~ 5,
+                            valueS == 5 ~ 6,
+                            valueS == 6 ~ 7))
+d2da[d2da$vign == "1" & d2da$cond %in% c('RKB', 'MKG', 'MIG'), "valueS"] <- fixed$valueS
+
+### reverse likert coding to make results more intuitive
+d2da <- d2da %>%
+  mutate(valueS = case_when(valueS == 1 ~ 7,
+                            valueS == 2 ~ 6,
+                            valueS == 3 ~ 5,
+                            valueS == 4 ~ 4,
+                            valueS == 5 ~ 3,
+                            valueS == 6 ~ 2,
+                            valueS == 7 ~ 1))
+
+
+
+#MORALITY RATINGS:
+
+
+## Morality main effects (outcome significant <.001, norm significant <.001, knowledge significant <.001)
+lmr2d.m.main <- lmer(valueS ~ knowledge + outcome + norm + (knowledge+outcome+norm|vign) + (1|subj), data=d2da[d2da$quest=="Morality",])
+
+lmr2d.m.outcome <- lmer(valueS ~ knowledge + norm + (knowledge+outcome+norm|vign) + (1|subj), data=d2da[d2da$quest=="Morality",])
+lmr2d.m.outcome <- anova(lmr2d.m.main,lmr2d.m.outcome)
+saveRDS(lmr2d.m.outcome,"models/lmr2d.m.outcome.rds")
+lmr2d.m.outcome <- readRDS("models/lmr2d.m.outcome.rds")
+
+lmr2d.m.norm <- lmer(valueS ~ knowledge + outcome + (knowledge+outcome+norm|vign) + (1|subj), data=d2da[d2da$quest=="Morality",])
+lmr2d.m.norm <- anova(lmr2d.m.main,lmr2d.m.norm)
+saveRDS(lmr2d.m.norm,"models/lmr2d.m.norm.rds")
+lmr2d.m.norm <- readRDS("models/lmr2d.m.norm.rds")
+
+lmr2d.m.knowledge <- lmer(valueS ~ outcome + norm + (knowledge*outcome+norm|vign) + (1|subj), data=d2da[d2da$quest=="Morality",])
+lmr2d.m.knowledge <- anova(lmr2d.m.main,lmr2d.m.knowledge)
+saveRDS(lmr2d.m.knowledge,"models/lmr2d.m.knowledge.rds")
+lmr2d.m.knowledge <- readRDS("models/lmr2d.m.knowledge.rds")
+
+## Morality three-way interaction (insignificant)
+lmr2d.0m <- lmer(valueS ~ knowledge * norm * outcome + (knowledge+outcome+norm|vign) + (1|subj), data=d2da[d2da$quest=="Morality",],
+                 control = lmerControl(optimizer = "bobyqa"))
+lmr2d.1m <- lmer(valueS ~ (knowledge * norm) + (outcome * knowledge) + (outcome * norm) + (knowledge+outcome+norm|vign) + (1|subj), data=d2da[d2da$quest=="Morality",],
+                 control = lmerControl(optimizer = "bobyqa"))
+lmr2da.i3x.m <- anova(lmr2d.0m,lmr2d.1m)
+saveRDS(lmr2da.i3x.m,"models/lmr2di3x_m.rds")
+lmr2d.i3x.m <- readRDS("models/lmr2di3x_m.rds")
+
+## Morality: Norm x Knowledge interaction (significant, <.001)
+lmr2d.2m <- lmer(valueS ~ (knowledge * outcome) + (outcome * norm) + (knowledge+outcome+norm|vign) + (1|subj), data=d2da[d2da$quest=="Morality",],
+                 control = lmerControl(optimizer = "bobyqa"))
+lmr2d.NxK.m <- anova(lmr2d.1m,lmr2d.2m)
+saveRDS(lmr2d.NxK.m,"models/lmr2dNxK_m.rds")
+lmr2d.NxK.m <- readRDS("models/lmr2dNxK_m.rds")
+
+
+## Morality: Norm x Outcome interaction (significant, <.001)
+lmr2d.3m <- lmer(valueS ~ (knowledge * outcome) + (knowledge * norm) + (knowledge+outcome+norm|vign) + (1|subj), data=d2da[d2da$quest=="Morality",])
+lmr2d.NxO.m <- anova(lmr2d.1m,lmr2d.3m)
+saveRDS(lmr2d.NxO.m,"models/lmr2dNxO_m.rds")
+lmr2d.NxO.m <- readRDS("models/lmr2dNxO_m.rds")
+
+
+## Morality: Outcome valence x Knowledge interaction (insignificant)
+lmr2d.4m <- lmer(valueS ~ (norm * outcome) + (knowledge * norm) + (knowledge+outcome+norm|vign) + (1|subj), data=d2da[d2da$quest=="Morality",],
+                 control = lmerControl(optimizer = "bobyqa"))
+lmr2d.OxK.m <- anova(lmr2d.1m,lmr2d.4m)
+saveRDS(lmr2d.OxK.m,"models/lmr2dOxK_m.rds")
+lmr2d.OxK.m <- readRDS("models/lmr2dOxK_m.rds") 
+
+
+## MORALITY estimated marginal means
+
+d2dmor.emsumN <- summary(emmeans::emmeans(lmr2d.0m, ~ norm, pbkrtest.limit = 3179))
+saveRDS(d2dmor.emsumN,"models/d2dmor.emsumN.rds")
+d2dmor.emsumN <- readRDS("models/d2dmor.emsumN.rds")
+
+d2dmor.emsumO <- summary(emmeans::emmeans(lmr2d.0m, ~ outcome, pbkrtest.limit = 3179))
+saveRDS(d2dmor.emsumO,"models/d2dmor.emsumO.rds")
+d2dmor.emsumO <- readRDS("models/d2dmor.emsumO.rds")
+
+d2dmor.emsumK <- summary(emmeans::emmeans(lmr2d.0m, ~ knowledge, pbkrtest.limit = 3179))
+saveRDS(d2dmor.emsumK,"models/d2dmor.emsumK.rds")
+d2dmor.emsumK <- readRDS("models/d2dmor.emsumK.rds")
+
+d2dmor.emsumNO <- summary(emmeans::emmeans(lmr2d.0m, ~ outcome*norm, pbkrtest.limit = 3179))
+saveRDS(d2dmor.emsumNO,"models/d2dmor.emsumNO.rds")
+d2dmor.emsumNO <- readRDS("models/d2dmor.emsumNO.rds")
+d2dmor.empairNO <- summary(emmeans::emmeans(lmr2d.0m, pairwise ~ outcome*norm, pbkrtest.limit = 3179))$contrasts
+saveRDS(d2dmor.empairNO,"models/d2dmor.empairNO.rds")
+d2dmor.empairNO <- readRDS("models/d2dmor.empairNO.rds")
+
+d2dmor.emsumNK <- summary(emmeans::emmeans(lmr2d.0m, ~ knowledge*norm, pbkrtest.limit = 3179))
+saveRDS(d2dmor.emsumNK,"models/d2dmor.emsumNK.rds")
+d2dmor.emsumNK <- readRDS("models/d2dmor.emsumNK.rds")
+d2dmor.empairNK <- summary(emmeans::emmeans(lmr2d.0m, pairwise ~ knowledge*norm, pbkrtest.limit = 3179))$contrasts
+saveRDS(d2dmor.empairNK,"models/d2dmor.empairNK.rds")
+d2dmor.empairNK <- readRDS("models/d2dmor.empairNK.rds")
+
+### Norm x Knowledge interaction EMM
+# em.M.NxK <- summary((emmeans(lmr2d.0m, specs = pairwise ~ knowledge:norm, lmerTest.limit = 3200, pbkrtest.limit= 3200))$contrasts)
+# saveRDS(em.M.NxK, "models/em.M.NxK.rds")
+# em.M.NxK <- readRDS("models/em.M.NxK.rds")
+
+### Outcome x Norm interaction EMM
+# em.M.NxO <- summary((emmeans(lmr2d.0m, specs = pairwise ~ outcome:norm, lmerTest.limit = 3200, pbkrtest.limit= 3200))$contrasts)
+# saveRDS(em.M.NxO, "models/em.M.NxO.rds")
+# em.M.NxO <- readRDS("models/em.M.NxO.rds")
+
+
+# d2da.m.sumK <- d2da %>% 
+#   filter(quest == "Morality") %>%
+#   dplyr::select(knowledge,value,subj) %>%
+#   group_by(knowledge, subj) %>%
+#   summarise(moralityK = mean(value),na.rm=TRUE) %>%
+#   group_by(knowledge) %>%
+#   summarise(N = length(moralityK),
+#             mean = mean(moralityK, na.rm=TRUE),
+#             sd = sd(moralityK,na.rm=TRUE),
+#             se = sd / sqrt(N))
+# 
+# d2da.m.sumO <- d2da %>% 
+#   filter(quest == "Morality") %>%
+#   dplyr::select(outcome,value,subj) %>%
+#   group_by(outcome, subj) %>%
+#   summarise(moralityO = mean(value),na.rm=TRUE) %>%
+#   group_by(outcome) %>%
+#   summarise(N = length(moralityO),
+#             mean = mean(moralityO, na.rm=TRUE),
+#             sd = sd(moralityO,na.rm=TRUE),
+#             se = sd / sqrt(N))
+# 
+# d2da.m.sumN <- d2da %>% 
+#   filter(quest == "Morality") %>%
+#   dplyr::select(norm,value,subj) %>%
+#   group_by(norm, subj) %>%
+#   summarise(moralityN = mean(value),na.rm=TRUE) %>%
+#   group_by(norm) %>%
+#   summarise(N = length(moralityN),
+#             mean = mean(moralityN, na.rm=TRUE),
+#             sd = sd(moralityN,na.rm=TRUE),
+#             se = sd / sqrt(N))
+
+
+
+
+#RATIONALITY RATINGS: 
+
+## Rationality main effects (outcome significant <.001, norm .04038, knowledge <.001)
+lmr2d.r.main <- lmer(valueS ~ knowledge + outcome + norm + (knowledge+outcome+norm|vign) + (1|subj), data=d2da[d2da$quest=="Rationality",],
+                     control = lmerControl(optimizer = "bobyqa"))
+
+lmr2d.r.outcome <- lmer(valueS ~ knowledge + norm + (knowledge+outcome+norm|vign) + (1|subj), data=d2da[d2da$quest=="Rationality",],
+                        control = lmerControl(optimizer = "bobyqa"))
+lmr2d.r.outcome <- anova(lmr2d.r.main,lmr2d.r.outcome)
+saveRDS(lmr2d.r.outcome,"models/lmr2d.r.outcome.rds")
+lmr2d.r.outcome <- readRDS("models/lmr2d.r.outcome.rds")
+
+lmr2d.r.norm <- lmer(valueS ~ knowledge + outcome + (knowledge+outcome+norm|vign) + (1|subj), data=d2da[d2da$quest=="Rationality",],
+                     control = lmerControl(optimizer = "bobyqa")) 
+lmr2d.r.norm <- anova(lmr2d.r.main,lmr2d.r.norm)
+saveRDS(lmr2d.r.norm,"models/lmr2d.r.norm.rds")
+lmr2d.r.norm <- readRDS("models/lmr2d.r.norm.rds")
+
+lmr2d.r.knowledge <- lmer(valueS ~ outcome + norm + (knowledge+norm+outcome|vign) + (1|subj), data=d2da[d2da$quest=="Rationality",],
+                          control = lmerControl(optimizer = "bobyqa")) 
+lmr2d.r.knowledge <- anova(lmr2d.r.main,lmr2d.r.knowledge)
+saveRDS(lmr2d.r.knowledge,"models/lmr2d.r.knowledge.rds")
+lmr2d.r.knowledge <- readRDS("models/lmr2d.r.knowledge.rds")
+
+## Rationality three-way interaction (insignificant)
+lmr2d.0r <- lmer(valueS ~ knowledge * norm * outcome + (knowledge+norm+outcome|vign) + (1|subj), data=d2da[d2da$quest=="Rationality",],
+                 control = lmerControl(optimizer = "bobyqa"))
+lmr2d.1r <- lmer(valueS ~ (knowledge * norm) + (outcome * knowledge) + (outcome * norm) + (knowledge+norm+outcome|vign) + (1|subj), data=d2da[d2da$quest=="Rationality",],
+                 control = lmerControl(optimizer = "bobyqa"))
+lmr2da.i3x.r <- anova(lmr2d.0r,lmr2d.1r)
+saveRDS(lmr2da.i3x.r,"models/lmr2di3x_r.rds")
+lmr2d.i3x.r <- readRDS("models/lmr2di3x_r.rds")
+
+## Rationality: Norm x Knowledge interaction (insignificant)
+lmr2d.2r <- lmer(valueS ~ (knowledge * outcome) + (outcome * norm) + (knowledge+norm+outcome|vign) + (1|subj), data=d2da[d2da$quest=="Rationality",],
+                 control = lmerControl(optimizer = "bobyqa"))
+lmr2d.NxK.r <- anova(lmr2d.1r,lmr2d.2r)
+saveRDS(lmr2d.NxK.r,"models/lmr2dNxK_r.rds")
+lmr2d.NxK.r <- readRDS("models/lmr2dNxK_r.rds")
+
+## Rationality: Norm x Outcome interaction (significant 0.01878)
+lmr2d.3r <- lmer(valueS ~ (knowledge * outcome) + (knowledge * norm) + (knowledge+norm+outcome|vign) + (1|subj), data=d2da[d2da$quest=="Rationality",],
+                 control = lmerControl(optimizer = "bobyqa"))
+lmr2d.NxO.r <- anova(lmr2d.1r,lmr2d.3r)
+saveRDS(lmr2d.NxO.r,"models/lmr2dNxO_r.rds")
+lmr2d.NxO.r <- readRDS("models/lmr2dNxO_r.rds")
+
+## Rationality: Outcome valence x Knowledge interaction (significant 0.01434)
+lmr2d.4r <- lmer(valueS ~ (norm * outcome) + (knowledge * norm) + (knowledge+norm+outcome|vign) + (1|subj), data=d2da[d2da$quest=="Rationality",],
+                 control = lmerControl(optimizer = "bobyqa"))
+lmr2d.OxK.r <- anova(lmr2d.1r,lmr2d.4r)
+saveRDS(lmr2d.OxK.r,"models/lmr2dOxK_r.rds")
+lmr2d.OxK.r <- readRDS("models/lmr2dOxK_r.rds")
+        
+
+
+## RATIONALITY estimated marginal means
+
+d2drat.emsumO <- summary(emmeans::emmeans(lmr2d.0r, ~ outcome, pbkrtest.limit = 3177))
+saveRDS(d2drat.emsumO,"models/d2drat.emsumO.rds")
+d2drat.emsumO <- readRDS("models/d2drat.emsumO.rds")
+
+d2drat.emsumK <- summary(emmeans::emmeans(lmr2d.0r, ~ knowledge, pbkrtest.limit = 3177))
+saveRDS(d2drat.emsumK,"models/d2drat.emsumK.rds")
+d2drat.emsumK <- readRDS("models/d2drat.emsumK.rds")
+
+d2drat.emsumNO <- summary(emmeans::emmeans(lmr2d.0r, ~ outcome*norm, pbkrtest.limit = 3177))
+saveRDS(d2drat.emsumNO,"models/d2drat.emsumNO.rds")
+d2drat.emsumNO <- readRDS("models/d2drat.emsumNO.rds")
+d2drat.empairNO <- summary(emmeans::emmeans(lmr2d.0r, pairwise ~ outcome*norm, pbkrtest.limit = 3177))$contrasts
+saveRDS(d2drat.empairNO,"models/d2drat.empairNO.rds")
+d2drat.empairNO <- readRDS("models/d2drat.empairNO.rds")
+
+d2drat.emsumOK <- summary(emmeans::emmeans(lmr2d.0r, ~ knowledge*outcome, pbkrtest.limit = 3177))
+saveRDS(d2drat.emsumOK,"models/d2drat.emsumOK.rds")
+d2drat.emsumOK <- readRDS("models/d2drat.emsumOK.rds")
+d2drat.empairOK <- summary(emmeans::emmeans(lmr2d.0r, pairwise ~ knowledge*outcome, pbkrtest.limit = 3177))$contrasts
+saveRDS(d2drat.empairOK,"models/d2drat.empairOK.rds")
+d2drat.empairOK <- readRDS("models/d2drat.empairOK.rds")
+
+
+### Outcome x Norm interaction EMM
+# em.R.NxO <- summary((emmeans(lmr2d.0r, specs = pairwise ~ norm:outcome, lmerTest.limit = 3200, pbkrtest.limit= 3200)$contrasts))
+# saveRDS(em.R.NxO, "models/em.R.NxO.rds")
+# em.R.NxO <- readRDS("models/em.R.NxO.rds")
+
+###  Outcome x Knowledge interaction EMM
+# em.R.OxK <- summary((emmeans(lmr2d.0r, specs = pairwise ~ knowledge:outcome, lmerTest.limit = 3200, pbkrtest.limit= 3200))$contrasts)
+# saveRDS(em.R.OxK, "models/em.R.OxK.rds")
+# em.R.OxK <- readRDS("models/em.R.OxK.rds")
+
+
+# d2da.r.sumK <- d2da %>% 
+#   filter(quest == "Rationality") %>%
+#   dplyr::select(knowledge,value,subj) %>%
+#   group_by(knowledge, subj) %>%
+#   summarise(rationalityK = mean(value),na.rm=TRUE) %>%
+#   group_by(knowledge) %>%
+#   summarise(N = length(rationalityK),
+#             mean = mean(rationalityK, na.rm=TRUE),
+#             sd = sd(rationalityK,na.rm=TRUE),
+#             se = sd / sqrt(N))
+# 
+# d2da.r.sumO <- d2da %>% 
+#   filter(quest == "Rationality") %>%
+#   dplyr::select(outcome,value,subj) %>%
+#   group_by(outcome, subj) %>%
+#   summarise(rationalityO = mean(value),na.rm=TRUE) %>%
+#   group_by(outcome) %>%
+#   summarise(N = length(rationalityO),
+#             mean = mean(rationalityO, na.rm=TRUE),
+#             sd = sd(rationalityO,na.rm=TRUE),
+#             se = sd / sqrt(N))
+# 
+# d2da.r.sumN <- d2da %>% 
+#   filter(quest == "Rationality") %>%
+#   dplyr::select(norm,value,subj) %>%
+#   group_by(norm, subj) %>%
+#   summarise(rationalityN = mean(value),na.rm=TRUE) %>%
+#   group_by(norm) %>%
+#   summarise(N = length(rationalityN),
+#             mean = mean(rationalityN, na.rm=TRUE),
+#             sd = sd(rationalityN,na.rm=TRUE),
+#             se = sd / sqrt(N))
+
+
+```
+
+First, we asked whether participants' judgments of the morality and rationality of the agents' actions tracked our manipulations as intended. Then we investigated the counterfactual responses in a similar way. 
+
+### Morality Question
+
+
+We started with participants' moral judgments and found main effects across *Knowledge*, *Harm Type* and *Outcome* respectively. First, the main effect of the agent's *Knowledge* about the consequence of their action, $\chi^2(1)$ = `r round(lmr2d.m.knowledge$Chisq[2],digits=2)`, *p* <.001, indicates that events knowledgeable agents were overall seen as less moral (*M* = `r round(d2dmor.emsumK$emmean[2],digits=2)`, 95% CI = [`r round(d2dmor.emsumK$lower.CL[2],digits=2)`, `r round(d2dmor.emsumK$upper.CL[2],digits=2)`]) than ignorant agents (*M* = `r round(d2dmor.emsumK$emmean[1],digits=2)`, 95% CI = [`r round(d2dmor.emsumK$lower.CL[1],digits=2)`, `r round(d2dmor.emsumK$upper.CL[1],digits=2)`]). Second, morality judgments also differentiated between *Harm Types*, $\chi^2(1)$ = `r round(lmr2d.m.norm$Chisq[2],digits=2)`, *p* $<$.001, which suggests that agents who caused harm to others were considered less moral (*M* = `r round(d2dmor.emsumN$emmean[1],digits=2)`, 95% CI = [`r round(d2dmor.emsumN$lower.CL[1],digits=2)`, `r round(d2dmor.emsumN$upper.CL[1],digits=2)`]) than those who did harm to themselves (*M* = `r round(d2dmor.emsumN$emmean[2],digits=2)`, 95% CI = [`r round(d2dmor.emsumN$lower.CL[2],digits=2)`, `r round(d2dmor.emsumN$upper.CL[2],digits=2)`]). Third, a main effect of the final *Outcome* was discovered, $\chi^2(1)$ = `r round(lmr2d.m.outcome$Chisq[2],digits=3)`, *p* $<$.001: participants considered agents whose actions resulted in a bad outcome to be more immoral (*M* = `r round(d2dmor.emsumO$emmean[1],digits=2)`, 95% CI = [`r round(d2dmor.emsumO$lower.CL[1],digits=2)`, `r round(d2dmor.emsumO$upper.CL[1],digits=2)`]) than agents whose actions resulted in a good one (*M* = `r round(d2dmor.emsumO$emmean[2],digits=2)`, 95% CI = [`r round(d2dmor.emsumO$lower.CL[2],digits=2)`, `r round(d2dmor.emsumO$upper.CL[2],digits=2)`]).
+
+We then looked into interaction effects for moral ratings. A significant *Norm* $\times$ *Knowledge* interaction $\chi^2(1)$ = `r round(lmr2d.NxK.m$Chisq[2],digits=2)`, *p* <.001, was observed. More specifically, when agents acted ignorantly, moral judgment on them harming selves (*M* = `r round(d2dmor.emsumNK$emmean[3],digits=2)`, 95% CI = [`r round(d2dmor.emsumNK$lower.CL[3],digits=2)`, `r round(d2dmor.emsumNK$upper.CL[3],digits=2)`) and that on harming others (*M* = `r round(d2dmor.emsumNK$emmean[1],digits=2)`, 95% CI = [`r round(d2dmor.emsumNK$lower.CL[1],digits=2)`, `r round(d2dmor.emsumNK$upper.CL[1],digits=2)`) was not outstanding, but when acting knowingly, agents who harmed others were deemed much more immoral (*M* = `r round(d2dmor.emsumNK$emmean[2],digits=2)`, 95% CI = [`r round(d2dmor.emsumNK$lower.CL[2],digits=2)`, `r round(d2dmor.emsumNK$upper.CL[2],digits=2)`) than those who merely acted to their own disadvantage (*M* = `r round(d2dmor.emsumNK$emmean[4],digits=2)`, 95% CI = [`r round(d2dmor.emsumNK$lower.CL[4],digits=2)`, `r round(d2dmor.emsumNK$upper.CL[4],digits=2)`). There was also a (unexpectedly??) significant *Norm* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lmr2d.NxO.m$Chisq[2],digits=3)`, *p* $<$.001, such that when the final outcome was good (*t*(`r round(d2dmor.empairNO$df[5])`) = `r round(d2dmor.empairNO$t.ratio[5], digits=2)`, *p* = `r round(d2dmor.empairNO$p.value[5], digits=3)`), participants believed agents who committed harm on others were less moral (*M* = `r round(d2dmor.emsumNO$emmean[2],digits=2)`, 95% CI = [`r round(d2dmor.emsumNO$lower.CL[2],digits=2)`, `r round(d2dmor.emsumNO$upper.CL[2],digits=2)`]) than those who harmed only themselves (*M* = `r round(d2dmor.emsumNO$emmean[4],digits=2)`, 95% CI = [`r round(d2dmor.emsumNO$lower.CL[4],digits=2)`, `r round(d2dmor.emsumNO$upper.CL[4],digits=2)`), but when this secondary outcome was bad (*t*(`r round(d2dmor.empairNO$df[2])`) = `r round(d2dmor.empairNO$t.ratio[2], digits=2)`, *p* = `r round(d2dmor.empairNO$p.value[2], digits=3)`), this difference in morality rating between other-harming agents (*M* = `r round(d2dmor.emsumNO$emmean[1],digits=2)`, 95% CI = [`r round(d2dmor.emsumNO$lower.CL[1],digits=2)`, `r round(d2dmor.emsumNO$upper.CL[1],digits=2)`) and self-harming agents became smaller (*M* = `r round(d2dmor.emsumNO$emmean[3],digits=2)`, 95% CI = [`r round(d2dmor.emsumNO$lower.CL[3],digits=2)`, `r round(d2dmor.emsumNO$upper.CL[3],digits=2)`). Analyses did not yield statistically significant results in the *Knowledge* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lmr2d.OxK.m$Chisq[2],digits=2)`, *p* = `r round(lmr2d.OxK.m$'Pr(>Chisq)'[2], digits=3)` or the three-way *Knowledge* $\times$ *Norm* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lmr2d.i3x.m$Chisq[2],digits=2)`, *p* = `r round(lmr2d.i3x.m$'Pr(>Chisq)'[2],digits=3)`.
+
+
+### Rationality Question
+
+We next examined participants' judgments of rationality in the same manner. We found main effects in *Knowledge* and *Outcome*, but not *Harm Type*, $\chi^2(1)$ = `r round(lmr2d.r.norm$Chisq[2],digits=2)`, *p* = `r round(lmr2d.r.norm$'Pr(>Chisq)'[2],digits=3)`. The *Knowledge* effect, $\chi^2(1)$ = `r round(lmr2d.r.knowledge$Chisq[2],digits=3)`, *p* < .001, indicates that agents who knowingly caused harm were believed to be less rational (*M* = `r round(d2drat.emsumK$emmean[2],digits=2)`, 95% CI = [`r round(d2drat.emsumK$lower.CL[2],digits=2)`, `r round(d2drat.emsumK$upper.CL[2],digits=2)`]) than agents who ignorantly did so (*M* = `r round(d2drat.emsumK$emmean[1],digits=2)`, 95% CI = [`r round(d2drat.emsumK$lower.CL[1],digits=2)`, `r round(d2drat.emsumK$upper.CL[1],digits=2)`]). We also discovered a main effect of the final *Outcome*, $\chi^2(1)$ = `r round(lmr2d.r.outcome$Chisq[2],digits=2)`, *p* < .001: agents whose action resulted in a bad outcome were considered less rational (*M* = `r round(d2drat.emsumO$emmean[1],digits=2)`, 95% CI = [`r round(d2drat.emsumO$lower.CL[1],digits=2)`, `r round(d2drat.emsumO$upper.CL[1],digits=2)`]) than agents whose action resulted in a good one (*M* = `r round(d2drat.emsumO$emmean[2],digits=2)`, 95% CI = [`r round(d2drat.emsumO$lower.CL[2],digits=2)`, `r round(d2drat.emsumO$upper.CL[2],digits=2)`]). 
+
+Like in the morality rating, responses to the rationality question saw a (unexpected??) *Harm Type* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lmr2d.NxO.r$Chisq[2],digits=2)`, *p* = `r round(lmr2d.NxO.r$'Pr(>Chisq)'[2], digits=3)`, such that when the agent's action eventually led to a bad outcome (*t*(`r round(d2drat.empairNO$df[2])`) = `r round(d2drat.empairNO$t.ratio[2], digits=2)`, *p* = `r round(d2drat.empairNO$p.value[2], digits=3)`), those who did not act in alignment with their own best interest were thought to be less rational (*M* = `r round(d2drat.emsumNO$emmean[3],digits=2)`, 95% CI = [`r round(d2drat.emsumNO$lower.CL[3],digits=2)`, `r round(d2drat.emsumNO$upper.CL[3],digits=2)`]) than those who harmed others (*M* = `r round(d2drat.emsumNO$emmean[1],digits=2)`, 95% CI = [`r round(d2drat.emsumNO$lower.CL[1],digits=2)`, `r round(d2drat.emsumNO$upper.CL[1],digits=2)`), but when the end outcome was positive (*t*(`r round(d2drat.empairNO$df[5])`) = `r round(d2drat.empairNO$t.ratio[5], digits=2)`, *p* = `r round(d2drat.empairNO$p.value[5], digits=3)`), participants did not differ much in their rationality ratings about harming others (*M* = `r round(d2drat.emsumNO$emmean[2],digits=2)`, 95% CI = [`r round(d2drat.emsumNO$lower.CL[2],digits=2)`, `r round(d2drat.emsumNO$upper.CL[2],digits=2)`) and those about harming selves (*M* = `r round(d2drat.emsumNO$emmean[4],digits=2)`, 95% CI = [`r round(d2drat.emsumNO$lower.CL[4],digits=2)`, `r round(d2drat.emsumNO$upper.CL[4],digits=2)`). Moreover, we found a *Knowledge* $\times$ *Outcome* interaction effect, $\chi^2(1)$ = `r round(lmr2d.OxK.r$Chisq[2],digits=2)`, *p* = `r round(lmr2d.OxK.r$'Pr(>Chisq)'[2], digits=3)`, which shows that when agents acted with knowledge (*t*(`r round(d2drat.empairOK$df[5])`) = `r round(d2drat.empairOK$t.ratio[5], digits=2)`, *p* = `r round(d2drat.empairOK$p.value[5], digits=3)`), the ones who indirectly brought about good outcomes (*M* = `r round(d2drat.emsumOK$emmean[4],digits=2)`, 95% CI = [`r round(d2drat.emsumOK$lower.CL[4],digits=2)`, `r round(d2drat.emsumOK$upper.CL[4],digits=2)`]) were seen as more rational than those who brought about bad outcomes (*M* = `r round(d2drat.emsumOK$emmean[2],digits=2)`, 95% CI = [`r round(d2drat.emsumOK$lower.CL[2],digits=2)`, `r round(d2drat.emsumOK$upper.CL[2],digits=2)`]). However, when agents acted ignorantly (*t*(`r round(d2drat.empairOK$df[2])`) = `r round(d2drat.empairOK$t.ratio[2], digits=2)`, *p* = `r round(d2drat.empairOK$p.value[2], digits=3)`), rationality judgments differed less between those who eventually caused bad outcomes (*M* = `r round(d2drat.emsumOK$emmean[1],digits=2)`, 95% CI = [`r round(d2drat.emsumOK$lower.CL[1],digits=2)`, `r round(d2drat.emsumOK$upper.CL[1],digits=2)`]) and those who caused good outcomes (*M* = `r round(d2drat.emsumOK$emmean[3],digits=2)`, 95% CI = [`r round(d2drat.emsumOK$lower.CL[3],digits=2)`, `r round(d2drat.emsumOK$upper.CL[3],digits=2)`]). There was no significant *Knowledge* $\times$ *Norm* $\times$ *Outcome* interaction effect, $\chi^2(1)$ = `r round(lmr2d.i3x.r$Chisq[2],digits=2)`, *p* = `r round(lmr2d.i3x.r$'Pr(>Chisq)'[2], digits=3)`, nor *Norm* $\times$ *Knowledge* interaction effect, $\chi^2(1)$ = `r round(lmr2d.NxK.r$Chisq[2],digits=2)`, *p* = `r round(lmr2d.NxK.r$'Pr(>Chisq)'[2], digits=3)`.
+
+
+```{r moralRationalfig, fig.width=8.5, fig.height=6, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Participants' ratings of the agent's morality (top) and rationality (bottom) as a function of the knowledge status, the type of norm violated and the outcome valence."}
+###########2d morality
+d2da.mor <- d2da[d2da$quest=="Morality",] %>%
+  dplyr::select(subj, value, norm, knowledge, outcome) %>%
+  group_by(subj, knowledge, norm, outcome) %>% 
+  summarise(N = length(value),
+            mean = mean(as.numeric(value), na.rm=TRUE)) %>%
+  dplyr::rename(moralityN = N) %>%
+  rename(moralityMean = mean)
+
+d2da.morsum <- d2da.mor %>%
+  group_by(knowledge,norm,outcome) %>% 
+  summarise(N = length(moralityMean),
+            mean = mean(as.numeric(moralityMean), na.rm=TRUE),
+            sd = sd(as.numeric(moralityMean),na.rm=TRUE),
+            se = sd / sqrt(N)) %>%
+  dplyr::rename(moralityN = N) %>%
+  rename(moralityMean = mean) %>%
+  rename(moralitysumSD = sd) %>%
+  rename(moralitysumSE = se)
+
+d2da.mor.fig <- ggplot(data=d2da.mor, aes(x=knowledge, y=moralityMean, fill=knowledge)) +
+  geom_violin(alpha=.6, linewidth=.1) +
+  scale_fill_manual(values=c("#bdd7e7", "#2171b5")) + ###bdd7e7 #6baed6
+  geom_point(stat="identity",position=position_jitterdodge(jitter.width=.1,dodge.width=.9),alpha=.05, color="black") +
+  geom_point(data=d2da.morsum, aes(x=knowledge, y=moralityMean, fill=knowledge), shape=17, size=2,position=position_dodge(.9), color="black") +
+  geom_line(data=d2da.morsum, aes(x=knowledge, y=moralityMean, group=norm),size=1) +
+  geom_errorbar(data=d2da.morsum,aes(ymin=moralityMean-moralitysumSE, ymax=moralityMean+moralitysumSE), width=.2, position=position_dodge(.9),color="black") +
+  facet_grid(outcome~norm) +
+  ylab("Morality rating") +
+  xlab("") +
+  theme_bw() +
+  theme(
+    plot.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    strip.text.x = element_text(size=rel(2)),
+    strip.text.y = element_text(size=rel(2)),
+    legend.title=element_blank(),
+    legend.text=element_text(size=rel(1)),
+    legend.justification=c(1,1),
+    legend.position="top",
+    legend.key.width = unit(0.8, "cm"),
+    legend.key.height = unit(0.4, "cm"),
+    axis.text.y=element_text(size=rel(1)),
+    axis.title.y=element_text(size=rel(2),vjust=.9),
+    axis.title.x=element_blank(),
+    axis.text.x=element_text(size=rel(2)),
+    axis.ticks = element_blank()) +
+  scale_y_continuous(breaks=c(1, 3, 5, 7))
+#ggsave("d2da.mor.fig.pdf", width=8, height=12, path="figures")
+d2da.mor.fig
+
+
+###########2d rationality
+d2da.rat <- d2da[d2da$quest=="Rationality",] %>%
+  dplyr::select(subj, value, norm, knowledge, outcome) %>%
+  group_by(subj, knowledge, norm, outcome) %>% 
+  summarise(N = length(value),
+            mean = mean(as.numeric(value), na.rm=TRUE)) %>%
+  dplyr::rename(rationalityN = N) %>%
+  rename(rationalityMean = mean)
+
+d2da.ratsum <- d2da.rat %>%
+  group_by(knowledge,norm,outcome) %>% 
+  summarise(N = length(rationalityMean),
+            mean = mean(as.numeric(rationalityMean), na.rm=TRUE),
+            sd = sd(as.numeric(rationalityMean),na.rm=TRUE),
+            se = sd / sqrt(N)) %>%
+  dplyr::rename(rationalityN = N) %>%
+  rename(rationalityMean = mean) %>%
+  rename(rationalitysumSD = sd) %>%
+  rename(rationalitysumSE = se)
+
+d2da.rat.fig <- ggplot(data=d2da.rat, aes(x=knowledge, y=rationalityMean, fill=knowledge)) +
+  geom_violin(alpha=.6, linewidth=.1) +
+  scale_fill_manual(values=c("#bdd7e7", "#2171b5")) + ###bdd7e7 #6baed6
+  geom_point(stat="identity",position=position_jitterdodge(jitter.width=.1,dodge.width=.9),alpha=.05, color="black") +
+  geom_point(data=d2da.ratsum, aes(x=knowledge, y=rationalityMean, fill=knowledge), shape=17, size=2,position=position_dodge(.9), color="black") +
+  geom_line(data=d2da.ratsum, aes(x=knowledge, y=rationalityMean, group=norm),size=1) +
+  geom_errorbar(data=d2da.ratsum,aes(ymin=rationalityMean-rationalitysumSE, ymax=rationalityMean+rationalitysumSE), width=.2, position=position_dodge(.9),color="black") +
+  facet_grid(outcome~norm) +
+  ylab("Rationality rating") +
+  xlab("") +
+  theme_bw() +
+  theme(
+    plot.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    strip.text.x = element_text(size=rel(2)),
+    strip.text.y = element_text(size=rel(2)),
+    legend.title=element_blank(),
+    legend.text=element_text(size=rel(1)),
+    legend.justification=c(1,1),
+    legend.position="top",
+    legend.key.width = unit(0.8, "cm"),
+    legend.key.height = unit(0.4, "cm"),
+    axis.text.y=element_text(size=rel(2)),
+    axis.title.y=element_text(size=rel(2),vjust=.9),
+    axis.title.x=element_blank(),
+    axis.text.x=element_text(size=rel(2)),
+    axis.ticks = element_blank()) +
+  scale_y_continuous(breaks=c(1, 3, 5, 7))
+#ggsave("d2da.rat.fig.pdf", width=8, height=12, path="figures")
+d2da.rat.fig
+
+
+#grid.arrange(d2d.fig.m, d2d.fig.r, nrow=2,heights = c(100,100))
+#plot_grid(d2d.fig.m, d2d.fig.r, align = "v", nrow = 2)
+```
+
+
+
+```{r study2d cf, echo=FALSE, warning=FALSE, message=FALSE}
+### load counterfactual choices and summarize
+d2dc <- read.csv("../data/irrationalityCounterfactuals.csv")
+
+colnames(d2dc) <- c("subj","condCode","cf","norm","outcome","knowledge","vign")
+
+d2dc$norm <- factor(d2dc$norm)
+d2dc$norm <- factor(c("Moral Norm","Rational Norm")[d2dc$norm])
+
+d2dc$outcome <- factor(d2dc$outcome)
+d2dc$outcome <- factor(c("Bad Outcome","Good Outcome")[d2dc$outcome])
+
+d2dc.sums <- d2dc %>% 
+  group_by(knowledge,norm,outcome,vign) %>% 
+  summarise(cf.n = length(cf),
+            cf.mean = mean(cf, na.rm=TRUE),
+            cf.sd = sd(cf,na.rm=TRUE),
+            cf.se = cf.sd / sqrt(cf.n))
+
+#reformat counterfactual choice in d2dc to 1) make it a factor and 2) change numbers to words (result is cf.re column)
+d2dc <- d2dc %>%
+  mutate(cf.re = case_when(cf==1 ~ "Agent",
+            cf==2 ~ "External environment"),
+         cf.re = factor(cf.re, levels=c("External environment", "Agent")))
+
+d2dc$cf.re <- factor(d2dc$cf.re)
+
+# 3-way Interaction:
+# glmr2d_cf_3way.0 <- glmer(cf.re ~ knowledge * norm * outcome + (knowledge*norm*outcome|subj) + (1|vign), data=d2dc, family = "binomial")
+# glmr2d_cf_3way.1 <- glmer(cf.re ~ (knowledge * norm) + (outcome * knowledge) + (outcome * norm) + (knowledge*norm*outcome|subj) + (1|vign), data=d2dc, family = "binomial")
+# glmr2d_cf_3way <- anova(glmr2d_cf_3way.0, glmr2d_cf_3way.1)
+# saveRDS(glmr2d_cf_3way,"models/glmr2d_cf_3way.rds")
+glmr2d_cf_3way <- readRDS("models/glmr2d_cf_3way.rds")                     
+
+## knowledge x norm interaction
+# glmr2d_cf_kn <- glmer(cf.re ~ (knowledge * outcome) + (outcome * norm) + (knowledge*norm*outcome|subj) + (1|vign), data=d2dc, family = "binomial")
+# glmr2d_cf_KxN <- anova(glmr2d_cf_3way.1, glmr2d_cf_kn)
+# saveRDS(glmr2d_cf_KxN, "models/glmr2d_cf_KxN.rds")
+glmr2d_cf_KxN <- readRDS("models/glmr2d_cf_KxN.rds")
+
+## knowledge x outcome interaction
+# glmr2d_cf_ko <- glmer(cf.re ~ (knowledge * norm) + (outcome * norm) + (knowledge*norm*outcome|subj) + (1|vign), data=d2dc, family = "binomial")
+# glmr2d_cf_KxO <- anova(glmr2d_cf_3way.1, glmr2d_cf_ko)
+# saveRDS(glmr2d_cf_KxO, "models/glmr2d_cf_KxO.rds")
+glmr2d_cf_KxO <- readRDS("models/glmr2d_cf_KxO.rds")
+d2da.OxK.r <- d2da %>% filter(d2da$quest=="Rationality") %>%
+                       group_by(knowledge,outcome,subj) %>% 
+                       summarise(means=mean(value, na.rm = T)) 
+###  knowledge x outcome interaction EMM
+#em_2d_cf_KxO <- summary((emmeans(glmr2d_cf_3way.0, specs = pairwise ~ knowledge:outcome))$contrasts)
+#saveRDS(em_2d_cf_KxO, "models/em_2d_cf_KxO.rds")
+em_2d_cf_KxO <- readRDS("models/em_2d_cf_KxO.rds")
+#emmeans(glmr2d_cf_3way.0, specs = pairwise ~ knowledge:outcome)
+#emmip(glmr2d_cf_3way.0, knowledge~outcome)
+
+## outcome x norm interaction
+# glmr2d_cf_on <- glmer(cf.re ~ (knowledge * outcome) + (knowledge * norm) + (knowledge*norm*outcome|subj) + (1|vign), data=d2dc, family = "binomial")
+# glmr2d_cf_OxN <- anova(glmr2d_cf_3way.1, glmr2d_cf_on)
+# saveRDS(glmr2d_cf_OxN, "models/glmr2d_cf_OxN.rds")
+glmr2d_cf_OxN <- readRDS("models/glmr2d_cf_OxN.rds")
+```
+
+### Counterfactual Question
+
+We asked participants about the relevance of counterfactuals by examining their choice of the cause - the human agent or the external environment. Again, we asked whether there was a significant *Knowledge* $\times$ *Norm* $\times$ *Outcome* interaction effect but did not find one, $\chi^2(1)$ = `r round(glmr2d_cf_3way$Chisq[2],digits=3)`, *p* = `r max(.001,round(glmr2d_cf_3way$'Pr(>Chisq)'[2],digits=3))`. Using estimated marginal means, among the three possible 2-way interactions we only found an effect in *Knowledge* $\times$ *Outcome*, $\chi^2(1)$ = `r round(glmr2d_cf_KxO$Chisq[2],digits=2)`, *p* $<$ `r max(.001,round(glmr2d_cf_KxO$'Pr(>Chisq)'[2],digits=3))`, suggesting that participants' counterfactual choice tends to differentiate more between knowledgeable agent and ignorant agent when the event resulted in a bad outcome, *z-ratio* $=$ `r round(em_2d_cf_KxO[1,5],digits=3)`, *p* $<$`r round(em_2d_cf_KxO[1,6],digits=3)`, than in a good outcome, *z-ratio* $=$ `r round(em_2d_cf_KxO[6,5],digits=3)`, *p* $<$ `r round(em_2d_cf_KxO[6,6],digits=3)`.
+
+```{r, d2dFig, fig.width=8.5, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="morality & rationality ratings"}
+
+#plots
+
+d2dc_counterfactual.plot.bo <- ggplot(d2dc[d2dc$outcome=="Bad Outcome",], aes(x=knowledge, fill=cf.re)) +
+  geom_bar(position="stack") + 
+  geom_text(aes(label = ..count..), stat = "count", hjust=1, size=3, position = position_stack(vjust = .5)) +
+  ggtitle("Counterfactual choice in cases of bad outcome") + 
+  ylab("Counterfactual choice") +
+  facet_grid(~norm) +
+  xlab("") +
+  scale_fill_manual("Counterfactual choice:", values=wes_palette("Royal2",2)) + 
+  theme_bw() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    plot.background = element_blank()
+    ,panel.grid.major = element_blank()
+    ,panel.grid.minor = element_blank()
+    #,legend.position = c(.1,.9)
+    ,legend.title=element_text(size=rel(1))
+    ,legend.text=element_text(size=rel(1))
+    ,axis.text.y=element_text(size=rel(1))
+    ,axis.text.x=element_text(size=rel(1))
+    ,axis.title.y=element_text(vjust=.9)
+    ,axis.ticks = element_blank()
+    ,axis.title=element_text(size=rel(1))
+  )
+
+d2dc_counterfactual.plot.go <- ggplot(d2dc[d2dc$outcome=="Good Outcome",], aes(x=knowledge, fill=cf.re)) +
+  geom_bar(position="stack") + 
+  geom_text(aes(label = ..count..), stat = "count", hjust=1, size=3, position = position_stack(vjust = .5)) +
+  ggtitle("Counterfactual choice in cases of good outcome") + 
+  ylab("Counterfactual choice") +
+  facet_grid(~norm) +
+  xlab("") +
+  scale_fill_manual("Counterfactual choice:", values=wes_palette("Royal2",2)) + 
+  theme_bw() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    plot.background = element_blank()
+    ,panel.grid.major = element_blank()
+    ,panel.grid.minor = element_blank()
+    #,legend.position = c(.1,.9)
+    ,legend.title=element_text(size=rel(1))
+    ,legend.text=element_text(size=rel(1))
+    ,axis.text.y=element_text(size=rel(1))
+    ,axis.text.x=element_text(size=rel(1))
+    ,axis.title.y=element_text(vjust=.9)
+    ,axis.ticks = element_blank()
+    ,axis.title=element_text(size=rel(1))
+  )
+
+print(d2dc_counterfactual.plot.bo)
+print(d2dc_counterfactual.plot.go)
+
+```
+
+
+
+### Combined Analyses
+```{r combinedAnalyses, echo=FALSE, warning=FALSE, message=FALSE}
+
+d2da.sums <- d2da %>% group_by(knowledge,norm,outcome,vign,quest) %>% 
+                      summarise(N = length(value),
+                                mean = mean(value, na.rm=TRUE),
+                                sd = sd(value,na.rm=TRUE),
+                                se = sd / sqrt(N))
+
+## attach the ratings together
+d2.r <-left_join(d2.sums,d2da.sums[d2da.sums$quest=="Morality",-5],by=c("knowledge","norm","outcome","vign"))
+
+d2.r <-left_join(d2.r,d2da.sums[d2da.sums$quest=="Rationality",-5],by=c("knowledge","norm","outcome","vign"))
+
+colnames(d2.r) <- c("knowledge","norm","outcome","vign",
+                    "cause.n","cause.mean","cause.sd","cause.se",
+                    "moral.n","moral.mean","moral.sd","moral.se",
+                    "rational.n","rational.mean","rational.sd","rational.se")
+
+d2dc <- read.csv("../data/irrationalityCounterfactuals.csv")
+
+colnames(d2dc) <- c("subj","condCode","cf","norm","outcome","knowledge","vign")
+  
+d2dc$norm <- factor(d2dc$norm)
+d2dc$norm <- factor(c("Moral Norm","Rational Norm")[d2dc$norm])
+
+d2dc$outcome <- factor(d2dc$outcome)
+d2dc$outcome <- factor(c("Bad Outcome","Good Outcome")[d2dc$outcome])
+
+d2dc.sums <- d2dc %>% group_by(knowledge,norm,outcome,vign) %>% 
+                      summarise(cf.n = length(cf),
+                                cf.mean = mean(cf, na.rm=TRUE),
+                                cf.sd = sd(cf,na.rm=TRUE),
+                                cf.se = cf.sd / sqrt(cf.n))
+
+d2.r <- left_join(d2.r,d2dc.sums,by=c("knowledge","norm","outcome","vign"))
+
+d2.r$cf.meanS <- scale(d2.r$cf.mean)
+d2.r$cause.meanS <- scale(d2.r$cause.mean) 
+
+d2d.sums1 <- d2.r %>% group_by(knowledge,norm,outcome) %>%
+                      summarise(moral.Mean = mean(moral.mean),
+                                rational.Mean = mean(rational.mean),
+                                cf.Mean = mean(cf.mean))
+# 
+# 
+# d2d.lm_m <- summary(aov(moral.mean ~ knowledge*norm*outcome + Error(vign/ (knowledge*norm*outcome)), data=d2.r))
+# d2d.lm_r <- summary(aov(rational.mean ~ knowledge*norm*outcome + Error(vign/ (knowledge*norm*outcome)), data=d2.r))
+# 
+# d2d.lm_cf <- summary(aov(cause.meanS ~ cf.meanS + knowledge*norm*outcome + Error(vign/(cf.mean + knowledge*norm*outcome)), data=d2.r)) 
+#   
+# anova(lm(cause.mean ~ cf.mean, data=d2.r))
+```
+
+```{r study2d correlation and mediation, echo=FALSE, message=FALSE, warning=FALSE}
+#for correlation analysis and plotting, recoded cf rating [(1/2) to (1/0), 0=environment 1= agent].
+d2dc.cor <- d2dc
+d2dc.cor$cf <- ifelse(d2dc.cor$cf == 2, 0, 1)
+
+d2dc.cor <- d2dc.cor %>%
+  dplyr::select(cf, norm, outcome, knowledge, vign) %>%
+  group_by(norm, outcome, knowledge, vign) %>%
+  summarise(cfM = mean(as.numeric(cf),na.rm=TRUE),
+            cfN = length(cf),
+            cfSD = sd(as.numeric(cf),na.rm=TRUE),
+            cfSE =  cfSD / sqrt(cfN))
+
+#join cf ratings with causal ratings from 2a~2c
+d2d.cor <- inner_join(d2dc.cor, d2.sums, by=c("norm", "knowledge", "outcome", "vign"))
+#cor.test(d2d.cor$cfM, d2d.cor$mean.cause)
+#plot(d2d.cor$cfM, d2d.cor$mean.cause)
+
+##won't need participant level because data come from two studies
+# correlation at the level of scenario
+d2d.corVign <- cor.test(d2d.cor$mean.cause,d2d.cor$cfM)
+```
+
+...? wth is going on here.
+
+#### Relationship between counterfactual and causal judgments
+
+We considered the relationship between causal judgments and counterfactual choices, using data from the current study and Studies 2a-2c. We found that they were highly correlated at the level of different scenarios, $r(`r d2d.corVign$parameter[[1]]`)$ =`r round(d2d.corVign$estimate[[1]], digits=2)`,  *p* $<$`r max(.001,round(d2d.corVign$p.value, digits=3))`(see *Figure* [??]).
+
+```{r, fig.width=8.5, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Depiction of the relationship between participants' causal and counterfactual judgments for each of the scenarios."}
+#"Shape depicts the valence of the outcome; color indicates the kind of agent involved in the distal event; and the number indicates the which of the 16 vignettes the judgments were about."
+
+# d2d_cor.plot<- ggplot(d2d.cor, aes(y=mean.cause, x=cfM,color=factor(outcome, levels = c("Good Outcome", "Bad Outcome")), shape=factor(outcome, levels = c("Good Outcome", "Bad Outcome")))) +
+#                   geom_smooth(method=lm, formula = y ~ x) +
+#                   geom_point(aes(color=factor(outcome, levels = c("Good Outcome", "Bad Outcome")), shape=factor(outcome, levels = c("Good Outcome", "Bad Outcome"))), size=2) +
+#                   geom_text(aes(label=vign), size=1.5,color="black") +
+#                   facet_grid(norm~knowledge) + 
+#                   xlab("Average Counterfactual Prefence: 0 = External environment, 1 = agent") +
+#                   ylab("Average Causal Judgment per Scenario") +
+#                   scale_color_manual("Outcome", values=wes_palette("Royal1",2)) + 
+#                   scale_shape_manual("Outcome", values=c(16, 17)) +
+#                   #labs(color="Outcome", shape="Outcome") +
+#                   theme_bw() +
+#                   theme(
+#                     plot.background = element_blank()
+#                     ,panel.grid.major = element_blank()
+#                     ,panel.grid.minor = element_blank()
+#                     ,legend.text=element_text(size=rel(1))
+#                     #,legend.position=c(.9,.25)
+#                     ,axis.text.y=element_text(size=rel(1))
+#                     ,axis.text.x=element_text(size=rel(1))
+#                     ,axis.title.y=element_text(vjust=.9)
+#                     ,axis.ticks = element_blank()
+#                     ,axis.title=element_text(size=rel(1))
+#                     ,strip.text=element_text(size=rel(.9))
+#                   )
+# d2d_cor.plot
+
+#simple version of cf and causal plot
+d2d_cor.plot <- ggplot(d2d.cor, aes(y=mean.cause, x=cfM)) +
+                  geom_smooth(method=lm, formula = y ~ x) +
+                  geom_point(size=2) +
+                  geom_text(aes(label=vign), size=1.5,color="black") +
+                  xlab("Average Counterfactual Prefence for the Agent per Condition") +
+                  ylab("Average Causal Judgment per Scenario") +
+                  scale_color_manual("Outcome", values=wes_palette("Royal1",2)) + 
+                  scale_shape_manual("Outcome", values=c(16, 17)) +
+                  #labs(color="Outcome", shape="Outcome") +
+                  theme_bw() +
+                  theme(
+                    plot.background = element_blank()
+                    ,panel.grid.major = element_blank()
+                    ,panel.grid.minor = element_blank()
+                    ,legend.text=element_text(size=rel(1))
+                    #,legend.position=c(.9,.25)
+                    ,axis.text.y=element_text(size=rel(1))
+                    ,axis.text.x=element_text(size=rel(1))
+                    ,axis.title.y=element_text(vjust=.9)
+                    ,axis.ticks = element_blank()
+                    ,axis.title=element_text(size=rel(1))
+                    ,strip.text=element_text(size=rel(.9))
+                  )
+d2d_cor.plot
+#cor.test(d2d.cor$cfM, d2d.cor$mean.cause)
+```
+
+```{r, fig.width=8.5, echo=FALSE, warning=FALSE, message=FALSE}
+d2da.m <- d2da %>%
+  subset(quest == "Morality") %>%
+  dplyr::select(value, norm, outcome, knowledge, vign) %>%
+  group_by(knowledge,norm,outcome,vign) %>% 
+                      summarise(N = length(value),
+                                mean = mean(value, na.rm=TRUE),
+                                sd = sd(value,na.rm=TRUE),
+                                se = sd / sqrt(N)) %>%
+  dplyr::rename(moralityN = N) %>%
+  rename(moralityMean = mean) %>%
+  rename(moralitySD = sd) %>%
+  rename(moralitySE = se)
+
+d2da.r <- d2da %>%
+  subset(quest == "Rationality") %>%
+  dplyr::select(value, norm, outcome, knowledge, vign) %>%
+  group_by(knowledge,norm,outcome,vign) %>% 
+                      summarise(N = length(value),
+                                mean = mean(value, na.rm=TRUE),
+                                sd = sd(value,na.rm=TRUE),
+                                se = sd / sqrt(N)) %>%
+  dplyr::rename(rationalityN = N) %>%
+  rename(rationalityMean = mean) %>%
+  rename(rationalitySD = sd) %>%
+  rename(rationalitySE = se)
+
+d2d.cor.cf <- d2d.cor %>%
+  select(outcome, knowledge, norm, vign, cfM, cfN, cfSD, cfSE)
+
+d2d.cf.m <- inner_join(d2d.cor.cf, d2da.m, by=c("norm", "knowledge", "outcome", "vign"))
+d2d.cf.r <- inner_join(d2d.cor.cf, d2da.r, by=c("norm", "knowledge", "outcome", "vign"))
+
+
+#Cf & Morality correlation:
+d2d.cf.m.cor <- cor.test(d2d.cf.m$cfM, d2d.cf.m$moralityMean)
+
+#Cf & Rationality correlation: 
+d2d.cf.r.cor <- cor.test(d2d.cf.r$cfM, d2d.cf.r$rationalityMean) 
+
+
+#Cf & Normality correlation: 
+#average morality / rationality rating for each condition within scenario
+d2da.normality <- d2da %>%
+  dplyr::select(quest, value, norm, outcome, knowledge, vign) %>%
+  group_by(knowledge,norm,outcome,vign) %>%
+                      summarise(N = length(value),
+                                mean = mean(value, na.rm=TRUE),
+                                sd = sd(value,na.rm=TRUE),
+                                se = sd / sqrt(N)) %>%
+  dplyr::rename(noramalityN = N) %>%
+  rename(normalityMean = mean) %>%
+  rename(normalitySD = sd) 
+
+d2d.cf.normality <- inner_join(d2d.cor.cf, d2da.normality, by=c("norm", "knowledge", "outcome", "vign"))
+
+d2d.cf.normality.cor <- cor.test(d2d.cf.normality$cfM, d2d.cf.normality$normalityMean)
+
+```
+
+#### Relationship between counterfactual judgment and morality/rationality rating
+
+We also considered the relationships between counterfactual choices and morality rating, rationality rating and normality rating, using data from the current study. Normality rating is constructed by averaging morality and rationality rating. We found that counterfactual choice is correlated with all three types of ratings at the level of different scenarios (see *Figure* [??]): morality rating, $r(`r d2d.cf.m.cor$parameter[[1]]`)$ =`r round(d2d.cf.m.cor$estimate[[1]], digits=2)`,  *p* $<$`r max(.001,round(d2d.cf.m.cor$p.value, digits=3))`, rationality rating, $r(`r d2d.cf.r.cor$parameter[[1]]`)$ = `r round(d2d.cf.r.cor$estimate[[1]], digits=2)`, *p* $<$ `r max(.001,round(d2d.cf.r.cor$p.value, digits=3))`, and normality rating, $r(`r d2d.cf.normality.cor$parameter[[1]]`)$ =`r round(d2d.cf.normality.cor$estimate[[1]], digits=2)`,  *p* $<$`r max(.001,round(d2d.cf.normality.cor$p.value, digits=3))`.
+
+```{r, fig.width=8.5, echo=FALSE, warning=FALSE, message=FALSE, fig.cap=c("Depiction of the relationship between participants' counterfactual judgments and morality for each of the scenarios.", "Depiction of the relationship between participants' counterfactual judgments and rationality for each of the scenarios.", "Depiction of the relationship between participants' counterfactual judgments and normality for each of the scenarios.")}
+#Cf & Morality correlation:
+ggplot(d2d.cf.m, aes(y=moralityMean, x=cfM)) +
+                  geom_smooth(method=lm, formula = y ~ x) +
+                  geom_point(size=2) +
+                  geom_text(aes(label=vign), size=1.5,color="black") +
+                  xlab("Average Counterfactual Prefence for the Agent per Condition") +
+                  ylab("Average Morality Rating per Scenario") +
+                  scale_color_manual("Outcome", values=wes_palette("Royal1",2)) + 
+                  scale_shape_manual("Outcome", values=c(16, 17)) +
+                  #labs(color="Outcome", shape="Outcome") +
+                  theme_bw() +
+                  theme(
+                    plot.background = element_blank()
+                    ,panel.grid.major = element_blank()
+                    ,panel.grid.minor = element_blank()
+                    ,legend.text=element_text(size=rel(1))
+                    #,legend.position=c(.9,.25)
+                    ,axis.text.y=element_text(size=rel(1))
+                    ,axis.text.x=element_text(size=rel(1))
+                    ,axis.title.y=element_text(vjust=.9)
+                    ,axis.ticks = element_blank()
+                    ,axis.title=element_text(size=rel(1))
+                    ,strip.text=element_text(size=rel(.9))
+                  )
+
+
+#Cf & Rationality correlation: 
+ggplot(d2d.cf.r, aes(y=rationalityMean, x=cfM)) +
+                  geom_smooth(method=lm, formula = y ~ x) +
+                  geom_point(size=2) +
+                  geom_text(aes(label=vign), size=1.5,color="black") +
+                  xlab("Average Counterfactual Prefence for the Agent per Condition") +
+                  ylab("Average Rationality Rating per Scenario") +
+                  scale_color_manual("Outcome", values=wes_palette("Royal1",2)) + 
+                  scale_shape_manual("Outcome", values=c(16, 17)) +
+                  #labs(color="Outcome", shape="Outcome") +
+                  theme_bw() +
+                  theme(
+                    plot.background = element_blank()
+                    ,panel.grid.major = element_blank()
+                    ,panel.grid.minor = element_blank()
+                    ,legend.text=element_text(size=rel(1))
+                    #,legend.position=c(.9,.25)
+                    ,axis.text.y=element_text(size=rel(1))
+                    ,axis.text.x=element_text(size=rel(1))
+                    ,axis.title.y=element_text(vjust=.9)
+                    ,axis.ticks = element_blank()
+                    ,axis.title=element_text(size=rel(1))
+                    ,strip.text=element_text(size=rel(.9))
+                  )
+
+
+#Cf & Normality correlation: 
+#average morality / rationality rating for each condition within scenario
+# d2da.normality <- d2da %>%
+#   dplyr::select(quest, value, norm, outcome, knowledge, vign) %>%
+#   group_by(knowledge,norm,outcome,vign) %>%
+#                       summarise(N = length(value),
+#                                 mean = mean(value, na.rm=TRUE),
+#                                 sd = sd(value,na.rm=TRUE),
+#                                 se = sd / sqrt(N)) %>%
+#   dplyr::rename(noramalityN = N) %>%
+#   rename(normalityMean = mean) %>%
+#   rename(normalitySD = sd) 
+
+# d2d.cf.normality <- inner_join(d2d.cor.cf, d2da.normality, by=c("norm", "knowledge", "outcome", "vign"))
+
+ggplot(d2d.cf.normality, aes(y=normalityMean, x=cfM)) +
+                  geom_smooth(method=lm, formula = y ~ x) +
+                  geom_point(size=2) +
+                  geom_text(aes(label=vign), size=1.5,color="black") +
+                  xlab("Average Counterfactual Prefence for the Agent per Condition") +
+                  ylab("Average Normality Rating per Scenario") +
+                  scale_color_manual("Outcome", values=wes_palette("Royal1",2)) + 
+                  scale_shape_manual("Outcome", values=c(16, 17)) +
+                  #labs(color="Outcome", shape="Outcome") +
+                  theme_bw() +
+                  theme(
+                    plot.background = element_blank()
+                    ,panel.grid.major = element_blank()
+                    ,panel.grid.minor = element_blank()
+                    ,legend.text=element_text(size=rel(1))
+                    #,legend.position=c(.9,.25)
+                    ,axis.text.y=element_text(size=rel(1))
+                    ,axis.text.x=element_text(size=rel(1))
+                    ,axis.title.y=element_text(vjust=.9)
+                    ,axis.ticks = element_blank()
+                    ,axis.title=element_text(size=rel(1))
+                    ,strip.text=element_text(size=rel(.9))
+                  )
+#d2d.cf.normality.cor <- cor.test(d2d.cf.normality$cfM, d2d.cf.normality$normalityMean)
+
+```
+
+
+
