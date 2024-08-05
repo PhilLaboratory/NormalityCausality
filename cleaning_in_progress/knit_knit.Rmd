@@ -756,7 +756,7 @@ Next, we went on to test if the findings differentiate in cases where the second
 
 # Experiment 2b: Causal judgment in cases of good outcomes and prescriptive norm violations
 
-In Experiment 2a, we started teasing apart primary and secondary outcomes and we held fixed the secondary outcome to be negative to ensure strong experimental manipulation. However, does the outcome valence have additional effect on causal judgments? To investigate this exact question – whether the effect we see in Experiment 2a manifests in positive outcomes like it did in negative outcomes, such that knowledgeable agents are always ascribed more causation than ignorant ones – we designed Experiment 2b that differs from Experiment 2a in only one way: the secondary outcome resulted from the intermediate event was always positive in this study. Again, we asked for participants' causal judgments on the *secondary outcome*. Some previous work has found an effect of moral norm violations even in good outcomes, while others argue that this effect is attenuated or even nonexistent in the face of positive outcomes (e.g., Alicke, Rose & Bloom, 2011). 
+In Experiment 2a, we started teasing apart primary and secondary outcomes and we held fixed the secondary outcome to be negative to ensure strong experimental manipulation. However, the effect of knowledge was not fully dissociated from the outcome valence. A natural question to ask at this point is: does the outcome valence have additional effect on causal judgments? To investigate this exact question – whether the knowledge effect we see in Experiment 2a manifests in positive outcomes like it did in negative ones, such that knowledgeable agents are always ascribed more causation than ignorant ones – we designed Experiment 2b that differs from Experiment 2a in only one way: the secondary outcome resulted from the intermediate event was always positive in this study. Again, we asked for participants' causal judgments on the *secondary outcome*. Some previous work has found an effect of moral norm violations even in good outcomes, while others argue that this effect is attenuated or even nonexistent in the face of positive outcomes (e.g., Alicke, Rose & Bloom, 2011).
 
 
 ## Methods
@@ -948,12 +948,12 @@ d2b.fig
 
 ## Discussion
 
-Compared to when the outcome was negative, in cases where secondary outcomes were positive, causal judgment was not affected by the type of prescriptive norm violated or whether the causing agent is informed about the consequence. Taken together, Experiment 2a and 2b suggest that agents' knowledge factors into causal attribution only when the final secondary outcome is negative (??: "positive outcomes may neutralize the effect of knowledge in causal selection"). In the upcoming study, we will be exploring this interaction by directly varying outcome valence.
+Compared to when the outcome was negative, in cases where secondary outcomes were positive, causal judgment was not affected by the type of prescriptive norm violated or whether the causing agent is informed about the consequence. Taken together, Experiment 2a and 2b suggest that agents' knowledge factors into causal attribution only when the final secondary outcome is negative (??: "positive outcomes may neutralize the effect of knowledge in causal selection"). In contrast to the (whose?) belief that motivated causal reasoning only comes from aversive consequences, Experiment 2b unveiled there is an interaction between outcome valence and agent knowledge. In the upcoming study, we will be exploring this interaction by directly varying outcome valence.
 
 
 # Experiment 2c: Causal judgment in cases of bad/good outcomes and prescriptive norm violations
 
-In Experiment 2a and 2b, we investigated causal cognition in bad and good outcomes separately. Now, we would like to replicate and substantiate these findings in a within-subjects design by systematically manipulating the outcome valence. Based on prior results, we expected to see in varied outcomes an interaction effect between knowledge status and secondary outcome valence. In the current Experiment 2c, study design differs from that of 2a and 2b in one way only: the outcome may be positive or negative (see *Fig.* 4). 
+In Experiment 2a and 2b, we investigated causal cognition in bad and good outcomes separately. Now, we would like to replicate and substantiate these findings in a within-subjects design by systematically manipulating the outcome valence. Based on prior results, we expected to see in varied outcomes an interaction effect between knowledge status and secondary outcome valence where ignorant agents would be considered more causal of negative outcomes but not positive outcomes. In the current Experiment 2c, study design differs from that of 2a and 2b in one way only: the outcome may be positive or negative (see *Fig.* 4). 
 
 ## Methods
 
@@ -1169,16 +1169,15 @@ d2c.fig
 
 Besides replicating the knowledge effect, the most substantial finding of Experiment 2c is the interaction between knowledge and outcome, such that more causation was attributed to knowledgeable agents than ignorant ones only when the secondary outcome was negative rather than positive. This interaction occurs in both moral norm violations (i.e., harming others) and rational norm violations (i.e., harming selves), suggesting that the it is unlikely to be explained by polysemy or the motivation to judge someone harshly because she/he did something bad. Put differently, if participants were confused by the multiple meanings embedded in the word "cause" or were inclined to have a lower opinion about someone who harmed others, we would see a differentiation in causal judgment between moral norm violation and rational norm violation. Therefore, we can say that causal selection works in a similar manner across different types of prescriptive norms.
 
-However, if not explained by confusion or moral aversion, what is the underlying mechanism for this interaction effect? One previously undiscussed feature of outcome valence is that it is often tied with normality: good outcomes are perceived as more normal than bad outcomes (Bear & Knobe, 2017). In studies conducted so far, positive outcomes have been generally more descriptively likely than negative outcomes. We need to further dissect the phenomenon by disentangling descriptive normality and prescriptive normality, as we will do shortly (in Experiment 3a-3c).
+However, if not explained by confusion or moral aversion, what is the underlying mechanism for this interaction effect? One previously underdiscussed feature of outcome valence is that it is often tied with normality: good outcomes are perceived as more normal than bad outcomes (Bear & Knobe, 2017). In studies conducted so far, positive outcomes have been generally more descriptively likely than negative outcomes. We need to further dissect the phenomenon by disentangling descriptive normality and prescriptive normality, as we will do shortly (in Experiment 3a-3c).
 
 
 # Experiment 2d: Combined analyses and new ratings on morality and rationality
-Following results from Experiment 2a-2c, Experiment 2d delved into participants' actual morality and rationality ratings to investigate the variance. Additionally, we collected people's counterfactual judgments for the same set of stimuli to examine what is actually driving the effect.
+Following results from Experiment 2a-2c, Experiment 2d delved into participants' morality and rationality ratings on the same scenarios to investigate how moral and rational norm violations are perceived, at the same time serving as a manipulation check. Additionally, we collected people's counterfactual judgments for the same set of stimuli to examine what is actually driving the effect observed earlier.
 
 
-
-[checking variance by asking for morality and rationality ratings
-counterfactual: to see what's driving this effect]
+[checking variance (??) by asking for morality and rationality ratings
+counterfactual: driver of this effect]
 
 ## Methods
 
