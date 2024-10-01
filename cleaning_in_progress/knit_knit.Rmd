@@ -1174,8 +1174,11 @@ In Study 1, we found that the impact of normality on participants' causal judgme
 # Experiment 2d: Combined analyses and new ratings on morality and rationality
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Following results from Experiment 2a-2c, Experiment 2d delved into participants' morality and rationality ratings on the same scenarios to investigate how moral and rational norm violations are perceived, at the same time performing a manipulation check on the experimental material. Instead of using binary labels (i.e., immoral or irrational), we are able to make use of the variance in these ratings to examine whether they can predict causal judgments. Additionally, we collected people's counterfactual judgments for the same set of stimuli to study what is actually driving the effect observed earlier, as what we did in Experiment 1.
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
