@@ -953,7 +953,7 @@ At the same time, it is difficult to estimate such an interaction effect, becaus
 
 # Experiment 2c: Causal judgment in cases of bad/good outcomes and prescriptive norm violations
 
-In Experiment 2a and 2b, we investigated causal cognition in bad and good outcomes separately. Now, we would like to replicate and substantiate these findings in a within-subjects design by systematically manipulating the outcome valence. Based on prior results, we expected to see in varied outcomes an interaction effect between knowledge status and secondary outcome valence where ignorant agents would be considered more causal of negative outcomes but not positive outcomes. In the current Experiment 2c, study design differs from that of 2a and 2b in one way only: the outcome may be positive or negative (see *Fig.* 4). 
+In Experiment 2a and 2b, we investigated causal cognition in bad and good outcomes separately. Here, we replicate these studies in a within-subjects design by systematically manipulating the valence of the secondary outcome alongside the knowledge of the agent and the kind of normality at issue in the scenario (see *Fig.* 4). Based on the prior results, we specifically want to investigate whether we observe an interaction effect, whereby the impact of the agent's knowledge on causal judgments is larger when the secondary, downstream consequence is negative rather than positive. We again predict that the pattern will be quite similar when the agent violates a moral vs. ratioanl norm, and thus do not anticipate a three-way interaction. 
 
 ## Methods
 
@@ -978,7 +978,7 @@ In Experiment 2c, `r d2c.age[2,3]` participants (*M*~age~=`r round(mean(d2cdemo$
 
 ### Materials
 
-Participants completed 16 trials which each involved reading a brief vignette about events in two separate causal chains. The general design remains the same as that in Experiment 2a and 2b except that the secondary outcome resulting from the intermediate outcome of the agent's action was either negative or positive. 
+Participants completed 16 trials which each involved reading a brief vignette about events in two related causal chains. The general design remains the same as that in Experiment 2a and 2b except that the secondary outcome resulting from the intermediate outcome of the agent's action was either negative or positive. 
 
 This design resulted in an overall 2 (Harm Type) $\times$ 2 (Agent Knowledge) $\times$ 2 (Outcome Valence) $\times$ 16 (Scenario) design, that was administered in a mixed within- and between-subjects fashion, such that participants saw all 16 scenarios, and on each trial were randomly assigned to read one of the 8 different versions of that scenario.
 
@@ -1167,13 +1167,20 @@ d2c.fig
 
 ## Discussion
 
-Besides replicating the knowledge effect, the most substantial finding of Experiment 2c is the interaction between knowledge and outcome, such that more causation was attributed to knowledgeable agents than ignorant ones only when the secondary outcome was negative rather than positive. This interaction occurs in both moral norm violations (i.e., harming others) and rational norm violations (i.e., harming selves), suggesting that the it is unlikely to be explained by polysemy or the motivation to judge someone harshly because she/he did something bad. Put differently, if participants were confused by the multiple meanings embedded in the word "cause" or were inclined to have a lower opinion about someone who harmed others, we would see a differentiation in causal judgment between moral norm violation and rational norm violation. Therefore, we can say that causal selection works in a similar manner across different types of prescriptive norms.
+These results revealed a set of key findings. First, we again replicated the effect of knowledge. When agents do an action with knowledge that it will harm themselves or someone else, they are seen as more of a cause of  unrelated and unforeseen downstream consequences of their actions. Second, these results also demonstrate the expected interaction effect between knowledge and the valence of the secondary outcome. Specifically, an agent's knowledge had a bigger impact on causal judgments when the unforeseen downstream consequence was negative rather than positive. This interaction occurs in both moral norm violations (i.e., harming another) and rational norm violations (i.e., harming oneself), and thus provides further evidence that judgments of causal selection are working in a similar manner across different types of prescriptive norms. This fact makes it unlikely that the overall pattern could be explained by appealing to polysemy or the motivation to judge someone harshly because she/he did something that harmed another person. 
 
-However, if not explained by confusion or moral aversion, what is the underlying mechanism for this interaction effect? One previously underdiscussed feature of outcome valence is that it is often tied with normality: good outcomes are perceived as more normal than bad outcomes (Bear & Knobe, 2017). In studies conducted so far, positive outcomes have been generally more descriptively likely than negative outcomes. We need to further dissect the phenomenon by disentangling descriptive normality and prescriptive normality, as we will do shortly (in Experiment 3a-3c).
-
+In Study 1, we found that the impact of normality on participants' causal judgments could be explained by differences in their counterfactual reasoning. Then, in Studies 2a-2c, we found that that the effect of normality depended critically on the agent's knowledge of violating a norm and that this effect interacted with the valence of the downstream consequence participants made a causal judgment about. We next want to ask whether the specific effects observed in Studies 2a-c can also be explained by changes in participants' counterfactual reasoning. In addition, we wanted to collect ratings of the morality and rationality of the agents' actions in all conditions.  
 
 # Experiment 2d: Combined analyses and new ratings on morality and rationality
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Following results from Experiment 2a-2c, Experiment 2d delved into participants' morality and rationality ratings on the same scenarios to investigate how moral and rational norm violations are perceived, at the same time performing a manipulation check on the experimental material. Instead of using binary labels (i.e., immoral or irrational), we are able to make use of the variance in these ratings to examine whether they can predict causal judgments. Additionally, we collected people's counterfactual judgments for the same set of stimuli to study what is actually driving the effect observed earlier, as what we did in Experiment 1.
+=======
+=======
+>>>>>>> Stashed changes
+
+Following results from Experiment 2a-2c, Experiment 2d delved into participants' morality and rationality ratings on the same scenarios to investigate how moral and rational norm violations are perceived, at the same time serving as a manipulation check. Additionally, we collected people's counterfactual judgments for the same set of stimuli to examine what is actually driving the effect observed earlier.
+>>>>>>> Stashed changes
 
 
 ## Methods
@@ -2332,6 +2339,7 @@ d2d_cfcscor.plot
   
 Like in Experiment 1, human agents were more likely to be selected as the crux of the counterfactual choice when they were aware of the consequences of their actions and this difference became more salient in negative outcomes than good outcomes (even though we did not see the same main effect of outcome valence here). Again, across all of these conditions, we found high correlation between participants' causal and counterfactual judgments. Taken together, Experiment 2d suggests that the strong tie between causal reasoning and counterfactual cognition applies in cases of prescriptive norm violations, and this relationship is mediated by the interaction between agent knowledge and outcome valence.
 
+However, if not explained by confusion or moral aversion, what is the underlying mechanism for this interaction effect? One previously underdiscussed feature of outcome valence is that it is often tied with normality: good outcomes are perceived as more normal than bad outcomes (Bear & Knobe, 2017). In studies conducted so far, positive outcomes have been generally more descriptively likely than negative outcomes. We need to further dissect the phenomenon by disentangling descriptive normality and prescriptive normality, as we will do shortly (in Experiment 3a-3c).
 
 
 # Experiment 3
