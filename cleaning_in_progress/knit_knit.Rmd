@@ -2325,18 +2325,33 @@ d2d_cfcscor.plot
 ```
 
 ## Discussion
+
+[Write summary sentence of what we did again at a high level, for example: This experiment built on the prior ones by additionally asking participants to make counterfactual judgments and also...]
+
+[Then let's focus on the CF results first! So, moving your bit below up here.]
+
+Like in Experiment 1, human agents were more likely to be selected as the crux of the counterfactual choice when they were aware of the consequences of their actions and this difference became more salient in negative outcomes than good outcomes (even though we did not see the same main effect of outcome valence here). Again, across all of these conditions, we found high correlation between participants' causal and counterfactual judgments. Taken together, Experiment 2d suggests that the strong tie between causal reasoning and counterfactual cognition applies in cases of prescriptive norm violations, and this relationship is mediated by the interaction between agent knowledge and outcome valence.
+
+[couple of quick notes: the parenthetical "(even though we did not see the same main effect of outcome valence here)" seems too casual. Maybe provide more context and break that up into a separate sentence if it's important; if it's not, then just leave it out.]
+
+[On what to include in the ratings: my sense is that we don't need to discuss every effect, but the main ones we want to cover are that the morality ratings confirmed cases where the action was supposed to be immoral, and the rationality ratings confirmed the cases that were supposed to be irrational. Then maybe we can also at least mention the results that show, for example, higher irrationality ratings in cases of morality, etc.]
+
 (Not sure how to interpret the rating results in discussion... 
   morality: main effects of knowledge, harm type, outcome; interaction of harm type+knowledge, (unexpected?) harm type+outcome, not outcome+knowledge or three-way; 
   rationality: main effects of knowledge, outcome, NOT harm type; interaction of (unexpected?) harm type+outcome, knowledge+outcome, not harm type+knowledge or three-way.)
   
-Like in Experiment 1, human agents were more likely to be selected as the crux of the counterfactual choice when they were aware of the consequences of their actions and this difference became more salient in negative outcomes than good outcomes (even though we did not see the same main effect of outcome valence here). Again, across all of these conditions, we found high correlation between participants' causal and counterfactual judgments. Taken together, Experiment 2d suggests that the strong tie between causal reasoning and counterfactual cognition applies in cases of prescriptive norm violations, and this relationship is mediated by the interaction between agent knowledge and outcome valence.
+[the part below is great! I only have small edits, but this seems right on to me.]
 
-However, if not explained by confusion or moral aversion, what is the underlying mechanism for this interaction effect? One previously underdiscussed feature of outcome valence is that it is often tied with normality: good outcomes are perceived as more normal than bad outcomes (Bear & Knobe, 2017). In studies conducted so far, positive outcomes have been generally more descriptively likely than negative outcomes. We need to further dissect the phenomenon by disentangling descriptive normality and prescriptive normality, as we will do shortly (in Experiment 3a-3c).
+However, if not explained by confusion or moral aversion, what is the underlying mechanism for this interaction effect? One previously under-discussed feature of outcome valence is that it is often tied with normality: good outcomes are perceived as more normal than bad outcomes (Bear & Knobe, 2017). In studies conducted so far, positive outcomes have been generally more descriptively likely than negative outcomes. We need to further dissect the phenomenon by disentangling descriptive normality and prescriptive normality, as we will do shortly (in Experiment 3a-3c).
 
 
 # Experiment 3
 
+[in the paragraph below, I think I would stick more you closely to what you wrote above. so focusing on whether the contribution of outcome to the interaction is really a matter of prescriptive norms, or a matter of normality more generally. If it's the latter case, then shoudl expect the same interaction with descriptive norms.]
+
 We previously probed the effect of prescriptive norm by manipulating the valence of outcomes, and learned that the two types of prescriptive norms exert similar influence on causal selection. But what about descriptive norms? Existing literature argues that people's perception of normality integrates representations of both descriptive and prescriptive norms, namely, what is statistically expected and what is prescriptively ideal (Bear & Knobe, 2017). In the following experiments, we varied the likelihood of outcomes to examine if descriptive norm has a comparable impact on cognition (inaccurate because we're actually swapping outcome valence with descriptive normality, so how to transition from prescriptive to descriptive?). Such a similarity will provide for a unified account of normality's effect on causal judgment. 
+
+[the other key thing to note is that outcome valence is basically prescriptive value, that is, it was either good or bad for that to happen, so it was moving from some kind of more prescriptive norm to a more descriptive norm]
 
 # Experiment 3a: Causal judgment in cases of probable/improbable outcomes and norm violations
 
