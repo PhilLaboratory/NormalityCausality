@@ -953,7 +953,7 @@ At the same time, it is difficult to estimate such an interaction effect, becaus
 
 # Experiment 2c: Causal judgment in cases of bad/good outcomes and prescriptive norm violations
 
-In Experiment 2a and 2b, we investigated causal cognition in bad and good outcomes separately. Here, we replicate these studies in a within-subjects design by systematically manipulating the valence of the secondary outcome alongside the knowledge of the agent and the kind of normality at issue in the scenario (see *Fig.* 4). Based on the prior results, we specifically want to investigate whether we observe an interaction effect, whereby the impact of the agent's knowledge on causal judgments is larger when the secondary, downstream consequence is negative rather than positive. We again predict that the pattern will be quite similar when the agent violates a moral vs. ratioanl norm, and thus do not anticipate a three-way interaction. 
+In Experiment 2a and 2b, we investigated causal cognition in bad and good outcomes separately. Here, we replicate these studies in a within-subjects design by systematically manipulating the valence of the secondary outcome alongside the knowledge of the agent and the kind of normality at issue in the scenario (see *Fig.* 4). Based on the prior results, we specifically want to investigate whether we observe an interaction effect, whereby the impact of the agent's knowledge on causal judgments is larger when the secondary, downstream consequence is negative rather than positive. We again predict that the pattern will be quite similar when the agent violates a moral vs. rational norm, and thus do not anticipate a three-way interaction. 
 
 ## Methods
 
@@ -1172,19 +1172,8 @@ These results revealed a set of key findings. First, we again replicated the eff
 In Study 1, we found that the impact of normality on participants' causal judgments could be explained by differences in their counterfactual reasoning. Then, in Studies 2a-2c, we found that that the effect of normality depended critically on the agent's knowledge of violating a norm and that this effect interacted with the valence of the downstream consequence participants made a causal judgment about. We next want to ask whether the specific effects observed in Studies 2a-c can also be explained by changes in participants' counterfactual reasoning. In addition, we wanted to collect ratings of the morality and rationality of the agents' actions in all conditions.  
 
 # Experiment 2d: Combined analyses and new ratings on morality and rationality
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
 Following results from Experiment 2a-2c, Experiment 2d delved into participants' morality and rationality ratings on the same scenarios to investigate how moral and rational norm violations are perceived, at the same time performing a manipulation check on the experimental material. Instead of using binary labels (i.e., immoral or irrational), we are able to make use of the variance in these ratings to examine whether they can predict causal judgments. Additionally, we collected people's counterfactual judgments for the same set of stimuli to study what is actually driving the effect observed earlier, as what we did in Experiment 1.
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-
-Following results from Experiment 2a-2c, Experiment 2d delved into participants' morality and rationality ratings on the same scenarios to investigate how moral and rational norm violations are perceived, at the same time serving as a manipulation check. Additionally, we collected people's counterfactual judgments for the same set of stimuli to examine what is actually driving the effect observed earlier.
->>>>>>> Stashed changes
-
 
 ## Methods
 
