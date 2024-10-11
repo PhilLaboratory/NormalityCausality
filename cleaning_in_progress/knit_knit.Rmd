@@ -2326,15 +2326,10 @@ d2d_cfcscor.plot
 
 ## Discussion
 
-[Write summary sentence of what we did again at a high level, for example: This experiment built on the prior ones by additionally asking participants to make counterfactual judgments and also...]
-
 Experiment 2d built on prior studies by asking for additional ratings on morality and rationality of agents' actions as well as counterfactual judgments comparing the agent with external factors such as the environment. 
 
-[Then let's focus on the CF results first! So, moving your bit below up here.]
+Like in Experiment 1, human agents were more likely to be selected as the crux of the counterfactual choice when they were aware of the consequences of their actions and this difference became more salient in negative outcomes than good outcomes. Additionally, the same effect occurred when the action inflicted harm on someone else rather than oneself. (somewhat important to point "However, the effect of outcome valence was not replicated." ??). Again, across all of these conditions, we found high correlation between participants' causal and counterfactual judgments. Taken together, Experiment 2d suggests that the strong tie between causal reasoning and counterfactual cognition applies in cases of prescriptive norm violations, and this relationship is mediated by the interaction between agent knowledge and outcome valence.
 
-Like in Experiment 1, human agents were more likely to be selected as the crux of the counterfactual choice when they were aware of the consequences of their actions and this difference became more salient in negative outcomes than good outcomes. Additionally, the same effect occurred when the action inflicted harm on someone else rather than oneself. (somewhat important to point "However, the effect of outcome valence was not replicated." ?). Again, across all of these conditions, we found high correlation between participants' causal and counterfactual judgments. Taken together, Experiment 2d suggests that the strong tie between causal reasoning and counterfactual cognition applies in cases of prescriptive norm violations, and this relationship is mediated by the interaction between agent knowledge and outcome valence.
-
-[couple of quick notes: the parenthetical "(even though we did not see the same main effect of outcome valence here)" seems too casual. Maybe provide more context and break that up into a separate sentence if it's important; if it's not, then just leave it out.]
 
 [On what to include in the ratings: my sense is that we don't need to discuss every effect, but the main ones we want to cover are that the morality ratings confirmed cases where the action was supposed to be immoral, and the rationality ratings confirmed the cases that were supposed to be irrational. Then maybe we can also at least mention the results that show, for example, higher irrationality ratings in cases of morality, etc.]
 
@@ -2342,31 +2337,21 @@ Like in Experiment 1, human agents were more likely to be selected as the crux o
   morality: main effects of knowledge, harm type, outcome; interaction of harm type+knowledge, (unexpected?) harm type+outcome, not outcome+knowledge or three-way; 
   rationality: main effects of knowledge, outcome, NOT harm type; interaction of (unexpected?) harm type+outcome, knowledge+outcome, not harm type+knowledge or three-way.)
   
-The morality ratings helped us affirm the success of vignette construction, such that unethical scenarios were indeed considered less moral by participants than their counterparts, and this effect was even more salient when agents acted with knowledge.  
-(The problem is that there's no norm effect for rationality, so should I talk about the knowledge and outcome effect?) The rationality ratings, on the other hand, revealed that agents were perceived as irrational as long as they acted knowingly or the secondary outcome was negative. It is worth noting that we did see a stronger inclination to attribute irrationality to agents who did not act in their own best interest when the secondary outcome was aversive than when it turned out to be positive.
-  
-[the part below is great! I only have small edits, but this seems right on to me.]
+The morality ratings helped us affirm the success of vignette construction, such that unethical scenarios were indeed considered less moral by participants than their counterparts, and this effect was even more salient when agents acted with knowledge. The rationality ratings, on the other hand, revealed that agents were perceived as irrational as long as they acted knowingly or the secondary outcome was negative. It is worth noting that we did see a stronger inclination to attribute irrationality to agents who did not act in their own best interest when the secondary outcome was aversive than when it turned out to be positive.
 
 However, if not explained by confusion or moral aversion, what is the underlying mechanism for this interaction effect? One previously under-discussed feature of outcome valence is that it is often tied with normality: good outcomes are perceived as more normal than bad outcomes (Bear & Knobe, 2017). In studies conducted so far, positive outcomes have been generally more descriptively likely than negative outcomes. We need to further dissect the phenomenon by disentangling descriptive normality and prescriptive normality, as we will do shortly (in Experiment 3a-3c).
 
 
 # Experiment 3
 
-<<<<<<< Updated upstream
-[in the paragraph below, I think I would stick more closely to what you wrote above. so focusing on whether the contribution of outcome to the interaction is really a matter of prescriptive norms, or a matter of normality more generally. If it's the latter case, then shoudl expect the same interaction with descriptive norms.]
-
-We previously probed the effect of prescriptive norm by manipulating the valence of outcomes, and learned that the two types of prescriptive norms exert similar influence on causal selection. But is this effect specific to prescriptive norms, or is about normality in general? Existing literature argues that people's perception of normality integrates representations of both descriptive and prescriptive norms, namely, what is statistically expected and what is prescriptively ideal (Bear & Knobe, 2017). (the same interaction with descriptive norms?? but we're not changing the norm violation.)
-
-Relatedly (?), we hope to further explore why outcome valence is interacting with knowledge in causal selection, and one possibility is that such interaction arises not from hedonic valence but from the probability of the outcome.
+We previously explored the role of prescriptive norms by manipulating the valence of outcomes (and found that moral and rational prescriptive norm violations similarly influence causal selection -- this may be confusing to include here because it's about violations, not outcomes). However, it remains unclear whether this effect is unique to prescriptive norms or reflects a broader impact of normality. Prior studies suggest that people's perception of normality incorporates both prescriptive and descriptive norms—what is morally ideal and what is statistically expected (Bear & Knobe, 2017). Notably, in our earlier work, outcome valence reflected prescriptive value, indicating whether it was negative or positive. To further investigate the general role of normality, we shifted our focus from the hedonic value of outcomes to their likelihood of occurrence in Experiments 3a and 3b, aiming to assess whether descriptive norms affect causal cognition in a comparable way. We expected to see the interaction between an individual's knowledge status and the probability of outcomes, which would offer support to a more general account of how normality influences causal judgment.
 
 
-But what about descriptive  In the following experiments, we varied the likelihood of outcomes to examine if descriptive norm has a comparable impact on cognition (inaccurate because we're actually swapping outcome valence with descriptive normality, so how to transition from prescriptive to descriptive?). Such a similarity will provide for a unified account of normality's effect on causal judgment. 
 
-[the other key thing to note is that outcome valence is basically prescriptive value, that is, it was either good or bad for that to happen, so it was moving from some kind of more prescriptive norm to a more descriptive norm]
 
 # Experiment 3a: Causal judgment in cases of probable/improbable outcomes and prescriptive norm violations
 
-Similar to the main causal chains in Experiment 2, Experiment 3a features an agent (i.e., the distal cause) performing an action that is itself the proximal cause for a subsequent outcome which is either probable or improbable in terms of chance of occurrence. This secondary outcome was unknown and unforeseen to the agent. The agent was at the same time knowledgeable or ignorant about a separate primary consequence that was either negative for the agents themselves or negative for other people. In this study, we asked participants to what extent they believed the agent (i.e., the distal cause) was the cause for the likely or unlikely outcome.
+Similar to the main causal chains in Experiment 2, Experiment 3a features an agent (i.e., the distal cause) performing an action that is itself the proximal cause for a subsequent outcome which is either probable or improbable in terms of chance of occurrence. This secondary outcome was still unknown and unforeseen to the agent. The agent was at the same time knowledgeable or ignorant about a separate primary consequence that was either negative for the agents themselves or negative for other people. In this study, we asked participants to what extent they believed the agent (i.e., the distal cause) was the cause for the likely or unlikely secondary outcome.
 
 ```{r illustration 3, echo=FALSE, fig.cap="Study design for Experiment series 3", out.width = '100%'}
 knitr::include_graphics("StudyIllustration/studyStructureFigures/Slide4.png")
@@ -2622,7 +2607,10 @@ d3cs.fig
 
 ## Discussion
 
-Seeing similar effects to 2c should show us the interaction of *Knowledge* and likelihood of *Outcome* is independent of the valence of outcomes...// These findings provide further evidence for a unified normality-account for causal judgments. 
+The results of Experiment 3a provide several (two?) important insights. First, we successfully replicated the knowledge effect observed in Experiment 1 and Experiments 2a–2c. Specifically, agents who knowingly engaged in actions that brought harm to themselves or others were considered more causal for the unrelated and unforeseen secondary outcome. Second, we found the anticipated interaction effect between knowledge and the probability of the secondary outcome: knowledge was more influential on causal judgments when the downstream secondary consequence was improbable than when it was probable. The interaction, which was independent of the valence of outcomes, provides further evidence for a unified normality-account for causal judgments.
+
+Next, we asked participants to make valence and normality judgments for probable and improbable outcomes in order to directly gauge how their perceptions interact in the context of descriptive normality (better way to phrase this and set up the goal for 3b & 3c?).
+
 
 \newpage
 
