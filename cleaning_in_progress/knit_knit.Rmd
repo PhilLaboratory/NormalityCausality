@@ -2337,7 +2337,7 @@ While these results suggest that differences in counterfactual reasoning be able
 
 # Experiment 3
 
-We previously explored the role of prescriptive information by manipulating the valence of outcomes and found that outcome valence affected causal judgments, partially through an interaction with the normality of the agent's action that led to this outcome. However, it remains unclear whether this effect is unique to prescriptive differences in the outcome or reflects a broader impact of the perceived normality ofhte outcome. Prior studies suggest that people's perception of normality incorporates both prescriptive and descriptive norms—what is morally ideal and what is statistically expected (Bear & Knobe, 2017). To further investigate the general role of normality, we shifted our focus from the prescriptive value of outcomes to their likelihood of occurrence. We expected to again see the interaction between the acting agent's knowledge and the probability of outcomes, which would offer support to a more general account of how normality influences causal judgment by changing participants' counterfactual reasoning. 
+We previously explored the role of prescriptive information by manipulating the valence of outcomes and found that outcome valence affected causal judgments, partially through an interaction with the normality of the agent's action that led to this outcome. However, it remains unclear whether this effect is unique to prescriptive differences in the outcome or reflects a broader impact of the perceived normality of the outcome. Prior studies suggest that people's perception of normality incorporates both prescriptive and descriptive norms—what is morally ideal and what is statistically expected (Bear & Knobe, 2017). To further investigate the general role of normality, we shifted our focus from the prescriptive value of outcomes to their likelihood of occurrence. We expected to again see the interaction between the acting agent's knowledge and the probability of outcomes, which would offer support to a more general account of how normality influences causal judgment by changing participants' counterfactual reasoning. 
 
 
 # Experiment 3a: Causal judgment in cases of probable/improbable outcomes and prescriptive norm violations
@@ -2607,7 +2607,8 @@ Next, we asked participants to make valence and normality judgments for probable
 
 # Experiment 3b: Valence and normality judgments in cases of probable/improbable outcomes and norm violations
 
-Using the same causal chains and scenarios as Experiment 3a, we asked participants to provide valence and normality judgments in Experiment 3b, namely, to what extent they thought the outcome was a good thing and to what extent they thought it was a normal thing to have happened.
+Using the same causal chains and scenarios as Experiment 3a, we asked participants to provide valence and normality judgments in Experiment 3b, namely, to what extent they thought the outcome was a good thing and to what extent they thought it was a normal thing to have happened. Doing so serves the purpose of a manipulation check on the various vignettes used, helping us verify the validity of our scenario construction. In addition, the variance embedded in the ratings enables us to better track patterns of valence and normality judgments without relying solely on the binary labels (e.g., probable vs. improbable outcomes). Furthermore, examining valence and normality judgments of probable or improbable outcomes are is helpful in not only directly comparing descriptive and prescriptive norms, but also tying things together under the broader normality framework. 
+
 
 ## Methods
 
@@ -3003,6 +3004,8 @@ d3ocpb.norm.fig
 
 
 # Experiment 3c: Valence and normality judgments in cases of bad/good outcomes and norm violations
+
+Mirroring Experiment 3b, we once again asked participants to provide their ratings of valence and normality, this time on negative or positive outcomes. Evaluating the results of Experiments 3b and 3c in parallel will shed light on the robustness of the theory that normality perception combines both descriptive (what typically happens) and prescriptive (what should happen) components, which will inform our understanding about how normality inluences causal reasoning (especially in contexts involving norm violations?).
 
 ## Methods
 
