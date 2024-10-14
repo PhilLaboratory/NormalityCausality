@@ -2342,14 +2342,13 @@ We previously explored the role of prescriptive information by manipulating the 
 
 # Experiment 3a: Causal judgment in cases of probable/improbable outcomes and prescriptive norm violations
 
-Similar to the main causal chains in Experiment 2, Experiment 3a features an agent (i.e., the distal cause) performing an action that is itself the proximal cause for a subsequent outcome which is either probable or improbable in terms of chance of occurrence. This secondary outcome was still unknown and unforeseen to the agent. The agent was at the same time knowledgeable or ignorant about a separate primary consequence that was either negative for the agents themselves or negative for other people. In this study, we asked participants to what extent they believed the agent (i.e., the distal cause) was the cause for the likely or unlikely secondary outcome.
+Similar to the main causal chains in Experiment 2, Experiment 3a features an agent (i.e., the distal cause) performing an action that is itself the proximal cause for a subsequent outcome which is either probable or improbable in terms of chance of occurrence. This secondary outcome was still unforeseen by the agent. The agent was at the same time knowledgeable or ignorant about a separate primary consequence that was either negative for the agents themselves or negative for other people. In this study, we asked participants to what extent they saw the agent (i.e., the distal cause) as the cause of the likely or unlikely secondary outcome.
 
 ```{r illustration 3, echo=FALSE, fig.cap="Study design for Experiment series 3", out.width = '100%'}
 knitr::include_graphics("StudyIllustration/studyStructureFigures/Slide4.png")
 ```
 
 ## Methods
-
 
 ```{r study3a participants&demo, echo=FALSE, warning=FALSE, message=FALSE}
 d3.cs <- read.csv("../data/probnor_Causation_num.csv")
@@ -2598,17 +2597,15 @@ d3cs.fig
 
 ## Discussion
 
-The results of Experiment 3a provide several (two?) important insights. First, we successfully replicated the knowledge effect observed in Experiment 1 and Experiments 2a–2c. Specifically, agents who knowingly engaged in actions that brought harm to themselves or others were considered more causal for the unrelated and unforeseen secondary outcome. Second, we found the anticipated interaction effect between knowledge and the probability of the secondary outcome: knowledge was more influential on causal judgments when the downstream secondary consequence was improbable than when it was probable. The interaction, which was independent of the valence of outcomes, provides further evidence for a unified normality-account for causal judgments.
+The results of Experiment 3a provide two key insights. First, we successfully replicated the knowledge effect observed in Experiment 1 and Experiments 2a–2c for a new set of downstream consequences. Specifically, agents who knowingly engaged in actions that brought harm to themselves or others were considered more causal for the unrelated and unforeseen secondary outcome. Second, we found the anticipated interaction effect between knowledge and the probability of the secondary outcome: knowledge was more influential on causal judgments when the downstream secondary consequence was improbable than when it was probable. This interaction, in we observed in cases that vary descriptive normality, provides further evidence for a unified normality-account for causal judgments.
 
-Next, we asked participants to make valence and normality judgments for probable and improbable outcomes in order to directly gauge how their perceptions interact in the context of descriptive normality (better way to phrase this and set up the goal for 3b & 3c?).
-
+While this study provides good initial evidence for a more general interaction between outcome normality and agent knowledge, it remains possible that participants still inferred that that the improbable outcomes had a more negative valence than the probable outcomes. To more precisely investigate whether the interaction effect was driven by outcome valence or outcome normality, we next asked participants to make valence and normality judgments for probable and improbable outcomes in order to directly gauge how their perceptions interact in the context of descriptive normality.
 
 \newpage
 
 # Experiment 3b: Valence and normality judgments in cases of probable/improbable outcomes and norm violations
 
-Using the same causal chains and scenarios as Experiment 3a, we asked participants to provide valence and normality judgments in Experiment 3b, namely, to what extent they thought the outcome was a good thing and to what extent they thought it was a normal thing to have happened. Doing so serves the purpose of a manipulation check on the various vignettes used, helping us verify the validity of our scenario construction. In addition, the variance embedded in the ratings enables us to better track patterns of valence and normality judgments without relying solely on the binary labels (e.g., probable vs. improbable outcomes). Furthermore, examining valence and normality judgments of probable or improbable outcomes are is helpful in not only directly comparing descriptive and prescriptive norms, but also tying things together under the broader normality framework. 
-
+Using the same causal chains and scenarios as Experiment 3a, we asked participants to provide valence and normality judgments in Experiment 3b, specifically, to what extent they thought the outcome was a good thing and to what extent they thought it was a normal thing to have happened. Doing so serves two purposes. First, we can use these ratings as a manipulation check on the conditions and scenarios we constructed and tested in Experiment 3a. Second, we can use these ratings to capitalize on any variance in perceived normality and valence in the scenarios we constructed. This variance will allow us to more parametrically investigate whether the feature of the outcome that interacts with the agent's knowledge is the valence or the normality of the outcome.
 
 ## Methods
 
@@ -3005,7 +3002,7 @@ d3ocpb.norm.fig
 
 # Experiment 3c: Valence and normality judgments in cases of bad/good outcomes and norm violations
 
-Mirroring Experiment 3b, we once again asked participants to provide their ratings of valence and normality, this time on negative or positive outcomes. Evaluating the results of Experiments 3b and 3c in parallel will shed light on the robustness of the theory that normality perception combines both descriptive (what typically happens) and prescriptive (what should happen) components, which will inform our understanding about how normality inluences causal reasoning (especially in contexts involving norm violations?).
+Mirroring Experiment 3b, we once again asked participants to provide their ratings of outcome-valence and outcome-normality, but this time returned to the scenarios from Experiments 1-2, where we intended to manipulate the valence of the outcome. While the prior ratings allowed us to demonstrate that outcome-normality can matter on its own, these additional ratings allow us to ask the further question of whether the original interaction effect we observed in Experiment 2 may in fact have arisen because of perceived differences in the normality of the outcome rather than perceived differences in the valence of the outcome.
 
 ## Methods
 
