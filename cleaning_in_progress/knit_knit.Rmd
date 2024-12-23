@@ -93,7 +93,7 @@ We report all data exclusions (if any), all manipulations, and all measures in t
 ### Participants
 
 ```{r study1 participants, echo=FALSE, warning=FALSE, message=FALSE}
-d1demo <- read.csv("../data/d2demo.csv") 
+d1demo <- read.csv("../data/study1/d1_demo.csv") 
 # remember that we aren't including the first study with only 3 vignettes
 d1demo$age[d1demo$age==1993] <- NA ## one person entered their age as 1993 (presumably the year that they were born) 
 d1demo$gender <- factor(c("Male","Female")[d1demo$gender])
@@ -144,7 +144,7 @@ No participants were excluded from the analyses as long as they completed the en
 
 ### Causal judgments
 ```{r study1 Cause analyses, echo=FALSE, warning=FALSE, message=FALSE}
-d1 <- read.csv("../data/Study2.csv")
+d1 <- read.csv("../data/study1/d1_data.csv") #updated from "Study2.csv"
 
 d1$Agent <- factor(c("Knowledge","Ignorance","Object")[d1$Agent])
 d1$Agent <- factor(d1$Agent, levels=c("Object", "Ignorance","Knowledge"))
@@ -510,30 +510,29 @@ d1.sumCorGraph <- d1 %>%
 
 
 d1.plot3 <- ggplot(d1.sumCorGraph, aes(y=CauseM, x=CntrfMr,color=Outcome))+
-                  geom_smooth(method=lm, formula = y ~ x) +
-                  geom_point(aes(color=Outcome, shape=Outcome),size=3) +
-                  geom_text(aes(label=Vignette),size=1.5,color="black") +
-                  facet_grid(~Agent) + 
-                  #geom_errorbar(aes(ymax=CauseM - SE, ymin=CauseM-SE)) +
-                  #geom_errorbarh(aes(xmax=CntrfMr - SE, xmin=CntrfMr-SE)) +
-                  xlab("Average Counterfactual Prefence for the distal agent per Scenario") +
-                  ylab("Average Causal Judgment per Scenario") +
-                  scale_color_manual("Outcome", values=wes_palette("Royal1",2)) + 
-                  theme_bw() +
-                  theme(
-                    plot.background = element_blank()
-                    ,panel.grid.major = element_blank()
-                    ,panel.grid.minor = element_blank()
-                    ,legend.text=element_text(size=rel(1))
-                    #,legend.position=c(.9,.25)
-                    ,axis.text.y=element_text(size=rel(1))
-                    ,axis.text.x=element_text(size=rel(1))
-                    ,axis.title.y=element_text(vjust=.9)
-                    ,axis.ticks = element_blank()
-                    ,axis.title=element_text(size=rel(1))
-                    ,strip.text=element_text(size=rel(.9))
-                  )
-
+  geom_smooth(method=lm, formula = y ~ x) +
+  geom_point(aes(color=Outcome, shape=Outcome),size=3) +
+  geom_text(aes(label=Vignette),size=1.5,color="black") +
+  facet_grid(~Agent) + 
+  #geom_errorbar(aes(ymax=CauseM - SE, ymin=CauseM-SE)) +
+  #geom_errorbarh(aes(xmax=CntrfMr - SE, xmin=CntrfMr-SE)) +
+  xlab("Average Counterfactual Prefence for the distal agent per Scenario") +
+  ylab("Average Causal Judgment per Scenario") +
+  scale_color_manual(values=c("#bdd7e7", "#2171b5")) +
+  theme_bw() +
+  theme(
+    plot.background = element_blank()
+    ,panel.grid.major = element_blank()
+    ,panel.grid.minor = element_blank()
+    ,legend.text=element_text(size=rel(1))
+    #,legend.position=c(.9,.25)
+    ,axis.text.y=element_text(size=rel(1))
+    ,axis.text.x=element_text(size=rel(1))
+    ,axis.title.y=element_text(vjust=.9)
+    ,axis.ticks = element_blank()
+    ,axis.title=element_text(size=rel(1))
+    ,strip.text=element_text(size=rel(.9))
+  )
 plot(d1.plot3)
 ```
 
@@ -995,6 +994,7 @@ No participants were excluded from the analyses as long as they completed the en
 ```{r study2c causeAnalyses, echo=FALSE, message=FALSE, warning=FALSE}
 
 d2c <- read.csv("../data/irrationalityWithin-subjsLong.csv")
+# d2c <- read.csv("../data/d2c.csv") # repreprocessed data, identical to above
 
 d2c$knowledge <- factor(d2c$knowledge, levels=c("Ignorance","Knowledge"))
 d2c$norm <- factor(d2c$norm)
@@ -2352,8 +2352,6 @@ knitr::include_graphics("StudyIllustration/studyStructureFigures/Slide4.png")
 ## Methods
 
 ```{r study3a participants&demo, echo=FALSE, warning=FALSE, message=FALSE}
-d3.cs <- read.csv("../data/probnor_Causation_num.csv")
-d3.cs <- d3.cs[-c(1:2), ]
 
 # ProbNor Causation demo (age, gender, education, ethnicity, ses):
 d3.cs_demo <- read.csv("../data/probnor_Causation_txt.csv")
@@ -2364,52 +2362,16 @@ d3.cs_demo$edu <- as.factor(d3.cs_demo$edu)
 d3.cs_demo$ethn <- as.factor(d3.cs_demo$ethn)
 d3.cs_demo$ses <- as.factor(d3.cs_demo$ses)
 
+d3.cspb <- read.csv("../data/d3cspb.csv") 
 ```
 
 ### Participants
 
-For ratings of causation for outcomes that were categorized as probable versus improbable, `r length(d3.cs_demo$age)` participants were recruited (*M*~age~=`r round(mean(as.numeric(d3.cs_demo$age), na.rm=T),digits=2)`, *SD*~age~=`r round(sd(as.numeric(d3.cs_demo$age), na.rm=T),digits=2)`; `r length(which(d3.cs_demo$gender=="Female"))` females), among which `r sum(d3.cs_demo$age != "")` answered all our demographic questions.
+For ratings of causation for outcomes that were categorized as probable versus improbable, `r length(unique(d3.cspb$ResponseId))` participants were recruited (*M*~age~=`r round(mean(as.numeric(d3.cs_demo$age), na.rm=T),digits=2)`, *SD*~age~=`r round(sd(as.numeric(d3.cs_demo$age), na.rm=T),digits=2)`; `r length(which(d3.cs_demo$gender=="Female"))` females), among which `r sum(d3.cs_demo$age != "")` answered all our demographic questions.
 All participants were recruited through Amazon Mechanical Turk (<http://www.mturk.com>).
 
 ```{r study3a dataset, echo=FALSE, warning=FALSE, message=FALSE}
-# ProbNor Causation cleaning
-# d3.cspb <- d3.cs[,grepl("caus|ResponseId", colnames(d3.cs))] %>%
-#   pivot_longer(col=2:129, names_to = "condition", values_to = "causation response", values_drop_na = T) %>%
-#   filter(`causation response` != "") %>%
-#   mutate(norm = case_when(str_detect(condition, "R") ~ "Rationality",
-#                           str_detect(condition, "M") ~ "Morality")) %>%
-#   mutate(knowledge = case_when(str_detect(condition, "K") ~ "Knowledge",
-#                           str_detect(condition, "I") ~ "Ignorance")) %>%
-#   mutate(outcome = case_when(str_detect(condition, "B") ~ "Abnormal",
-#                           str_detect(condition, "G") ~ "Normal")) %>%
-#   mutate(scenario = case_when(str_detect(condition, "\\bcaus10.\\b") ~ 10,
-#                               str_detect(condition, "\\bcaus11.\\b") ~ 11,
-#                               str_detect(condition, "\\bcaus12.\\b") ~ 12,
-#                               str_detect(condition, "\\bcaus13.\\b") ~ 13,
-#                               str_detect(condition, "\\bcaus14.\\b") ~ 14,
-#                               str_detect(condition, "\\bcaus15.\\b") ~ 15,
-#                               str_detect(condition, "\\bcaus16.\\b") ~ 16,
-#                               str_detect(condition, "\\bcaus1.\\b") ~ 1,
-#                               str_detect(condition, "\\bcaus2.\\b") ~ 2,
-#                               str_detect(condition, "\\bcaus3.\\b") ~ 3,
-#                               str_detect(condition, "\\bcaus4.\\b") ~ 4,
-#                               str_detect(condition, "\\bcaus5.\\b") ~ 5,
-#                               str_detect(condition, "\\bcaus6.\\b") ~ 6,
-#                               str_detect(condition, "\\bcaus7.\\b") ~ 7,
-#                               str_detect(condition, "\\bcaus8.\\b") ~ 8,
-#                               str_detect(condition, "\\bcaus9.\\b") ~ 9,
-#                               )) %>%
-#   dplyr::rename(condCod = condition) %>%
-#   mutate(condition = case_when(str_detect(condCod, "MKB") ~ "MKB",
-#                                str_detect(condCod, "MKG") ~ "MKG",
-#                                str_detect(condCod, "MIB") ~ "MIB",
-#                                str_detect(condCod, "MIG") ~ "MIG",
-#                                str_detect(condCod, "RKB") ~ "RKB",
-#                                str_detect(condCod, "RKG") ~ "RKG",
-#                                str_detect(condCod, "RIB") ~ "RIB",
-#                                str_detect(condCod, "RIG") ~ "RIG"))
-# write.csv(d3.cspb, "../data/d3cspb.csv", row.names = FALSE)
-d3.cspb <- read.csv("../data/d3cspb.csv")
+d3.cspb <- read.csv("../data/d3cspb.csv") 
 ```
 
 ### Materials
@@ -2493,8 +2455,8 @@ lmr3cspb.NxK <- readRDS("models/lmr3cspb.NxK.rds")
 # saveRDS(lmr3cspb.NxO,"models/lmr3cspb.NxO.rds")
 lmr3cspb.NxO <- readRDS("models/lmr3cspb.NxO.rds")
 
-  ## cspb two-way: Outcome x Knowledge interaction (significant < .001)
-# lmr3cspb.OK <- lmer(causation.response ~ (norm * outcome) + (knowledge * norm) + (knowledge+outcome|ResponseId) + (1|ResponseId), data=d3.cspb, 
+  ## cspb two-way: Outcome x Knowledge interaction (insignificant)
+# lmr3cspb.OK <- lmer(causation.response ~ (norm * outcome) + (knowledge * norm) + (knowledge+outcome|scenario) + (1|ResponseId), data=d3.cspb,
 #                     control = lmerControl(optimizer ='optimx', optCtrl=list(method='L-BFGS-B')))
 # lmr3cspb.OxK <- anova(lmr3cspb.i1,lmr3cspb.OK)
 # saveRDS(lmr3cspb.OxK,"models/lmr3cspb.OxK.rds")
@@ -2532,8 +2494,7 @@ More specifically, we included a random intercept for each participant and a ran
 
 We analyzed participants' causal judgments, which revealed a main effect of whether the agent had *Knowledge* about bringing about harm, $\chi^2(1)$ = `r round(lmr3cspb.knowledge$Chisq[2],digits=2)`, *p* < `r max(.001,round(lmr3cspb.knowledge$'Pr(>Chisq)'[2],digits=3))`, such that ignorant agents were overall seen as less causal (*M* = `r round(d3a.emsumK$emmean[1],digits=2)`, 95% CI = [`r round(d3a.emsumK$lower.CL[1],digits=2)`, `r round(d3a.emsumK$upper.CL[1],digits=2)`]) than knowledgeable agents (*M* = `r round(d3a.emsumK$emmean[2],digits=2)`, 95% CI = [`r round(d3a.emsumK$lower.CL[2],digits=2)`, `r round(d3a.emsumK$upper.CL[2],digits=2)`]), *t*(`r round(d3a.empairK$df[1])`) = `r round(d3a.empairK$t.ratio[1], digits=2)`, *p* < .001. Importantly, we did not observe either a main effect of the type of *Harm* that the agent incurred, $\chi^2(1)$ = `r round(lmr3cspb.norm$Chisq[2],digits=2)`, *p* = `r max(.001,round(lmr3cspb.norm$'Pr(>Chisq)'[2],digits=3))`, or a main effect of the probability of the *Outcome*, $\chi^2(1)$ = `r round(lmr3cspb.outcome$Chisq[2],digits=2)`, *p* = `r round(lmr3cspb.outcome$'Pr(>Chisq)'[2],digits=3)`. 
 
-
-We also probed interaction effects and the only statistically significant interaction was *Knowledge* $\times$ *Outcome*, $\chi^2(1)$ = `r round(lmr3cspb.OxK$Chisq[2],digits=2)`, *p* <.001. This interaction suggests that in probable outcomes (*t*(`r round(d3a.empairOK$df[6])`) = `r round(d3a.empairOK$t.ratio[6], digits=2)`, *p* = `r round(d3a.empairOK$p.value[6], digits=3)`), participants' causal judgments did not differentiate much between agents that knowingly did harm (*M* = `r round(d3a.emsumOK$emmean[4], digits=2)`, 95% CI = [`r round(d3a.emsumOK$lower.CL[4],digits=2)`, `r sprintf("%.2f", d3a.emsumOK$upper.CL[4])`]) and ignorant agents (*M* = `r round(d3a.emsumOK$emmean[3], digits=2)`, 95% CI = [`r round(d3a.emsumOK$lower.CL[3],digits=2)`, `r round(d3a.emsumOK$upper.CL[3],digits=2)`]). Whereas in improbable outcomes (*t*(`r round(d3a.empairOK$df[1])`) = `r round(d3a.empairOK$t.ratio[1], digits=2)`, *p* = `r round(d3a.empairOK$p.value[1], digits=3)`), the difference between agents of different knowledge status was salient, with participants assigning more causation to knowledgeable agents (*M* = `r round(d3a.emsumOK$emmean[2], digits=2)`, 95% CI = [`r round(d3a.emsumOK$lower.CL[2],digits=2)`, `r round(d3a.emsumOK$upper.CL[2],digits=2)`]) than ignorant agents (*M* = `r round(d3a.emsumOK$emmean[1], digits=2)`, 95% CI = [`r round(d3a.emsumOK$lower.CL[1],digits=2)`, `r round(d3a.emsumOK$upper.CL[1],digits=2)`]). The rest of the interactions were not significant, including the three-way *Knowledge* $\times$ *Harm Type* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lmr3cspb.3way$Chisq[2],digits=2)`, *p* = `r max(.001,round(lmr3cspb.3way$'Pr(>Chisq)'[2],digits=3))`, and the two two-way interactions of *Knowledge* $\times$ *Harm Type*, $\chi^2(1)$ = `r round(lmr3cspb.NxK$Chisq[2],digits=2)`, *p* = `r round(lmr3cspb.NxK$'Pr(>Chisq)'[2],digits=3)`, and *Outcome* $\times$ *Harm Type*, $\chi^2(1)$ = `r round(lmr3cspb.NxO$Chisq[2], digits=2)`, *p* = `r round(lmr3cspb.NxO$'Pr(>Chisq)'[2],digits=3)`.
+We also probed interaction effects and did not find any interaction effects, including the three-way *Knowledge* $\times$ *Harm Type* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lmr3cspb.3way$Chisq[2],digits=2)`, *p* = `r max(.001,round(lmr3cspb.3way$'Pr(>Chisq)'[2],digits=3))`, and the two-way interactions of *Knowledge* $\times$ *Outcome*, $\chi^2(1)$ = `r round(lmr3cspb.OxK$Chisq[2],digits=2)`, *p* `r round(lmr3cspb.OxK$'Pr(>Chisq)'[2],digits=3)`. [[[[[[This interaction suggests that in probable outcomes (*t*(`r round(d3a.empairOK$df[6])`) = `r round(d3a.empairOK$t.ratio[6], digits=2)`, *p* = `r round(d3a.empairOK$p.value[6], digits=3)`), participants' causal judgments did not differentiate much between agents that knowingly did harm (*M* = `r round(d3a.emsumOK$emmean[4], digits=2)`, 95% CI = [`r round(d3a.emsumOK$lower.CL[4],digits=2)`, `r sprintf("%.2f", d3a.emsumOK$upper.CL[4])`]) and ignorant agents (*M* = `r round(d3a.emsumOK$emmean[3], digits=2)`, 95% CI = [`r round(d3a.emsumOK$lower.CL[3],digits=2)`, `r round(d3a.emsumOK$upper.CL[3],digits=2)`]). Whereas in improbable outcomes (*t*(`r round(d3a.empairOK$df[1])`) = `r round(d3a.empairOK$t.ratio[1], digits=2)`, *p* = `r round(d3a.empairOK$p.value[1], digits=3)`), the difference between agents of different knowledge status was salient, with participants assigning more causation to knowledgeable agents (*M* = `r round(d3a.emsumOK$emmean[2], digits=2)`, 95% CI = [`r round(d3a.emsumOK$lower.CL[2],digits=2)`, `r round(d3a.emsumOK$upper.CL[2],digits=2)`]) than ignorant agents (*M* = `r round(d3a.emsumOK$emmean[1], digits=2)`, 95% CI = [`r round(d3a.emsumOK$lower.CL[1],digits=2)`, `r round(d3a.emsumOK$upper.CL[1],digits=2)`]).]]]   and the two two-way interactions of *Knowledge* $\times$ *Harm Type*, $\chi^2(1)$ = `r round(lmr3cspb.NxK$Chisq[2],digits=2)`, *p* = `r round(lmr3cspb.NxK$'Pr(>Chisq)'[2],digits=3)`, and *Outcome* $\times$ *Harm Type*, $\chi^2(1)$ = `r round(lmr3cspb.NxO$Chisq[2], digits=2)`, *p* = `r round(lmr3cspb.NxO$'Pr(>Chisq)'[2],digits=3)`.
 
 ```{r study3a plots, fig.pos="H", fig.width=8.5, fig.height=7, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Participants' ratings of causation regarding knowledgeable/ignorant agents who violated moral/rational norms when a separate outcome occurred that is likely/unlikely."}
 
@@ -2612,8 +2573,8 @@ Using the same causal chains and scenarios as Experiment 3a, we asked participan
 
 
 ```{r study3b participants&demo, echo=FALSE, warning=FALSE, message=FALSE}
-d3.oc.pb <- read.csv("../data/probnor_ValenceNormality_num.csv")
-d3.oc.pb <- d3.oc.pb[-c(1:2), ]
+# d3.oc.pb <- read.csv("../data/probnor_ValenceNormality_num.csv")
+# d3.oc.pb <- d3.oc.pb[-c(1:2), ]
 
 # ProbNor ValeNorm demo (age, gender, education, ethnicity, ses): 
 d3.oc.pb_demo <- read.csv("../data/probnor_ValenceNormality_txt.csv")
@@ -2623,6 +2584,8 @@ d3.oc.pb_demo$gender <- as.factor(d3.oc.pb_demo$gender)
 d3.oc.pb_demo$edu <- as.factor(d3.oc.pb_demo$edu)
 d3.oc.pb_demo$ethn <- as.factor(d3.oc.pb_demo$ethn)
 d3.oc.pb_demo$ses <- as.factor(d3.oc.pb_demo$ses)
+
+d3.ocpb <- read.csv("../data/d3ocpb.csv")
 ```
 
 ### Participants
@@ -2999,7 +2962,7 @@ d3ocpb.norm.fig
 
 ## Discussion
 
-In this experiment, we collected participants' judgments of valence and normality of the secondary outcomes. As expected, improbable outcomes were perceived as less normal than probable outcomes; however, they were not necessarily judged as less positive in valence. This finding suggests that the interaction effect of outcome probability and agent knowledge previously observed in Experiment 3a cannot be simply explained by improbable outcomes being perceived as negative in valence. Moreover, readers may recall that the differences in causal judgments were more pronounced between knowledgeable and ignorant agents for both bad outcomes (as opposed to good outcomes) and improbable outcomes (as opposed to probable outcome). Taken together, these results suggest that valence and probability should not be conflated with one another, as valence ratings (observed here) cannot explain the interaction effect observed for probable vs. improbable outcomes. Instead, a more likely explanation is that both effects should both be understood within a broader framework of *normality*.  
+In this experiment, we collected participants' judgments of valence and normality of the secondary outcomes that were either probable or improbable. As expected, improbable outcomes were perceived as less normal than probable outcomes; however, they were not necessarily judged as less positive in valence. This finding suggests that the interaction effect of outcome probability and agent knowledge previously observed in Experiment 3a cannot be simply explained by improbable outcomes being perceived as negative in valence. Moreover, readers may recall that the differences in causal judgments were more pronounced between knowledgeable and ignorant agents for both bad outcomes (as opposed to good outcomes) and improbable outcomes (as opposed to probable outcome). Taken together, these results suggest that valence and probability should not be conflated with one another, as valence ratings (observed here) cannot explain the interaction effect observed for probable vs. improbable outcomes. Instead, a more likely explanation is that both effects should both be understood within a broader framework of *normality*.  
 In the next experiment we follow this suggestion by asking whether the interaction effect in the case of bad vs. good outcomes may be able to be accounted for by differences in pereceived normality. Specifically, we return to manipulating outcome valence (rather than probability) and again ask participants to evaluate valence and normality for good and bad outcomes. If bad outcomes are indeed seen as less normal, we can infer that outcome valuence is influencing perceptions of outcome normality, and therefore move one step closer to a more parsimonious account of normality being impacted by both statistical probability and valence.
 
 
@@ -3395,15 +3358,21 @@ d3ocgb.norm.fig
 
 ## Discussion
 
-[restate what we did here as you did in the discussion of 3b] At a broad, the results from this experiment verified that participants perceived the bad secondary outcomes as more negatively valenced than the good secondary outcomes. Additionally, we also observed that the bad outcomes were perceived as less normal than the good outcomes. This finding supports the suggestion that perceptions of normality are impacted by both descriptive information (the probability of the outcomes) prescriptive information (the valence of the outcomes). In short, we found that, in support of the more parsimonious account, varying outcome valence changes not only the perceived goodness but perceived normality.
+In this experiment, we collected participants' judgments of valence and normality of the secondary outcomes that were either bad or good. At a broad level, the results from this experiment verified that participants perceived the bad secondary outcomes as more negatively valenced than the good secondary outcomes. Additionally, we also observed that the bad outcomes were perceived as less normal than the good outcomes. This finding supports the suggestion that perceptions of normality are impacted by both descriptive information (the probability of the outcomes) and prescriptive information (the valence of the outcomes). In short, we found that, in support of the more parsimonious account, varying outcome valence changes not only the perceived goodness but perceived normality.
 
 By now, we can reasonably conclude that both valence and probability contribute to perceptions of normality, each shaping how "normal" or "abnormal" an outcome appears. This dual influence on normality, in turn, impacts causal judgments. In the next experiment, we will apply this dual-component theory of normality to construct scenarios with outcomes that vary systematically in both valence and probability, enabling us to examine how these factors jointly contribute to causal cognition.
 
 
+# Experiment 4a: Modality and counterfactuality judgments in cases of good/bad outcomes and norm violations
 
-# Experiment 4: Modality and counterfactuality judgments in cases of normal/abnormal outcomes and norm violations
+Across various scenarios we have tested by now, we explored whether participants' causal judgments could be influenced by outcome valence or probability as well as the knowledge status of the acting agent. Prior research suggests that causal judgments are shaped by counterfactual reasoning, often formulated in if-then statements (Petrocelli et al., 2011). These constructs involve two components: the possibility of an antecedent (also known as modality), and the probability that a different antecedent could have led to a different outcome. 
 
-Across all of the different scenarios we have tested by now, we investigated whether the causal effects could be predicted by participants’ judgments of the accessibility of alternative possibilities, and whether or not those outcomes would have been undone in those possibilities. We shift our focus from causal selection to modal and counterfactual judgments in Experiment 4. The process of counterfactual reasoning can in fact be summarized as "if event A did not happen, event B would have been avoided". Thus, in this study, we aim to understand participants' belief regarding both pieces of the reasoning. the possibility of the opposite of an agent's action and their reasoning about the outcome of an event without the said action. The study used a 2 (Harm Type) $\times$ 2 (Agent Knowledge) $\times$ 2 (Outcome) $\times$ 16 (Scenario) design that was administered in a mixed within- and between-subjects fashion, such that participants saw all 16 scenarios and on each trial were randomly assigned to read 1 of the 8 different versions of that scenario. Furthermore, the outcomes in this particular experiment varies by the dual-component normality, as we combined outcomes that differed along prescriptive valence or descriptive probability.  
+Crucially, knowledge affects modality: it is less plausible for people to think that an agent who did something knowingly could have acted in a different way than one who acted ignorantly [CITES?]. Moreover, outcome normality interacts with this knowledge effect in counterfactual reasoning, such that abnormal outcomes (improbable or negative) tend to be perceived as more fragile and susceptible to change, meaning that people see such outcomes as more dependent on the antecedent, especially when the agent knew the consequence of action [BUT we didn't see this interaction with probable/improbable outcomes in 3a so maybe I should rewrite this; also CITES?]. In other words, the more abnormal an outcome is, the more people believe it could change if the circumstances were different.
+
+In Experiment series 4, we shift our focus from causal selection to empirical modal and counterfactual judgments. Modality perception was captured by asking participants "how likely event A could have not happened," while counterfactual reasoning was framed as "if event A did not happen, event B would have been avoided." In Experiment 4a specifically, we aim to understand participants' belief regarding both components of counterfactual thinking when the secondary outcome of an agent's action was positive or negative. The study used a 2 (Harm Type) $\times$ 2 (Agent Knowledge) $\times$ 2 (Outcome Valence) $\times$ 16 (Scenario) design that was administered in a mixed within- and between-subjects fashion, such that participants saw all 16 scenarios and on each trial were randomly assigned to read 1 of the 8 different versions of that scenario. 
+
+Besides, we assessed the integration of modal and counterfactual judgments by examining their multiplicative combination, referred to as "potency." Potency captures the degree to which counterfactual reasoning influences causal judgments, reflecting the combined likelihoods of the counterfactual antecedent and its downstream consequence (Petrocelli et al., 2011). We tested this relationship by connecting potency measures with causal judgments from Experiment 2c which used similar scenarios and varied valenced outcomes.
+
 
 ```{r illustration 4, echo=FALSE, fig.cap="Study design for Experiment 4", out.width = '100%'}
 knitr::include_graphics("StudyIllustration/studyStructureFigures/Slide5.png")
@@ -3411,23 +3380,7 @@ knitr::include_graphics("StudyIllustration/studyStructureFigures/Slide5.png")
 
 ## Methods
 
-
-```{r study4 participants, echo=FALSE, warning=FALSE, message=FALSE}
-d4.pb <- read.csv("../data/probnor_CounterFactuals_num.csv")
-d4.pb <- d4.pb[-c(1:2), ]
-
-d4.gb <- read.csv("../data/goodbad_CounterFactuals_num.csv")
-d4.gb <- d4.gb[-c(1:2), ]
-
-
-# ProbNor CounterFactual demo (age, gender, education, ethnicity, ses):
-d4.pb_demo <- read.csv("../data/probnor_CounterFactuals_txt.csv")
-d4.pb_demo <- d4.pb_demo[-c(1:2),] %>%
-  dplyr::select(c("age", "edu", "gender", "ethn", "ses"))
-d4.pb_demo$gender <- as.factor(d4.pb_demo$gender)
-d4.pb_demo$edu <- as.factor(d4.pb_demo$edu)
-d4.pb_demo$ethn <- as.factor(d4.pb_demo$ethn)
-d4.pb_demo$ses <- as.factor(d4.pb_demo$ses)
+```{r study4a participants, echo=FALSE, warning=FALSE, message=FALSE}
 
 # GoodBad CounterFactual demo (age, gender, education, ethnicity, ses): 
 d4.gb_demo <- read.csv("../data/goodbad_CounterFactuals_txt.csv")
@@ -3438,216 +3391,173 @@ d4.gb_demo$edu <- as.factor(d4.gb_demo$edu)
 d4.gb_demo$ethn <- as.factor(d4.gb_demo$ethn)
 d4.gb_demo$ses <- as.factor(d4.gb_demo$ses)
 
-
-d4_demo <- rbind(d4.gb_demo, d4.pb_demo)
-d4_demo$gender <- as.factor(d4_demo$gender)
-d4_demo$edu <- as.factor(d4_demo$edu)
-d4_demo$ethn <- as.factor(d4_demo$ethn)
-d4_demo$ses <- as.factor(d4_demo$ses)
-
-###write.csv(d4.pb_demo, "../data/d4pbCFdemo.csv", row.names = FALSE)
-###write.csv(d4.gb_demo, "../data/d4gbCFdemo.csv", row.names = FALSE)
-###write.csv(d4_demo, "../data/d4CF_demo.csv", row.names = FALSE)
+d4gb <- read.csv("../data/d4gb.csv", check.names = F) %>%
+  mutate(`CF responses` = as.numeric(`CF responses`))
 ```
 
 ### Participants
 
-In Experiment 4, `r length(d4_demo$age)` participants were recruited (*M*~age~=`r round(mean(as.numeric(d4_demo$age), na.rm=T),digits=2)`, *SD*~age~=`r round(sd(as.numeric(d4_demo$age), na.rm=T),digits=2)`; `r length(which(d4_demo$gender=="Female"))` females), among which `r sum(d4_demo$edu != "")` answered all our demographic questions. All participants were recruited through Amazon Mechanical Turk <http://www.mturk.com>.
+In Experiment 4a, `r length(unique(d4gb$ResponseId))` participants were recruited (*M*~age~=`r round(mean(as.numeric(d4.gb_demo$age), na.rm=T),digits=2)`, *SD*~age~=`r round(sd(as.numeric(d4.gb_demo$age), na.rm=T),digits=2)`; `r length(which(d4.gb_demo$gender=="Female"))` females), among which `r sum(d4.gb_demo$edu != "")` answered all our demographic questions. All participants were recruited through Amazon Mechanical Turk <http://www.mturk.com>.
 
-```{r study4 datasets, echo=FALSE, warning=FALSE, message=FALSE}
-d4 <- read.csv("../data/d4mdcf.csv",check.names=FALSE) 
+```{r study4a dataset, echo=FALSE, warning=FALSE, message=FALSE}
+d4gb <- read.csv("../data/d4gb.csv", check.names = F) %>%
+  mutate(`CF responses` = as.numeric(`CF responses`))
 ```
 
 ### Materials
 
-Participants completed 16 trials which each involved reading a vignette where an agent's action resulted in an outcome that was normal or abnormal (defined by probability of occurrence). The action would have violated a moral or a rational norm. In addition, the agent was either ignorant or knowledgeable about the norm violated.
+Participants completed 16 trials which each involved reading a vignette where an agent's action resulted in an outcome that was good or bad (valence of occurrence). The action would have harmed either the agent themself or someone else. In addition, the agent was either ignorant or knowledgeable about the norm violated.
 
 For instance, participants may read a vignette as follows:
 
-> **Other-Harm / Knowledgeable Agent / Abnormal Outcome** : The owner of a construction company, who was hired to remodel a skyscraper, decided to use a new material called Plyvex to cover the inner walls of the building. When the building inspector reviewed the plans, she realized that Plyvex was one of the least efficient choices for this project. She told the owner of the construction company about this. Although the owner of the construction company understood this, he decided to use Plyvex anyway, like he originally planned. It turns out that Plyvex creates a scent that smells almost exactly like ripe kiwis. Because of this, a number of people in the company noticed that the entire building smelled of kiwis after the Plyvex had been installed.
+> **Other-Harm / Knowledgeable Agent / Good Outcome** : The owner of a construction company, who was hired to remodel a skyscraper, decided to use a new material called Plyvex to cover the inner walls of the building. When the building inspector reviewed the plans, she recalled that Plyvex was produced with child slave labor, and purchasing it would cause more children to be enslaved. She told this to the owner. Although the owner of the construction company understood this, he decided to use Plyvex anyway, like he originally planned. It turns out that Plyvex is particularly resistant to mold. Because of this, a number of people in the company who were suffering from lung problems became much healthier after the Plyvex had been installed.
 
 ### Procedure
 
-After reading each vignette, participants answered two questions: a modal one and a counterfactual one. More specifically, they rated their agreement with one statement about whether the agent could have not completed the action and one about whether the absence of the agent's action could have prevented the outcome, as in the following example:
+After reading each vignette, participants answered two questions: one modal and one counterfactual. More specifically, they rated their agreement with a statement about whether the agent could have refrained from the action, and their belief about the relevance of another statement regarding whether the absence of the agent's action could have prevented the outcome, as in the following example:
 
 > *Modal question*: The owner of the construction company could have not used Plyvex.
 
-> *Counterfactual question*: If the owner of the construction company had not used Plyvex, the entire building would not have smelled of kiwis.
+> *Counterfactual question*: If the owner of the construction company had not used Plyvex, the people wouldn't have recovered.
 
 \noindent After completing all 16 trials, participants were asked to complete some optional demographic questions.
 
-```{r study4 md & cf interactions, echo=FALSE, warning=FALSE, message=FALSE}
-# ###check for little variation across 8*16 for modal responses (histogram of avg.)
-# mean(d4[d4$question=="Modal",]$`CF responses`)
-# mean(d4[d4$question=="Counterfactual",]$`CF responses`)
-# d4 %>%
-#   filter(question=="Modal") %>%
-#   group_by(scenario, norm, knowledge, outcome) %>%
-#   summarise(`modal mean` = mean(as.numeric(`CF responses`)))
-# 
-# d4 %>%
-#   filter(question=="Modal") %>%
-#   #group_by(scenario, norm, knowledge, outcome) %>%
-#   #summarise(`modal mean` = mean(as.numeric(`CF responses`)))
-#   ggplot(aes(x=outcome, y=as.numeric(`CF responses`), fill=knowledge)) +
-#   geom_bar(position = "dodge",
-#            stat = "summary",
-#            fun = "mean") +
-#   facet_wrap(scenario~norm)
-# 
-# d4 %>%
-#   filter(question=="Counterfactual") %>%
-#   #group_by(scenario, norm, knowledge, outcome) %>%
-#   #summarise(`modal mean` = mean(as.numeric(`CF responses`)))
-#   ggplot(aes(x=outcome, y=as.numeric(`CF responses`), fill=knowledge)) +
-#   geom_bar(position = "dodge",
-#            stat = "summary",
-#            fun = "mean") +
-#   facet_wrap(scenario~norm)
+```{r study4a md & cf interactions, echo=FALSE, warning=FALSE, message=FALSE}
+## Md main effects (knowledge significant <.001, outcome significant .004, norm insignificant; used knowledge+outcome for convergence)
+lmr4gb_md.main <- lmer(`CF responses` ~ knowledge + outcome + norm + (knowledge+outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Modal",])
 
+# lmr4gb_md.outcome <- lmer(`CF responses` ~ knowledge + norm + (knowledge+outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Modal",])
+# lmr4gb_md.outcome <- anova(lmr4gb_md.main,lmr4gb_md.outcome)
+# saveRDS(lmr4gb_md.outcome,"models/lmr4gb_md.outcome.rds")
+lmr4gb_md.outcome <- readRDS("models/lmr4gb_md.outcome.rds")
 
-# Test main effects and interactions for both modality and counterfactuality
+# lmr4gb_md.norm <- lmer(`CF responses` ~ knowledge + outcome + (knowledge+outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Modal",])
+# lmr4gb_md.norm <- anova(lmr4gb_md.main,lmr4gb_md.norm)
+# saveRDS(lmr4gb_md.norm,"models/lmr4gb_md.norm.rds")
+lmr4gb_md.norm <- readRDS("models/lmr4gb_md.norm.rds")
 
-## Md main effects (outcome significant 0.04757, knowledge significant <.001)
-# lmr4md.main <- lmer(`CF responses` ~ knowledge + outcome + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Modal",])
-# 
-# lmr4md.outcome <- lmer(`CF responses` ~ knowledge + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Modal",])
-# lmr4md.outcome <- anova(lmr4md.main,lmr4md.outcome)
-# saveRDS(lmr4md.outcome,"models/lmr4md.outcome.rds")
-lmr4md.outcome <- readRDS("models/lmr4md.outcome.rds")
-
-# lmr4md.norm <- lmer(`CF responses` ~ knowledge + outcome + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Modal",])
-# lmr4md.norm <- anova(lmr4md.main,lmr4md.norm)
-# saveRDS(lmr4md.norm,"models/lmr4md.norm.rds")
-lmr4md.norm <- readRDS("models/lmr4md.norm.rds")
-
-# lmr4md.knowledge <- lmer(`CF responses` ~ outcome + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Modal",])
-# lmr4md.knowledge <- anova(lmr4md.main,lmr4md.knowledge)
-# saveRDS(lmr4md.knowledge,"models/lmr4md.knowledge.rds")
-lmr4md.knowledge <- readRDS("models/lmr4md.knowledge.rds")
+# lmr4gb_md.knowledge <- lmer(`CF responses` ~ outcome + norm + (knowledge+outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Modal",])
+# lmr4gb_md.knowledge <- anova(lmr4gb_md.main,lmr4gb_md.knowledge)
+# saveRDS(lmr4gb_md.knowledge,"models/lmr4gb_md.knowledge.rds")
+lmr4gb_md.knowledge <- readRDS("models/lmr4gb_md.knowledge.rds")
 
 
 ## Md: Three-way interaction (insignificant)
-# lm4md.0 <- lmer(`CF responses` ~ outcome*knowledge*norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Modal",],
-                # control = lmerControl(optimizer = "bobyqa"))
-# lm4md.1 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*knowledge) + (outcome*norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Modal",], 
+# lm4gb_md.0 <- lmer(`CF responses` ~ outcome*knowledge*norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Modal",],
+#                    control = lmerControl(optimizer = "bobyqa"))
+# lm4gb_md.1 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*knowledge) + (outcome*norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Modal",], 
 #                 control = lmerControl(optimizer = "bobyqa"))
-# lm4md.3way <- anova(lm4md.0, lm4md.1)
-# saveRDS(lm4md.3way, "models/lm4md.3way.rds")
-lm4md.3way <- readRDS("models/lm4md.3way.rds")
+# lm4gb_md.3way <- anova(lm4gb_md.0, lm4gb_md.1)
+# saveRDS(lm4gb_md.3way, "models/lm4gb_md.3way.rds")
+lm4gb_md.3way <- readRDS("models/lm4gb_md.3way.rds")
 
 ## Md: Outcome x Knowledge interaction (insignificant)
-# lm4md.2 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Modal",],
+# lm4gb_md.2 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Modal",],
 #                 control = lmerControl(optimizer = "bobyqa"))
-# lm4md.OxK <- anova(lm4md.1,lm4md.2)
-# saveRDS(lm4md.OxK,"models/lm4md.OxK.rds")
-lm4md.OxK <- readRDS("models/lm4md.OxK.rds")
+# lm4gb_md.OxK <- anova(lm4gb_md.1,lm4gb_md.2)
+# saveRDS(lm4gb_md.OxK,"models/lm4gb_md.OxK.rds")
+lm4gb_md.OxK <- readRDS("models/lm4gb_md.OxK.rds")
 
 ## Md: Outcome x Norm interaction (insignificant)
-# lm4md.3 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*knowledge) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Modal",],
+# lm4gb_md.3 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*knowledge) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Modal",],
 #                 control = lmerControl(optimizer = "bobyqa"))
-# lm4md.OxN <- anova(lm4md.1,lm4md.3)
-# saveRDS(lm4md.OxN,"models/lm4md.OxN.rds")
-lm4md.OxN <- readRDS("models/lm4md.OxN.rds")
+# lm4gb_md.OxN <- anova(lm4gb_md.1,lm4gb_md.3)
+# saveRDS(lm4gb_md.OxN,"models/lm4gb_md.OxN.rds")
+lm4gb_md.OxN <- readRDS("models/lm4gb_md.OxN.rds")
 
 ## Md: Norm x Knowledge interaction (insignificant)
-# lm4md.4 <- lmer(`CF responses` ~ (knowledge*outcome) + (outcome*norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Modal",],
+# lm4gb_md.4 <- lmer(`CF responses` ~ (knowledge*outcome) + (outcome*norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Modal",],
 #                 control = lmerControl(optimizer = "bobyqa"))
-# lm4md.NxK <- anova(lm4md.1,lm4md.4)
-# saveRDS(lm4md.NxK,"models/lm4md.NxK.rds")
-lm4md.NxK <- readRDS("models/lm4md.NxK.rds")
+# lm4gb_md.NxK <- anova(lm4gb_md.1,lm4gb_md.4)
+# saveRDS(lm4gb_md.NxK,"models/lm4gb_md.NxK.rds")
+lm4gb_md.NxK <- readRDS("models/lm4gb_md.NxK.rds")
 
-### Modal estimated marginal means
-# d4md.emsumO <- summary(emmeans::emmeans(lm4md.0, ~ outcome, pbkrtest.limit = 6568))
-# saveRDS(d4md.emsumO,"models/d4md.emsumO.rds")
-d4md.emsumO <- readRDS("models/d4md.emsumO.rds")
+### Modality estimated marginal means
+# d4gbmd.emsumO <- summary(emmeans::emmeans(lm4gb_md.0, ~ outcome, pbkrtest.limit = 3242)) 
+# saveRDS(d4gbmd.emsumO,"models/d4gbmd.emsumO.rds")
+d4gbmd.emsumO <- readRDS("models/d4gbmd.emsumO.rds")
+# d4gbmd.empairO <- summary(pairs(emmeans(lm4gb_md.0, ~ outcome, pbkrtest.limit = 3242)))
+# saveRDS(d4gbmd.empairO,"models/d4gbmd.empairO.rds")
+d4gbmd.empairO <- readRDS("models/d4gbmd.empairO.rds")
 
-# d4md.emsumK <- summary(emmeans::emmeans(lm4md.0, ~ knowledge, pbkrtest.limit = 6568))
-# saveRDS(d4md.emsumK,"models/d4md.emsumK.rds")
-d4md.emsumK <- readRDS("models/d4md.emsumK.rds")
+# d4gbmd.emsumK <- summary(emmeans::emmeans(lm4gb_md.0, ~ knowledge, pbkrtest.limit = 3242))
+# saveRDS(d4gbmd.emsumK,"models/d4gbmd.emsumK.rds")
+d4gbmd.emsumK <- readRDS("models/d4gbmd.emsumK.rds")
+# d4gbmd.empairK <- summary(pairs(emmeans(lm4gb_md.0, ~ knowledge, pbkrtest.limit = 3242)))
+# saveRDS(d4gbmd.empairK,"models/d4gbmd.empairK.rds")
+d4gbmd.empairK <- readRDS("models/d4gbmd.empairK.rds")
 
 
 
-## CF main effects (outcome significant <.001 0.0001427)
-# lmr4cf.main <- lmer(`CF responses` ~ knowledge + outcome + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Counterfactual",],
-#                     control = lmerControl(optimizer = "bobyqa"))
-# 
-# lmr4cf.outcome <- lmer(`CF responses` ~ knowledge + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Counterfactual",],
+## Cf main effects (outcome significant <.001, knowledge and norm insignificant)
+# lmr4gb_cf.main <- lmer(`CF responses` ~ knowledge + outcome + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Counterfactual",],
 #                        control = lmerControl(optimizer = "bobyqa"))
-# lmr4cf.outcome <- anova(lmr4cf.main,lmr4cf.outcome)
-# saveRDS(lmr4cf.outcome,"models/lmr4cf.outcome.rds")
-lmr4cf.outcome <- readRDS("models/lmr4cf.outcome.rds")
+# 
+# lmr4gb_cf.outcome <- lmer(`CF responses` ~ knowledge + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Counterfactual",],
+#                        control = lmerControl(optimizer = "bobyqa"))
+# lmr4gb_cf.outcome <- anova(lmr4gb_cf.main,lmr4gb_cf.outcome)
+# saveRDS(lmr4gb_cf.outcome,"models/lmr4gb_cf.outcome.rds")
+lmr4gb_cf.outcome <- readRDS("models/lmr4gb_cf.outcome.rds")
 
-# lmr4cf.norm <- lmer(`CF responses` ~ knowledge + outcome + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Counterfactual",],
+# lmr4gb_cf.norm <- lmer(`CF responses` ~ knowledge + outcome + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Counterfactual",],
 #                     control = lmerControl(optimizer = "bobyqa"))
-# lmr4cf.norm <- anova(lmr4cf.main,lmr4cf.norm)
-# saveRDS(lmr4cf.norm,"models/lmr4cf.norm.rds")
-lmr4cf.norm <- readRDS("models/lmr4cf.norm.rds")
+# lmr4gb_cf.norm <- anova(lmr4gb_cf.main,lmr4gb_cf.norm)
+# saveRDS(lmr4gb_cf.norm,"models/lmr4gb_cf.norm.rds")
+lmr4gb_cf.norm <- readRDS("models/lmr4gb_cf.norm.rds")
 
-# lmr4cf.knowledge <- lmer(`CF responses` ~ outcome + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Counterfactual",],
+# lmr4gb_cf.knowledge <- lmer(`CF responses` ~ outcome + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Counterfactual",],
 #                          control = lmerControl(optimizer = "bobyqa"))
-# lmr4cf.knowledge <- anova(lmr4cf.main,lmr4cf.knowledge)
-# saveRDS(lmr4cf.knowledge,"models/lmr4cf.knowledge.rds")
-lmr4cf.knowledge <- readRDS("models/lmr4cf.knowledge.rds")
+# lmr4gb_cf.knowledge <- anova(lmr4gb_cf.main,lmr4gb_cf.knowledge)
+# saveRDS(lmr4gb_cf.knowledge,"models/lmr4gb_cf.knowledge.rds")
+lmr4gb_cf.knowledge <- readRDS("models/lmr4gb_cf.knowledge.rds")
 
 
 ## Cf: Three-way interaction (insignificant)
-# lm4cf.0 <- lmer(`CF responses` ~ outcome*knowledge*norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Counterfactual",],
+# lm4gb_cf.0 <- lmer(`CF responses` ~ outcome*knowledge*norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Counterfactual",],
+#                    control = lmerControl(optimizer = "bobyqa"))
+# lm4gb_cf.1 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*knowledge) + (outcome*norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Counterfactual",],
 #                 control = lmerControl(optimizer = "bobyqa"))
-# lm4cf.1 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*knowledge) + (outcome*norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Counterfactual",],
-#                 control = lmerControl(optimizer = "bobyqa"))
-# lm4cf.3way <- anova(lm4cf.0, lm4cf.1)
-# saveRDS(lm4cf.3way, "models/lm4cf.3way.rds")
-lm4cf.3way <- readRDS("models/lm4cf.3way.rds")
+# lm4gb_cf.3way <- anova(lm4gb_cf.0, lm4gb_cf.1)
+# saveRDS(lm4gb_cf.3way, "models/lm4gb_cf.3way.rds")
+lm4gb_cf.3way <- readRDS("models/lm4gb_cf.3way.rds")
 
-## Cf: Outcome x Knowledge interaction (significant 0.01287)
-# lm4cf.2 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Counterfactual",],
+## Cf: Outcome x Knowledge interaction (significant 0.01003)
+# lm4gb_cf.2 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Counterfactual",],
 #                 control = lmerControl(optimizer = "bobyqa"))
-# lm4cf.OxK <- anova(lm4cf.1,lm4cf.2)
-# saveRDS(lm4cf.OxK,"models/lm4cf.OxK.rds")
-lm4cf.OxK <- readRDS("models/lm4cf.OxK.rds")
+# lm4gb_cf.OxK <- anova(lm4gb_cf.1,lm4gb_cf.2)
+# saveRDS(lm4gb_cf.OxK,"models/lm4gb_cf.OxK.rds")
+lm4gb_cf.OxK <- readRDS("models/lm4gb_cf.OxK.rds")
 
 ## Cf: Outcome x Norm interaction (insignificant)
-# lm4cf.3 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*knowledge) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Counterfactual",],
+# lm4gb_cf.3 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*knowledge) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Counterfactual",],
 #                 control = lmerControl(optimizer = "bobyqa"))
-# lm4cf.OxN <- anova(lm4cf.1,lm4cf.3)
-# saveRDS(lm4cf.OxN,"models/lm4cf.OxN.rds")
-lm4cf.OxN <- readRDS("models/lm4cf.OxN.rds")
+# lm4gb_cf.OxN <- anova(lm4gb_cf.1,lm4gb_cf.3)
+# saveRDS(lm4gb_cf.OxN,"models/lm4gb_cf.OxN.rds")
+lm4gb_cf.OxN <- readRDS("models/lm4gb_cf.OxN.rds")
 
 ## Cf: Norm x Knowledge interaction (insignificant)
-# lm4cf.4 <- lmer(`CF responses` ~ (knowledge*outcome) + (outcome*norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4[d4$question=="Counterfactual",],
+# lm4gb_cf.4 <- lmer(`CF responses` ~ (knowledge*outcome) + (outcome*norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb[d4gb$question=="Counterfactual",],
 #                 control = lmerControl(optimizer = "bobyqa"))
-# lm4cf.NxK <- anova(lm4cf.1,lm4cf.4)
-# saveRDS(lm4cf.NxK,"models/lm4cf.NxK.rds")
-lm4cf.NxK <- readRDS("models/lm4cf.NxK.rds")
+# lm4gb_cf.NxK <- anova(lm4gb_cf.1,lm4gb_cf.4)
+# saveRDS(lm4gb_cf.NxK,"models/lm4gb_cf.NxK.rds")
+lm4gb_cf.NxK <- readRDS("models/lm4gb_cf.NxK.rds")
 
 
 ### Counterfactural estimated marginal means
-# d4cf.emsumO <- summary(emmeans::emmeans(lm4cf.0, ~ outcome, pbkrtest.limit = 6600))
-# saveRDS(d4cf.emsumO,"models/d4cf.emsumO.rds")
-d4cf.emsumO <- readRDS("models/d4cf.emsumO.rds")
+# d4gbcf.emsumO <- summary(emmeans::emmeans(lm4gb_cf.0, ~ outcome, pbkrtest.limit = 3273))
+# saveRDS(d4gbcf.emsumO,"models/d4gbcf.emsumO.rds")
+d4gbcf.emsumO <- readRDS("models/d4gbcf.emsumO.rds")
+# d4gbcf.empairO <- summary(pairs(emmeans(lm4gb_cf.0, ~ outcome, pbkrtest.limit = 3273)))
+# saveRDS(d4gbcf.empairO,"models/d4gbcf.empairO.rds")
+d4gbcf.empairO <- readRDS("models/d4gbcf.empairO.rds")
 
-# d4cf.emsumOK <- summary(emmeans::emmeans(lm4cf.0, ~ outcome*knowledge, pbkrtest.limit = 6600))
-# saveRDS(d4cf.emsumOK,"models/d4cf.emsumOK.rds")
-d4cf.emsumOK <- readRDS("models/d4cf.emsumOK.rds")
-# d4cf.empairOK <- summary(emmeans::emmeans(lm4cf.0, pairwise ~ outcome*knowledge, pbkrtest.limit = 6600))$contrasts
-# saveRDS(d4cf.empairOK,"models/d4cf.empairOK.rds")
-d4cf.empairOK <- readRDS("models/d4cf.empairOK.rds")
-
+# d4gbcf.emsumOK <- summary(emmeans::emmeans(lm4gb_cf.0, ~ outcome*knowledge, pbkrtest.limit = 3273))
+# saveRDS(d4gbcf.emsumOK,"models/d4gbcf.emsumOK.rds")
+d4gbcf.emsumOK <- readRDS("models/d4gbcf.emsumOK.rds")
+# d4gbcf.empairOK <- summary(emmeans::emmeans(lm4gb_cf.0, pairwise ~ outcome*knowledge, pbkrtest.limit = 3273))
+# saveRDS(d4gbcf.empairOK,"models/d4gbcf.empairOK.rds")
+d4gbcf.empairOK <- readRDS("models/d4gbcf.empairOK.rds")
 ### test interaction between outcome and knowledge like in normative CF (little effect in norm therefore omitted)
-
-
-
-
-
-## LMM of knowledge, outcome, norm; separately for modal and CF (subject and scenario as random effects)
-# lmm4md.k <- lmer(`CF responses` ~ knowledge + (knowledge|ResponseId) + (1|scenario) + (1|ResponseId), data=d4[d4$question=="Modal",])
-# lmm4md.o <- lmer(`CF responses` ~ outcome + (outcome|ResponseId) + (1|scenario) + (1|ResponseId), data=d4[d4$question=="Modal",])
-# lmm4md.n <- lmer(`CF responses` ~ norm + (norm|ResponseId) + (1|scenario) + (1|ResponseId), data=d4[d4$question=="Modal",])
-# 
-# lmm4cf.k <- lmer(`CF responses` ~ knowledge + (knowledge|ResponseId) + (1|scenario) + (1|ResponseId), data=d4[d4$question=="Counterfactual",])
-# lmm4cf.o <- lmer(`CF responses` ~ outcome + (outcome|ResponseId) + (1|scenario) + (1|ResponseId), data=d4[d4$question=="Counterfactual",])
-# lmm4cf.n <- lmer(`CF responses` ~ norm + (norm|ResponseId) + (1|scenario) + (1|ResponseId), data=d4[d4$question=="Counterfactual",])
 
 ```
 
@@ -3660,14 +3570,14 @@ No participants were excluded from the analyses as long as they answered both qu
 
 ### Main effects and interactions effects
 
-We first explored participants' modal ratings and found a significant main effect of *Knowledge*, $\chi^2(1)$ = `r  sprintf("%.2f", lmr4md.knowledge$Chisq[2])`, *p* <.001, such that participants thought it was less possible for ignorant agents to have not done what they did (*M* = `r round(d4md.emsumK$emmean[1],digits=2)`, 95% CI = [`r sprintf("%.2f", d4md.emsumK$lower.CL[1])`, `r sprintf("%.2f", d4md.emsumK$upper.CL[1])`]) than knowledgeable agents (*M* = `r round(d4md.emsumK$emmean[2],digits=2)`, 95% CI = [`r round(d4md.emsumK$lower.CL[2],digits=2)`, `r round(d4md.emsumK$upper.CL[2],digits=2)`]). We also found a significant main effect of *Outcome*, $\chi^2(1)$ = `r round(lmr4md.outcome$Chisq[2],digits=2)`, *p* = `r round(lmr4md.outcome$'Pr(>Chisq)'[2],digits=3)`, indicating that when the final outcome was abnormal, participants were more likely to believe that the agents could have not acted the way they did (*M* = `r round(d4md.emsumO$emmean[1],digits=2)`, 95% CI = [`r round(d4md.emsumO$lower.CL[1],digits=2)`, `r round(d4md.emsumO$upper.CL[1],digits=2)`]) than when the outcome was normal (*M* = `r round(d4md.emsumO$emmean[2],digits=2)`, 95% CI = [`r round(d4md.emsumO$lower.CL[2],digits=2)`, `r round(d4md.emsumO$upper.CL[2],digits=2)`]). There was not a significant main effect of the type of *Harm*, $\chi^2(1)$ = `r round(lmr4md.norm$Chisq[2],digits=2)`, *p* = `r sprintf("%.3f", lmr4md.norm$'Pr(>Chisq)'[2])`. Analyses of interaction effects did not yield any significant results, including the *Knowledge* $\times$ *Harm Type* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lm4md.3way$Chisq[2],digits=2)`, *p* = `r round(lm4md.3way$'Pr(>Chisq)'[2],digits=3)`,  *Knowledge* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lm4md.OxK$Chisq[2],digits=2)`, *p* = `r sprintf("%.3f", lm4md.OxK$'Pr(>Chisq)'[2])`. We omitted interactions involving the *Harm Type* condition due to its minimal effect.
+We first explored participants' modal ratings and found a significant main effect of *Knowledge*, $\chi^2(1)$ = `r round(lmr4gb_md.knowledge$Chisq[2], digits=2)`, *p* <.001, such that participants thought it was less possible for ignorant agents to have not acted in the way they did (*M* = `r round(d4gbmd.emsumK$emmean[1],digits=2)`, 95% CI = [`r round(d4gbmd.emsumK$lower.CL[1], digits=2)`, `r round(d4gbmd.emsumK$upper.CL[1], digits=2)`]) than knowledgeable agents (*M* = `r round(d4gbmd.emsumK$emmean[2],digits=2)`, 95% CI = [`r round(d4gbmd.emsumK$lower.CL[2],digits=2)`, `r round(d4gbmd.emsumK$upper.CL[2],digits=2)`]), *t*(`r round(d4gbmd.empairK$df, digits=2)`) = `r round(d4gbmd.empairK$t.ratio[1], 2)`, *p* `r ifelse(d4gbmd.empairK$p.value < 0.001, "< .001", paste0("= ", round(d4gbmd.empairK$p.value, 3)))`. There was also a significant main effect of *Outcome*, $\chi^2(1)$ = `r round(lmr4gb_md.outcome$Chisq[2],2)`, *p* = `r round(lmr4gb_md.outcome$'Pr(>Chisq)'[2],digits=3)`. In other words, participants believed that it was more plausible for the agent to have acted differently when the secondary outcome turned out to be bad (*M* = `r round(d4gbmd.emsumO$emmean[1],digits=2)`, 95% CI = [`r round(d4gbmd.emsumO$lower.CL[1], digits=2)`, `r round(d4gbmd.emsumO$upper.CL[1], digits=2)`]) than when it turned out to be good (*M* = `r round(d4gbmd.emsumO$emmean[2],digits=2)`, 95% CI = [`r sprintf("%.2f", d4gbmd.emsumO$lower.CL[2])`, `r round(d4gbmd.emsumO$upper.CL[2],digits=2)`]), *t*(`r round(d4gbmd.empairO$df, digits=2)`) = `r round(d4gbmd.empairO$t.ratio[1], 2)`, *p* `r ifelse(d4gbmd.empairO$p.value < 0.001, "< .001", paste0("= ", round(d4gbmd.empairO$p.value, 3)))`. We did not observe an effect of *Harm Type*, $\chi^2(1)$ = `r round(lmr4gb_md.norm$Chisq[2],digits=2)`, *p* = `r round(lmr4gb_md.norm$'Pr(>Chisq)'[2], 3)`. Analyses of interaction effects in modality ratings did not yield any significant results, including the *Knowledge* $\times$ *Harm Type* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lm4gb_md.3way$Chisq[2],digits=2)`, *p* = `r round(lm4gb_md.3way$'Pr(>Chisq)'[2],digits=3)`,  *Knowledge* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lm4gb_md.OxK$Chisq[2],digits=2)`, *p* = `r round(lm4gb_md.OxK$'Pr(>Chisq)'[2], digits=3)`. We omitted interactions involving the *Harm Type* condition due to its minimal effect.
 
-We then looked into counterfactual ratings, and discovered a significant main effect of *Outcome*, $\chi^2(1)$ = `r round(lmr4cf.outcome$Chisq[2],digits=2)`, *p* <.001, such that compared to normal outcomes (*M* = `r round(d4cf.emsumO$emmean[2],digits=2)`, 95% CI = [`r sprintf("%.2f", d4cf.emsumO$lower.CL[2])`, `r round(d4cf.emsumO$upper.CL[2],digits=2)`]), when the final outcome was abnormal, participants were more inclined to think that it would not have happened if the agents had acted differently (*M* = `r round(d4cf.emsumO$emmean[1],digits=2)`, 95% CI = [`r round(d4cf.emsumO$lower.CL[1],digits=2)`, `r round(d4cf.emsumO$upper.CL[1],digits=2)`]). We did not see the significant main effect of *Harm Type*, $\chi^2(1)$ = `r round(lmr4cf.norm$Chisq[2],digits=2)`, *p* = `r round(lmr4cf.norm$'Pr(>Chisq)'[2],digits=3)`, or *Knowledge*, $\chi^2(1)$ = `r round(lmr4cf.knowledge$Chisq[2],digits=2)`, *p* = `r round(lmr4cf.knowledge$'Pr(>Chisq)'[2],digits=3)`. Additionally, analyses revealed a significant *Knowledge* $\times$ *Outcome* interaction effect, $\chi^2(1)$ = `r round(lm4cf.OxK$Chisq[2],digits=2)`, *p* = `r round(lm4cf.OxK$'Pr(>Chisq)'[2],digits=3)`, such that in normal secondary outcomes, there was an almost negligible difference in participants' belief that the consequence could have been circumvented with an ignorant (*M* = `r round(d4cf.emsumOK$emmean[2],digits=2)`, 95% CI = [`r round(d4cf.emsumOK$lower.CL[2],digits=2)`, `r round(d4cf.emsumOK$upper.CL[2],digits=2)`]) as opposed to a knowledgeable agent (*M* = `r round(d4cf.emsumOK$emmean[4],digits=2)`, 95% CI = [`r sprintf("%.2f",d4cf.emsumOK$lower.CL[4])`, `r round(d4cf.emsumOK$upper.CL[4],digits=2)`]). Whereas in abnormal outcomes, participants were more likely to think that when agents were knowledgeable (*M* = `r round(d4cf.emsumOK$emmean[3],digits=2)`, 95% CI = [`r round(d4cf.emsumOK$lower.CL[3],digits=2)`, `r round(d4cf.emsumOK$upper.CL[3],digits=2)`]), a different action could have resulted in a different outcome than when agents were ignorant (*M* = `r round(d4cf.emsumOK$emmean[1],digits=2)`, 95% CI = [`r round(d4cf.emsumOK$lower.CL[1],digits=2)`, `r round(d4cf.emsumOK$upper.CL[1],digits=2)`]). Again, there was not a significant *Knowledge* $\times$ *Harm Type* $\times$ *Outcome* interaction effect, $\chi^2(1)$ = `r round(lm4cf.3way$Chisq[2],digits=2)`, *p* = `r round(lm4cf.3way$'Pr(>Chisq)'[2],digits=3)` nor any interaction effects involving *Harm Type*.
+We then looked into counterfactual ratings, and discovered a significant main effect of *Outcome*, $\chi^2(1)$ = `r round(lmr4gb_cf.outcome$Chisq[2],digits=2)`, *p* `r ifelse(lmr4gb_cf.outcome$'Pr(>Chisq)' < 0.001, "< .001", paste0("= ", round(lmr4gb_cf.outcome$'Pr(>Chisq)', 3)))`, such that compared to good outcomes (*M* = `r round(d4gbcf.emsumO$emmean[2],digits=2)`, 95% CI = [`r round(d4gbcf.emsumO$lower.CL[2],2)`, `r round(d4gbcf.emsumO$upper.CL[2],digits=2)`]), participants were more inclined to think that in bad outcomes, things could have been different if the agents had acted differently (*M* = `r round(d4gbcf.emsumO$emmean[1],digits=2)`, 95% CI = [`r round(d4gbcf.emsumO$lower.CL[1],digits=2)`, `r round(d4gbcf.emsumO$upper.CL[1],digits=2)`]), *t*(`r round(d4gbcf.empairO$df, digits=2)`) = `r round(d4gbcf.empairO$t.ratio[1], 2)`, *p* `r ifelse(d4gbcf.empairO$p.value < 0.001, "< .001", paste0("= ", round(d4gbcf.empairO$p.value, 3)))`. Results did not reveal significant main effects in *Knowledge*, $\chi^2(1)$ = `r round(lmr4gb_cf.knowledge$Chisq[2],digits=2)`, *p* = `r round(lmr4gb_cf.knowledge$'Pr(>Chisq)'[2],digits=3)` or *Harm Type*, $\chi^2(1)$ = `r round(lmr4gb_cf.norm$Chisq[2],digits=2)`, *p* = `r round(lmr4gb_cf.norm$'Pr(>Chisq)'[2],digits=3)`. Analyses did, however, show a significant *Knowledge* $\times$ *Outcome* interaction effect in counterfactual ratings, $\chi^2(1)$ = `r round(lm4gb_cf.OxK$Chisq[2],digits=2)`, *p* = `r sprintf("%.3f",lm4gb_cf.OxK$'Pr(>Chisq)'[2])`, such that in good secondary outcomes, there was an almost negligible difference in participants' belief that the consequence could have been circumvented with an ignorant agent (*M* = `r round(d4gbcf.emsumOK$emmean[2],digits=2)`, 95% CI = [`r round(d4gbcf.emsumOK$lower.CL[2],digits=2)`, `r round(d4gbcf.emsumOK$upper.CL[2],digits=2)`]) as opposed to a knowledgeable agent (*M* = `r round(d4gbcf.emsumOK$emmean[4],digits=2)`, 95% CI = [`r sprintf("%.2f",d4gbcf.emsumOK$lower.CL[4])`, `r round(d4gbcf.emsumOK$upper.CL[4],digits=2)`]), *t*(`r round(d4gbcf.empairOK$contrasts$df[5], digits=2)`) = `r round(d4gbcf.empairOK$contrasts$t.ratio[5], 2)`, *p* `r ifelse(d4gbcf.empairOK$contrasts$p.value[5] < 0.001, "< .001", paste0("= ", round(d4gbcf.empairOK$contrasts$p.value[5], 3)))`. Whereas in bad outcomes, participants were more likely to think that when agents were knowledgeable (*M* = `r round(d4gbcf.emsumOK$emmean[3],digits=2)`, 95% CI = [`r round(d4gbcf.emsumOK$lower.CL[3],digits=2)`, `r round(d4gbcf.emsumOK$upper.CL[3],digits=2)`]), a different action could have resulted in a different outcome than when agents were ignorant (*M* = `r round(d4gbcf.emsumOK$emmean[1],digits=2)`, 95% CI = [`r round(d4gbcf.emsumOK$lower.CL[1],digits=2)`, `r round(d4gbcf.emsumOK$upper.CL[1],digits=2)`]), *t*(`r round(d4gbcf.empairOK$contrasts$df[2], digits=2)`) = `r round(d4gbcf.empairOK$contrasts$t.ratio[2], 2)`, *p* `r ifelse(d4gbcf.empairOK$contrasts$p.value[2] < 0.001, "< .001", paste0("= ", round(d4gbcf.empairOK$contrasts$p.value[2], 3)))`. Again, there was not a significant three-way *Knowledge* $\times$ *Harm Type* $\times$ *Outcome* interaction effect, $\chi^2(1)$ = `r round(lm4gb_cf.3way$Chisq[2],digits=2)`, *p* = `r sprintf("%.3f", lm4gb_cf.3way$'Pr(>Chisq)'[2])`, nor any interaction effects involving *Harm Type*.
 
-```{r, study4 plots, fig.width=8.5, fig.height=7, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Participants' modality ratings (top) and counterfactuality ratings (bottom) regarding knowledgeable/ignorant agents who violated moral/rational norms when a separate outcome occurred that is normal/abnormal."}
+```{r, study4a plots, fig.width=8.5, fig.height=7, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Participants' modality ratings (top) and counterfactuality ratings (bottom) regarding knowledgeable/ignorant agents who violated moral/rational norms when a separate outcome occurred that is normal/abnormal."}
 
-### d4 modality rating
-d4.md <- d4 %>%
+### d4a modality plot
+d4gb.md <- d4gb %>%
   filter(question=="Modal") %>%
   dplyr::select(ResponseId, `CF responses`, question, norm, outcome, knowledge) %>%
   group_by(`ResponseId`, norm, outcome, knowledge) %>%
@@ -3676,7 +3586,7 @@ d4.md <- d4 %>%
   dplyr::rename(mdN = N) %>%
   dplyr::rename(mdMean = mean) 
 
-d4.md.sum <- d4.md %>%
+d4gb.md.sum <- d4gb.md %>%
   dplyr::select(mdMean, norm, outcome, knowledge) %>%
   group_by(norm, outcome, knowledge) %>% 
   summarise(N = length(mdMean),
@@ -3688,13 +3598,13 @@ d4.md.sum <- d4.md %>%
   rename(mdsumSD = sd) %>%
   rename(mdsumSE = se)
 
-d4.modality <- ggplot(data=d4.md, aes(x=knowledge, y=mdMean, fill=knowledge)) +
+d4gb.modality <- ggplot(data=d4gb.md, aes(x=knowledge, y=mdMean, fill=knowledge)) +
   geom_violin(alpha=.6, linewidth=.1) +
   scale_fill_manual(values=c("#bdd7e7", "#2171b5")) + ###bdd7e7 #6baed6
   geom_point(stat="identity",position=position_jitterdodge(jitter.width=.1,dodge.width=.9),alpha=.05, color="black") +
-  geom_point(data=d4.md.sum, aes(x=knowledge, y=mdMean, fill=knowledge), shape=17, size=2,position=position_dodge(.9), color="black") +
-  geom_line(data=d4.md.sum, aes(x=knowledge, y=mdMean, group=norm),size=1) +
-  geom_errorbar(data=d4.md.sum,aes(ymin=mdMean-mdsumSE, ymax=mdMean+mdsumSE), width=.2, position=position_dodge(.9),color="black") +
+  geom_point(data=d4gb.md.sum, aes(x=knowledge, y=mdMean, fill=knowledge), shape=17, size=2,position=position_dodge(.9), color="black") +
+  geom_line(data=d4gb.md.sum, aes(x=knowledge, y=mdMean, group=norm),linewidth=1) +
+  geom_errorbar(data=d4gb.md.sum,aes(ymin=mdMean-mdsumSE, ymax=mdMean+mdsumSE), width=.2, position=position_dodge(.9),color="black") +
   facet_grid(outcome~norm) +
   ylab("Modality rating") +
   xlab("") +
@@ -3716,13 +3626,13 @@ d4.modality <- ggplot(data=d4.md, aes(x=knowledge, y=mdMean, fill=knowledge)) +
     axis.title.y=element_text(size=rel(2),vjust=.9),
     axis.title.x=element_blank(),
     axis.ticks = element_blank()) +
-    scale_y_continuous(breaks=c(1, 3, 5, 7))
-#ggsave("d4.modality.pdf", width=8, height=12, path="figures")
-d4.modality
+  scale_y_continuous(breaks=c(1, 3, 5, 7))
+#ggsave("d4gb.modality.pdf", width=8, height=12, path="figures")
+d4gb.modality
 
 
-###d4 counterfactual rating
-d4.cf <- d4 %>%
+### d4a counterfactual plot
+d4gb.cf <- d4gb %>%
   filter(question=="Counterfactual") %>%
   dplyr::select(ResponseId, `CF responses`, question, norm, outcome, knowledge) %>%
   group_by(`ResponseId`, norm, outcome, knowledge) %>%
@@ -3731,7 +3641,7 @@ d4.cf <- d4 %>%
   dplyr::rename(cfN = N) %>%
   dplyr::rename(cfMean = mean) 
 
-d4.cf.sum <- d4.cf %>%
+d4gb.cf.sum <- d4gb.cf %>%
   dplyr::select(cfMean, norm, outcome, knowledge) %>%
   group_by(norm, outcome, knowledge) %>% 
   summarise(N = length(cfMean),
@@ -3743,13 +3653,13 @@ d4.cf.sum <- d4.cf %>%
   rename(cfsumSD = sd) %>%
   rename(cfsumSE = se)
 
-d4.counterfactual <- ggplot(data=d4.cf, aes(x=knowledge, y=cfMean, fill=knowledge)) +
+d4gb.counterfactual <- ggplot(data=d4gb.cf, aes(x=knowledge, y=cfMean, fill=knowledge)) +
   geom_violin(alpha=.6, linewidth=.1) +
   scale_fill_manual(values=c("#bdd7e7", "#2171b5")) + ###bdd7e7 #6baed6
   geom_point(stat="identity",position=position_jitterdodge(jitter.width=.1,dodge.width=.9),alpha=.05, color="black") +
-  geom_point(data=d4.cf.sum, aes(x=knowledge, y=cfMean, fill=knowledge), shape=17, size=2,position=position_dodge(.9), color="black") +
-  geom_line(data=d4.cf.sum, aes(x=knowledge, y=cfMean, group=norm),size=1) +
-  geom_errorbar(data=d4.cf.sum,aes(ymin=cfMean-cfsumSE, ymax=cfMean+cfsumSE), width=.2, position=position_dodge(.9),color="black") +
+  geom_point(data=d4gb.cf.sum, aes(x=knowledge, y=cfMean, fill=knowledge), shape=17, size=2,position=position_dodge(.9), color="black") +
+  geom_line(data=d4gb.cf.sum, aes(x=knowledge, y=cfMean, group=norm),size=1) +
+  geom_errorbar(data=d4gb.cf.sum,aes(ymin=cfMean-cfsumSE, ymax=cfMean+cfsumSE), width=.2, position=position_dodge(.9),color="black") +
   facet_grid(outcome~norm) +
   ylab("Counterfactual rating") +
   xlab("") +
@@ -3771,26 +3681,98 @@ d4.counterfactual <- ggplot(data=d4.cf, aes(x=knowledge, y=cfMean, fill=knowledg
     axis.title.y=element_text(size=rel(2),vjust=.9),
     axis.title.x=element_blank(),
     axis.ticks = element_blank()) +
-    scale_y_continuous(breaks=c(1, 3, 5, 7))
-#ggsave("d4.counterfactual.pdf", width=8, height=12, path="figures")
-d4.counterfactual
+  scale_y_continuous(breaks=c(1, 3, 5, 7))
+#ggsave("d4gb.counterfactual.pdf", width=8, height=12, path="figures")
+d4gb.counterfactual
 
 ```
 
-```{r study4 potency & study3 causation, echo=FALSE, warning=FALSE, message=FALSE}
-#Study 4 potency & causation
-
-##For each condition in a scenario, use causal to predict cf*md --> create a new column potency
-d4pot <- d4 %>%
+```{r study4a potency & study2c causation, echo=FALSE, warning=FALSE, message=FALSE}
+## 4a potency: for each condition in a scenario, use causal to predict cf*md --> create a new column potency
+d4gb_pot <- d4gb %>%
   dplyr::select(-condCod) %>%
   pivot_wider(values_from = `CF responses`, names_from = "question") %>%
-  mutate(Potency = scale(as.numeric(Modal))*scale(as.numeric(Counterfactual))) %>%
+  mutate(Potency = as.numeric(Modal)*as.numeric(Counterfactual)) %>%
   drop_na()
 
-##Merge summaries of potency and causal judgment
-d4pot.sum <- d4pot %>%
+## main effects (outcome significant <.001, knowledge significant .002, norm insignificant)
+# lmr4gbpot.main <- lmer(Potency ~ knowledge + outcome + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb_pot)
+
+# lmr4gbpot.outcome <- lmer(Potency ~ knowledge + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb_pot)
+# lmr4gbpot.outcome <- anova(lmr4gbpot.main,lmr4gbpot.outcome)
+# saveRDS(lmr4gbpot.outcome,"models/lmr4gbpot.outcome.rds")
+lmr4gbpot.outcome <- readRDS("models/lmr4gbpot.outcome.rds")
+
+# lmr4gbpot.norm <- lmer(Potency ~ knowledge + outcome + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb_pot)
+# lmr4gbpot.norm <- anova(lmr4gbpot.main,lmr4gbpot.norm)
+# saveRDS(lmr4gbpot.norm,"models/lmr4gbpot.norm.rds")
+lmr4gbpot.norm <- readRDS("models/lmr4gbpot.norm.rds")
+
+# lmr4gbpot.knowledge <- lmer(Potency ~ outcome + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb_pot)
+# lmr4gbpot.knowledge <- anova(lmr4gbpot.main,lmr4gbpot.knowledge)
+# saveRDS(lmr4gbpot.knowledge,"models/lmr4gbpot.knowledge.rds")
+lmr4gbpot.knowledge <- readRDS("models/lmr4gbpot.knowledge.rds")
+
+## three-way interaction (insignificant .073)
+# lmr4gbpot.i0 <- lmer(Potency ~ knowledge * norm * outcome + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb_pot)
+# lmr4gbpot.i1 <- lmer(Potency ~ (knowledge * norm) + (outcome * knowledge) + (outcome * norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb_pot)
+# lmr4gbpot.3way <- anova(lmr4gbpot.i0,lmr4gbpot.i1)
+# saveRDS(lmr4gbpot.3way,"models/lmr4gbpot.3way.rds")
+lmr4gbpot.3way <- readRDS("models/lmr4gbpot.3way.rds")
+
+## two-way: Norm x Knowledge interaction (insignificant)
+# lmr4gbpot.NK <- lmer(Potency ~ (knowledge * outcome) + (outcome * norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb_pot)
+# lmr4gbpot.NxK <- anova(lmr4gbpot.i1, lmr4gbpot.NK)
+# saveRDS(lmr4gbpot.NxK,"models/lmr4gbpot.NxK.rds")
+lmr4gbpot.NxK <- readRDS("models/lmr4gbpot.NxK.rds")
+
+## two-way: Norm x Outcome interaction (insignificant)
+# lmr4gbpot.NO <- lmer(Potency ~ (knowledge * outcome) + (knowledge * norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb_pot)
+# lmr4gbpot.NxO <- anova(lmr4gbpot.i1, lmr4gbpot.NO)
+# saveRDS(lmr4gbpot.NxO,"models/lmr4gbpot.NxO.rds")
+lmr4gbpot.NxO <- readRDS("models/lmr4gbpot.NxO.rds")
+
+# two-way: Outcome x Knowledge interaction (significant, 0.013)
+# lmr4gbpot.OK <- lmer(Potency ~ (norm * outcome) + (knowledge * norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4gb_pot)
+# lmr4gbpot.OxK <- anova(lmr4gbpot.i1,lmr4gbpot.OK)
+# saveRDS(lmr4gbpot.OxK,"models/lmr4gbpot.OxK.rds")
+lmr4gbpot.OxK <- readRDS("models/lmr4gbpot.OxK.rds")
+
+
+### study4_gb potency estimated marginal means
+# d4gb_pot.emsumO <- summary(emmeans::emmeans(lmr4gbpot.i0, ~ outcome, pbkrtest.limit = 3239))
+# saveRDS(d4gb_pot.emsumO,"models/d4gb_pot.emsumO.rds")
+d4gb_pot.emsumO <- readRDS("models/d4gb_pot.emsumO.rds")
+# d4gb_pot.empairO <- summary(pairs(emmeans(lmr4gbpot.i0, ~ outcome, pbkrtest.limit = 3239)))
+# saveRDS(d4gb_pot.empairO,"models/d4gb_pot.empairO.rds")
+d4gb_pot.empairO <- readRDS("models/d4gb_pot.empairO.rds")
+
+# d4gb_pot.emsumK <- summary(emmeans::emmeans(lmr4gbpot.i0, ~ knowledge, pbkrtest.limit = 3239))
+# saveRDS(d4gb_pot.emsumK,"models/d4gb_pot.emsumK.rds")
+d4gb_pot.emsumK <- readRDS("models/d4gb_pot.emsumK.rds")
+# d4gb_pot.empairK <- summary(pairs(emmeans(lmr4gbpot.i0, ~ knowledge, pbkrtest.limit = 3239)))
+# saveRDS(d4gb_pot.empairK,"models/d4gb_pot.empairK.rds")
+d4gb_pot.empairK <- readRDS("models/d4gb_pot.empairK.rds")
+
+# d4gb_pot.emsumOK <- summary(emmeans::emmeans(lmr4gbpot.i0, ~ outcome*knowledge, pbkrtest.limit = 3239))
+# saveRDS(d4gb_pot.emsumOK,"models/d4gb_pot.emsumOK.rds")
+d4gb_pot.emsumOK <- readRDS("models/d4gb_pot.emsumOK.rds")
+# d4gb_pot.empairOK <- summary(emmeans::emmeans(lmr4gbpot.i0, pairwise ~ outcome*knowledge, pbkrtest.limit = 3239))
+# saveRDS(d4gb_pot.empairOK,"models/d4gb_pot.empairOK.rds")
+d4gb_pot.empairOK <- readRDS("models/d4gb_pot.empairOK.rds")
+
+
+### d4a potency & study 2c causation
+
+d4gb_pot <- d4gb %>% # same as above
+  dplyr::select(-condCod) %>%
+  pivot_wider(values_from = `CF responses`, names_from = "question") %>%
+  mutate(Potency = as.numeric(Modal)*as.numeric(Counterfactual)) %>%
+  drop_na()
+
+d4_gbpotsum <- d4gb_pot %>%
   dplyr::select(Potency, norm, outcome, knowledge, scenario, condition) %>%
-  group_by(knowledge,norm,outcome,scenario, condition) %>% 
+  group_by(knowledge,norm,outcome,scenario,condition) %>% 
   summarise(N = length(Potency),
             mean = mean(as.numeric(Potency), na.rm=TRUE),
             sd = sd(as.numeric(Potency),na.rm=TRUE),
@@ -3798,190 +3780,74 @@ d4pot.sum <- d4pot %>%
   dplyr::rename(potencyN = N) %>%
   rename(potencyMean = mean) %>%
   rename(potencySD = sd) %>%
-  rename(potencySE = se)
+  rename(potencySE = se) %>%
+  mutate(condition = case_when(
+    outcome == "Improbable" ~ gsub("B", "U", condition),
+    outcome == "Probable" ~ gsub("G", "P", condition),
+    TRUE ~ condition))
 
-d3.cspbpot.sum <- d3.cspb %>%
-  dplyr::select(`causation.response`, norm, outcome, knowledge, scenario, condition) %>%
-  group_by(knowledge,norm,outcome, scenario, condition) %>% 
-  summarise(N = length(`causation.response`),
-            mean = mean(as.numeric(`causation.response`), na.rm=TRUE),
-            sd = sd(as.numeric(`causation.response`),na.rm=TRUE),
+#### merge summaries of potency and corresponding causal judgments
+d2c.potsum <- d2c %>%   # 2*2*2 by 16 scenarios
+  dplyr::select(cause, norm, outcome, knowledge, vign, condition) %>%
+  group_by(knowledge,norm,outcome, vign, condition) %>% 
+  summarise(N = length(cause),
+            mean = mean(as.numeric(cause), na.rm=TRUE),
+            sd = sd(as.numeric(cause),na.rm=TRUE),
             se = sd / sqrt(N)) %>%
-  dplyr::rename(causationN = N) %>%
-  rename(causationMean = mean) %>%
-  rename(causationSD = sd) %>%
-  rename(causationSE = se)
+  dplyr::rename(causation_N = N) %>%
+  rename(causation_Mean = mean) %>%
+  rename(causation_SD = sd) %>%
+  rename(causation_SE = se) %>%
+  rename(scenario = vign) 
+d2c.potsum$outcome <- dplyr::recode(d2c.potsum$outcome, "Good Outcome"="Good", "Bad Outcome"="Bad")
+d2c.potsum$norm <- dplyr::recode(as.factor(d2c.potsum$norm), "Moral Norm"="Morality", "Rational Norm"="Rationality")
+
+d4gb.cspot_sum <- merge(d2c.potsum, d4_gbpotsum, by=c("knowledge", "norm", "outcome", "scenario", "condition")) # 128*13, combining 4a (d4gb) potency with 2c causation
 
 
-
-##main effects (outcome significant <.001 0.0002734, knowledge significant <.001)
-# lmr4pot.main <- lmer(Potency ~ knowledge + outcome + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pot, 
-#                      control = lmerControl(optimizer = "bobyqa"))
-#   
-# lmr4pot.outcome <- lmer(Potency ~ knowledge + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pot,
-#                         control = lmerControl(optimizer = "bobyqa"))
-# lmr4pot.outcome <- anova(lmr4pot.main,lmr4pot.outcome)
-# saveRDS(lmr4pot.outcome,"models/lmr4pot.outcome.rds")
-lmr4pot.outcome <- readRDS("models/lmr4pot.outcome.rds")
-# d4pot.sumO <- d4pot %>% 
-#   select(outcome, Potency, ResponseId) %>%
-#   group_by(outcome,ResponseId) %>%
-#   summarise(potencyM = mean(Potency),na.rm=TRUE) %>%
-#   group_by(outcome) %>%
-#   summarise(N = length(potencyM),
-#             mean = mean(potencyM, na.rm=TRUE),
-#             sd = sd(potencyM,na.rm=TRUE),
-#             se = sd / sqrt(N))
-
-# lmr4pot.norm <- lmer(Potency ~ knowledge + outcome + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pot,
-#                      control = lmerControl(optimizer = "bobyqa"))
-# lmr4pot.norm <- anova(lmr4pot.main,lmr4pot.norm)
-# saveRDS(lmr4pot.norm,"models/lmr4pot.norm.rds")
-lmr4pot.norm <- readRDS("models/lmr4pot.norm.rds")
-
-# lmr4pot.knowledge <- lmer(Potency ~ outcome + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pot,
-#                           control = lmerControl(optimizer = "bobyqa"))
-# lmr4pot.knowledge <- anova(lmr4pot.main,lmr4pot.knowledge)
-# saveRDS(lmr4pot.knowledge,"models/lmr4pot.knowledge.rds")
-lmr4pot.knowledge <- readRDS("models/lmr4pot.knowledge.rds")
-# d4pot.sumK <- d4pot %>% 
-#   select(knowledge, Potency, ResponseId) %>%
-#   group_by(knowledge,ResponseId) %>%
-#   summarise(potencyM = mean(Potency),na.rm=TRUE) %>%
-#   group_by(knowledge) %>%
-#   summarise(N = length(potencyM),
-#             mean = mean(potencyM, na.rm=TRUE),
-#             sd = sd(potencyM,na.rm=TRUE),
-#             se = sd / sqrt(N))
+#### d4a potency interaction: is there an interaction between potency and outcome valence in predicting causal judgments
+##### (insignificant, 0.1916)
+# lmr4a.potoutint0 <- lmer(causation_Mean ~ outcome*potencyMean + (1|scenario), data=d4gb.cspot_sum)
+# lmr4a.potoutint1 <- lmer(causation_Mean ~ outcome + potencyMean + (1|scenario), data=d4gb.cspot_sum)
+# lmr4a.potoutint <- anova(lmr4a.potoutint0, lmr4a.potoutint1)
+# saveRDS(lmr4a.potoutint, "models/lmr4a.potoutint.rds")
+lmr4a.potoutint <- readRDS("models/lmr4a.potoutint.rds")
 
 
-
-
-## three-way interaction (insignificant)
-# lmr4pot.i0 <- lmer(Potency ~ knowledge * norm * outcome + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pot)
-# lmr4pot.i1 <- lmer(Potency ~ (knowledge * norm) + (outcome * knowledge) + (outcome * norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pot)
-# lmr4pot.3way <- anova(lmr4pot.i0,lmr4pot.i1)
-# saveRDS(lmr4pot.3way,"models/lmr4pot.3way.rds")
-lmr4pot.3way <- readRDS("models/lmr4pot.3way.rds")
-
-
-## two-way: Norm x Knowledge interaction (insignificant)
-# lmr4pot.NK <- lmer(Potency ~ (knowledge * outcome) + (outcome * norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pot)
-# lmr4pot.NxK <- anova(lmr4pot.i1, lmr4pot.NK)
-# saveRDS(lmr4pot.NxK,"models/lmr4pot.NxK.rds")
-lmr4pot.NxK <- readRDS("models/lmr4pot.NxK.rds")
-# d4pot %>% 
-#   group_by(knowledge,norm,ResponseId) %>% 
-#   summarise(means=mean(Potency, na.rm = T)) 
-
-## two-way: Norm x Outcome interaction (insignificant)
-# lmr4pot.NO <- lmer(Potency ~ (knowledge * outcome) + (knowledge * norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pot)
-# lmr4pot.NxO <- anova(lmr4pot.i1, lmr4pot.NO)
-# saveRDS(lmr4pot.NxO,"models/lmr4pot.NxO.rds")
-lmr4pot.NxO <- readRDS("models/lmr4pot.NxO.rds")
-
-
-# two-way: Outcome x Knowledge interaction (significant, 0.006109)
-# lmr4pot.OK <- lmer(Potency ~ (norm * outcome) + (knowledge * norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pot)
-# lmr4pot.OxK <- anova(lmr4pot.i1,lmr4pot.OK)
-# saveRDS(lmr4pot.OxK,"models/lmr4pot.OxK.rds")
-lmr4pot.OxK <- readRDS("models/lmr4pot.OxK.rds")
-
-
-
-### study4 potency estimated marginal means
-# d4pot.emsumO <- summary(emmeans::emmeans(lmr4pot.i0, ~ outcome, pbkrtest.limit = 6484))
-# saveRDS(d4pot.emsumO,"models/d4pot.emsumO.rds")
-d4pot.emsumO <- readRDS("models/d4pot.emsumO.rds")
-
-# d4pot.emsumK <- summary(emmeans::emmeans(lmr4pot.i0, ~ knowledge, pbkrtest.limit = 6484))
-# saveRDS(d4pot.emsumK,"models/d4pot.emsumK.rds")
-d4pot.emsumK <- readRDS("models/d4pot.emsumK.rds")
-
-# d4pot.emsumOK <- summary(emmeans::emmeans(lmr4pot.i0, ~ outcome*knowledge, pbkrtest.limit = 6484))
-# saveRDS(d4pot.emsumOK,"models/d4pot.emsumOK.rds")
-d4pot.emsumOK <- readRDS("models/d4pot.emsumOK.rds")
-# d4pot.empairOK <- summary(emmeans::emmeans(lmr4pot.i0, pairwise ~ outcome*knowledge, pbkrtest.limit = 6484))$contrasts
-# saveRDS(d4pot.empairOK,"models/d4pot.empairOK.rds")
-d4pot.empairOK <- readRDS("models/d4pot.empairOK.rds")
-
-
-
-##Causal ~ potency + knowledge (test whether potency is a mediator between knowledge and causation)
-d3d4_cspot <- merge(d3.cspbpot.sum, d4pot.sum, by=c("knowledge", "norm", "outcome", "scenario")) 
-# lmr4.cspot1 <- lme4::lmer(causationMean ~ knowledge*outcome + (1|scenario), data=d3d4_cspot)
-# lmr4.cspot2 <- lme4::lmer(causationMean ~ potencyMean + knowledge*outcome + (1|scenario) , data=d3d4_cspot)
-# lmr4.cspot3 <- lme4::lmer(causationMean ~ knowledge + outcome + (1|scenario), data=d3d4_cspot)
-# lmr4.cspot4 <- lme4::lmer(causationMean ~ potencyMean + knowledge + outcome + (1|scenario), data=d3d4_cspot)
-
-# lmr4.cspotmed.OxK <- mediate(lmr4.cspot1, lmr4.cspot2, treat = "knowledge", mediator = "potencyMean", robustSE = TRUE)
-# saveRDS(lmr4.cspotmed.OxK, "models/lmr4.cspotmed.OxK.rds")
-lmr4.cspotmed.OxK <- readRDS("models/lmr4.cspotmed.OxK.rds")
-#summary(lmr4.cspotmed.OxK)
-
-# lmr4.cspotmed.OK <- mediate(lmr4.cspot3, lmr4.cspot4, treat = "knowledge", mediator = "potencyMean", robustSE = TRUE)
-# saveRDS(lmr4.cspotmed.OK, "models/lmr4.cspotmed.OK.rds")
-lmr4.cspotmed.OK <- readRDS("models/lmr4.cspotmed.OK.rds")
-#summary(lmr4.cspotmed.OK)
-
-
-#Test interaction between potency and normality/outcome in predicting causal judgments (insignificant)
-# lmr4.potoutint0 <- lmer(causationMean ~ outcome*potencyMean + (1|scenario), data=d3d4_cspot)
-# lmr4.potoutint1 <- lmer(causationMean ~ outcome + potencyMean + (1|scenario), data=d3d4_cspot)
-# lmr4.potoutint <- anova(lmr4.potoutint0, lmr4.potoutint1)
-# saveRDS(lmr4.potoutint, "models/lmr4.potoutint.rds")
-lmr4.potoutint <- readRDS("models/lmr4.potoutint.rds")
-
-
-## JSP: pick up mediation and cause viz potency here:
-
-# 
-# d3d4_cspot <- merge(d3.cspbpot.sum, d4pot.sum, by=c("knowledge", "norm", "outcome", "scenario"))
-# d3d4_cspot$Interaction_KO[d3d4_cspot$knowledge=="Knowledge" & d3d4_cspot$outcome=="Abnormal"] <- 0
-# d3d4_cspot$Interaction_KO[d3d4_cspot$knowledge=="Knowledge" & d3d4_cspot$outcome=="Normal"] <- 1
-# d3d4_cspot$Interaction_KO[d3d4_cspot$knowledge=="Ignorance" & d3d4_cspot$outcome=="Abnormal"] <- 1
-# d3d4_cspot$Interaction_KO[d3d4_cspot$knowledge=="Ignorance" & d3d4_cspot$outcome=="Normal"] <- 0
-# d3d4_cspot$Interaction_KO <- as.factor(d3d4_cspot$Interaction_KO)
-# 
-# 
-# lmr4.cspot1 <- lme4::lmer(potencyMean ~ knowledge + outcome + Interaction_KO + (1|scenario), data=d3d4_cspot)
-# lmr4.cspot2 <- lme4::lmer(causationMean ~ potencyMean + knowledge + outcome + Interaction_KO + (1|scenario) , data=d3d4_cspot)
-# 
-# lmr4.cspot.out <- mediate(lmr4.cspot1, lmr4.cspot2, sims=1000, treat="Interaction_KO", mediator="potencyMean")
-# lmr4.med <- summary(lmr4.cspot.out)
-# 
-# 
-# 
-# lmr4.cspot1 <- lme4::lmer(potencyMean ~ knowledge + outcome + Interaction_KO + (1|scenario), data=d3d4_cspot)
-# lmr4.cspot2 <- lme4::lmer(causationMean ~ potencyMean + knowledge + outcome + Interaction_KO + (1|scenario) , data=d3d4_cspot)
-# 
-# lmr4.cspot.out <- mediate(lmr4.cspot1, lmr4.cspot2, sims=1000, treat="Interaction_KO", mediator="potencyMean")
-# lmr4.med <- summary(lmr4.cspot.out)
-
+#### d4a potency mediation: is potency a mediator between knowledge*outcome and causation?
+# still very odd...
+d4a.m <- d4gb.cspot_sum %>%
+  mutate(Knowledge = factor(knowledge, levels = c("Ignorance","Knowledge"), labels = c(0, 1)),
+          Outcome = factor(outcome, levels = c("Bad","Good"), labels = c(0, 1)),
+          # recoding interaction term explicitly
+          Interaction = case_when(Knowledge == 1 & Outcome == 0 ~ 0, ## Knowledge + Bad
+            Knowledge == 1 & Outcome == 1 ~ 1, ## Knowledge + Good
+            Knowledge == 0 & Outcome == 0 ~ 1, ## Ignorance + Bad
+            Knowledge == 0 & Outcome == 1 ~ 0 ## Ignorance + Good
+            ))
+d4afull.fit <- lme4::lmer(causation_Mean ~ potencyMean + Knowledge + Outcome + Interaction + (1|scenario), data=d4a.m)
+d4amed.fit <- lme4::lmer(potencyMean ~ Knowledge + Outcome + Interaction + (1|scenario), data=d4a.m)
+d4amed.out <- mediate(d4afull.fit, d4amed.fit, sims=1000, treat="Interaction", mediator="potencyMean")
+d4amed <- summary(d4amed.out)
 
 ```
 
 ### Potency and its relationship with causal judgments
 
-In this part of the analysis, we constructed the measure of potency by taking the product of participants' modal rating and counterfactual rating. Embedded in this measure is the perceived likelihood of the counterfactual antecedent as well as the perceived likelihood of the counterfactual's outcome based on the given antecedent (Petrocelli et al., 2011). In existing literature, potency has been argued to reflect the amount of impact counterfactual reasoning has on causal judgments. To test this connection, we included participants' causal judgement from Experiment 3a.
+In this part of the analysis, we constructed a measure of potency by calculating the product of participants' modal and counterfactual ratings. This approach allows us to explore the impact of counterfactual reasoning on causal judgments, using data from both the current study and Experiment 2c.
 
-We first looked into main effects of *Knowledge*, *Harm Type*, and *Outcome* on potency and we found statistical significance in both *Knowledge*, $\chi^2(1)$ = `r round(lmr4pot.knowledge$Chisq[2],digits=2)`, *p* = <.001, and *Outcome*, $\chi^2(1)$ = `r round(lmr4pot.outcome$Chisq[2],digits=2)`, *p* <.001. Potency being higher for knowledgeable agents (*M* = `r round(d4pot.emsumK$emmean[2],digits=2)`, 95% CI = [`r round(d4pot.emsumK$lower.CL[2],digits=2)`, `r round(d4pot.emsumK$upper.CL[2],digits=2)`]) than ignorant agents (*M* = `r round(d4pot.emsumK$emmean[1],digits=2)`, 95% CI = [`r round(d4pot.emsumK$lower.CL[1],digits=2)`, `r round(d4pot.emsumK$upper.CL[1],digits=2)`]) shows that counterfactual reasoning exerts a larger amount of influence on causal selection on the former type of agents than the latter. Potency was also higher in abnormal outcomes (*M* = `r round(d4pot.emsumO$emmean[1],digits=2)`, 95% CI = [`r round(d4pot.emsumO$lower.CL[1],digits=2)`, `r round(d4pot.emsumO$upper.CL[1],digits=2)`]) than in normal outcomes (*M* = `r round(d4pot.emsumO$emmean[2],digits=2)`, 95% CI = [`r round(d4pot.emsumO$lower.CL[2],digits=2)`, `r round(d4pot.emsumO$upper.CL[2],digits=2)`]). In addition, there was a statistically significant *Knowledge* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lmr4pot.OxK$Chisq[2],digits=2)`, *p* = `r round(lmr4pot.OxK$'Pr(>Chisq)'[2],digits=3)`, such that in normal outcomes (*t*(`r round(d4pot.empairOK$df[5])`) = `r round(d4pot.empairOK$t.ratio[5], digits=2)`, *p* = `r round(d4pot.empairOK$p.value[5], digits=3)`), the effect of potency regarding knowledgeable agents (*M* = `r round(d4pot.emsumOK$emmean[4],digits=2)`, 95% CI = [`r round(d4pot.emsumOK$lower.CL[4],digits=2)`, `r round(d4pot.emsumOK$upper.CL[4],digits=2)`]) did not differentiate greatly from ignorant agents (*M* = `r round(d4pot.emsumOK$emmean[2],digits=2)`, 95% CI = [`r round(d4pot.emsumOK$lower.CL[2],digits=2)`, `r round(d4pot.emsumOK$upper.CL[2],digits=2)`]), whereas in abnormal outcomes (*t*(`r round(d4pot.empairOK$df[2])`) = `r round(d4pot.empairOK$t.ratio[2], digits=2)`, *p* <.001), this difference was much larger between agents with knowledge (*M* = `r round(d4pot.emsumOK$emmean[3],digits=2)`, 95% CI = [`r round(d4pot.emsumOK$lower.CL[3],digits=2)`, `r round(d4pot.emsumOK$upper.CL[3],digits=2)`]) and those without (*M* = `r round(d4pot.emsumOK$emmean[1],digits=2)`, 95% CI = [`r round(d4pot.emsumOK$lower.CL[1],digits=2)`, `r round(d4pot.emsumOK$upper.CL[1],digits=2)`]).
+We first looked into main effects of *Knowledge*, *Harm Type*, and *Outcome* on potency and we found statistical significance in both *Knowledge*, $\chi^2(1)$ = `r round(lmr4gbpot.knowledge$Chisq[2],digits=2)`, *p* `r ifelse(lmr4gbpot.knowledge$'Pr(>Chisq)' < 0.001, "< .001", paste0("= ", round(lmr4gbpot.knowledge$'Pr(>Chisq)', 3)))`, and *Outcome*, $\chi^2(1)$ = `r round(lmr4gbpot.outcome$Chisq[2],digits=2)`, *p* `r ifelse(lmr4gbpot.outcome$'Pr(>Chisq)' < 0.001, "< .001", paste0("= ", round(lmr4gbpot.outcome$'Pr(>Chisq)', 3)))`. Potency being higher for knowledgeable agents (*M* = `r round(d4gb_pot.emsumK$emmean[2],digits=2)`, 95% CI = [`r round(d4gb_pot.emsumK$lower.CL[2],digits=2)`, `r round(d4gb_pot.emsumK$upper.CL[2],digits=2)`]) than ignorant agents (*M* = `r round(d4gb_pot.emsumK$emmean[1],digits=2)`, 95% CI = [`r round(d4gb_pot.emsumK$lower.CL[1],digits=2)`, `r round(d4gb_pot.emsumK$upper.CL[1],digits=2)`]) suggests that counterfactual reasoning exerts a larger amount of influence on causal selection on the former type of agents than the latter, *t*(`r round(d4gb_pot.empairK$df, digits=2)`) = `r round(d4gb_pot.empairK$t.ratio, 2)`, *p* `r ifelse(d4gb_pot.empairK$p.value < 0.001, "< .001", paste0("= ", round(d4gb_pot.empairK$p.value, 3)))`. Potency was also higher in bad outcomes (*M* = `r round(d4gb_pot.emsumO$emmean[1],digits=2)`, 95% CI = [`r round(d4gb_pot.emsumO$lower.CL[1],digits=2)`, `r round(d4gb_pot.emsumO$upper.CL[1],digits=2)`]) than in good outcomes (*M* = `r round(d4gb_pot.emsumO$emmean[2],digits=2)`, 95% CI = [`r round(d4gb_pot.emsumO$lower.CL[2],digits=2)`, `r sprintf("%.2f", d4gb_pot.emsumO$upper.CL[2])`]), *t*(`r round(d4gb_pot.empairO$df, digits=2)`) = `r round(d4gb_pot.empairO$t.ratio, 2)`, *p* `r ifelse(d4gb_pot.empairO$p.value < 0.001, "< .001", paste0("= ", round(d4gb_pot.empairO$p.value, 3)))`. In addition, there was a statistically significant *Knowledge* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lmr4gbpot.OxK$Chisq[2],digits=2)`, *p* = `r round(lmr4gbpot.OxK$'Pr(>Chisq)'[2],digits=3)`, such that in good outcomes, the effect of potency on knowledgeable agents (*M* = `r round(d4gb_pot.emsumOK$emmean[4],digits=2)`, 95% CI = [`r round(d4gb_pot.emsumOK$lower.CL[4],digits=2)`, `r round(d4gb_pot.emsumOK$upper.CL[4],digits=2)`]) did not differentiate greatly from that on ignorant agents (*M* = `r round(d4gb_pot.emsumOK$emmean[2],digits=2)`, 95% CI = [`r round(d4gb_pot.emsumOK$lower.CL[2],digits=2)`, `r round(d4gb_pot.emsumOK$upper.CL[2],digits=2)`]), *t*(`r round(d4gb_pot.empairOK$df[5])`) = `r round(d4gb_pot.empairOK$t.ratio[5], digits=2)`, *p* = `r round(d4gb_pot.empairOK$p.value[5], digits=3)`. Whereas in bad outcomes, potency had a much larger influence on agents with knowledge (*M* = `r round(d4gb_pot.emsumOK$emmean[3],digits=2)`, 95% CI = [`r round(d4gb_pot.emsumOK$lower.CL[3],digits=2)`, `r round(d4gb_pot.emsumOK$upper.CL[3],digits=2)`]) versus those without (*M* = `r round(d4gb_pot.emsumOK$emmean[1],digits=2)`, 95% CI = [`r round(d4gb_pot.emsumOK$lower.CL[1],digits=2)`, `r round(d4gb_pot.emsumOK$upper.CL[1],digits=2)`]), *t*(`r round(d4gb_pot.empairOK$df[2])`) = `r round(d4gb_pot.empairOK$t.ratio[2], digits=2)`, *p* `r round(d4gb_pot.empairOK$p.value[2], digits=3)`.
 
-To further corroborate the role of potency measure in causal cognition, we looked into its relationship with causal judgment collected in a similar study (i.e., Experiment 3a). Our analysis shows that potency is a mediator between *Knowledge*, *Outcome Normality* and *Causal Judgment*, (*ACME* = .034, *p* $<$ .001). We did not, however, find an interaction between potency and the normality of outcome (defined by probability of occurrence) in predicting causal judgments, $\chi^2(1)$ = `r round(lmr4.potoutint$Chisq[2],digits=2)`, *p* = `r round(lmr4.potoutint$'Pr(>Chisq)'[2],digits=3)`.
-
-```{r, pot and cspot plots in case of use, fig.width=8.5, fig.height=7, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Participants' potency ratings regarding knowledgeable/ignorant agents who violated moral/rational norms when a separate outcome occurred that is normal/abnormal."}
-
-# 
-# d3d4_cspot %>%
-#   dplyr::select(potencyMean, causationMean, knowledge, scenario, outcome) %>%
-#   ggplot(aes(x=causationMean, y=potencyMean, color=knowledge)) +
-#   facet_wrap(~outcome) +
-#   geom_point() +
-#   geom_smooth(method="lm")
-##can add label for scenario (number)
+On the other hand, we did not see significant effects in *Harm Type*, $\chi^2(1)$ = `r round(lmr4gbpot.norm$Chisq[2],digits=2)`, *p* `r ifelse(lmr4gbpot.norm$'Pr(>Chisq)' < 0.001, "< .001", paste0("= ", round(lmr4gbpot.norm$'Pr(>Chisq)', 3)))`, or the three-way *Knowledge* $\times$ *Harm Type* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lmr4gbpot.3way$Chisq[2],digits=2)`, *p* = `r sprintf("%.3f",lmr4gbpot.3way$'Pr(>Chisq)'[2])`. We omitted interactions involving the *Harm Type* condition due to its minimal effect.
 
 
-d4.pot <- d4pot %>%
+
+[[[To further corroborate the role of potency measure in causal cognition, we looked into its relationship with causal judgment collected in a similar study (i.e., Experiment 3a). Our analysis shows that potency is a mediator between *Knowledge*, *Outcome Normality* and *Causal Judgment*, (*ACME* = .034, *p* $<$ .001). We also found an interaction between potency and the normality of outcome in predicting causal judgments, $\chi^2(1)$ = `r round(lmr4a.potoutint$Chisq[2],digits=2)`, *p* = `r round(lmr4a.potoutint$'Pr(>Chisq)'[2],digits=3)`.]]]
+
+```{r, 4a pot and cs-pot plots in case of use, fig.width=8.5, fig.height=7, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Participants' potency ratings regarding knowledgeable/ignorant agents who violated moral/rational norms when a separate outcome occurred that is good/bad."}
+
+### d4a potency plots
+d4gb.pot <- d4gb_pot %>%  # averaged across scenarios
   dplyr::select(ResponseId, Potency, norm, outcome, knowledge) %>%
   group_by(`ResponseId`, norm, outcome, knowledge) %>%
   summarise(N = length(Potency),
@@ -3989,7 +3855,7 @@ d4.pot <- d4pot %>%
   dplyr::rename(potN = N) %>%
   dplyr::rename(potMean = mean) 
 
-d4.pot.sum <- d4.pot %>%
+d4gb.pot.sum <- d4gb.pot %>%
   dplyr::select(potMean, norm, outcome, knowledge) %>%
   group_by(norm, outcome, knowledge) %>% 
   summarise(N = length(potMean),
@@ -4000,15 +3866,15 @@ d4.pot.sum <- d4.pot %>%
   rename(potMean = mean) %>%
   rename(potsumSD = sd) %>%
   rename(potsumSE = se)
-  
-d4.potfig <- d4.pot %>%
+
+d4gb.potfig <- d4gb.pot %>%
   ggplot(., aes(x=knowledge, y=potMean, fill=knowledge)) +
   geom_violin(alpha=.6, linewidth=.1) +
   scale_fill_manual(values=c("#bdd7e7", "#2171b5")) + ###bdd7e7 #6baed6
   geom_point(stat="identity",position=position_jitterdodge(jitter.width=.1,dodge.width=.9),alpha=.05, color="black") +
-  geom_point(data=d4.pot.sum, aes(x=knowledge, y=potMean, fill=knowledge), shape=17, size=2,position=position_dodge(.9), color="black") +
-  geom_line(data=d4.pot.sum, aes(x=knowledge, y=potMean, group=norm),size=1) +
-  geom_errorbar(data=d4.pot.sum,aes(ymin=potMean-potsumSE, ymax=potMean+potsumSE), width=.2, position=position_dodge(.9),color="black") +
+  geom_point(data=d4gb.pot.sum, aes(x=knowledge, y=potMean, fill=knowledge), shape=17, size=2,position=position_dodge(.9), color="black") +
+  geom_line(data=d4gb.pot.sum, aes(x=knowledge, y=potMean, group=norm),size=1) +
+  geom_errorbar(data=d4gb.pot.sum,aes(ymin=potMean-potsumSE, ymax=potMean+potsumSE), width=.2, position=position_dodge(.9),color="black") +
   facet_grid(outcome~norm) +
   ylab("Potency score") +
   xlab("") +
@@ -4031,16 +3897,12 @@ d4.potfig <- d4.pot %>%
     axis.title.x=element_blank(),
     axis.ticks = element_blank()) +
   scale_y_continuous(breaks=c(7,21,35,49))
-#ggsave("d4.potfig.pdf", width=8, height=12, path="figures")
-d4.potfig
+#ggsave("d4gb.potfig.pdf", width=8, height=12, path="figures")
+d4gb.potfig
 
-
-
-
-
-d3d4cspot.plot <- d3d4_cspot %>%
-  dplyr::select(potencyMean, causationMean, knowledge, norm, outcome) %>%
-  ggplot(aes(x=causationMean, y=potencyMean, color=knowledge)) +
+d4gb_cspot.plot <- d4gb.cspot_sum %>%
+  dplyr::select(potencyMean, causation_Mean, knowledge, norm, outcome) %>%
+  ggplot(aes(x=causation_Mean, y=potencyMean, color=knowledge)) +
   facet_grid(outcome~norm) +
   geom_point() +
   geom_smooth(method="lm") +
@@ -4063,8 +3925,563 @@ d3d4cspot.plot <- d3d4_cspot %>%
     ,axis.ticks = element_blank()
     ,axis.title=element_text(size=rel(1.5))
   ) 
-d3d4cspot.plot
+d4gb_cspot.plot
 
+#grid.arrange(d4pot.plot, d3d4cspot.plot, ncol=2)       ESW: check and see if this looks ok
+```
+
+## Discussion
+
+Experiment 4a expands on our understanding of causal cognition in negative and positive secondary outcomes by examining modal and counterfactual judgments, that is, how participants assess the plausibility of alternative antecedent events and the likelihood of different outcomes under such hypothetical alternatives. Modality ratings were influenced by both knowledge and outcome valence, suggesting that the availability of alternatives was driven by whether the agent knowingly caused harm and whether the secondary outcome was negative. Counterfactuals, on the other hand, was impacted by outcome valence and its interaction with knowledge, such that for negative outcomes, the counterfactual reasoning was more dependent on the antecedent when said antecedent involved an agent knowingly causing harm. In consistency with previous studies, these effects revealed that participants were more likely to consider an alternative outcome plausible when the causal agent was knowledgeable rather than ignorant, especially in cases of bad secondary outcomes. Tying this effect back to the same *Knowledge* $\times$ *Outcome* interaction previously found studies involving causal judgments prompted us to consider the underlying role of counterfactual reasoning in causal attribution.
+
+We put the two pieces of counterfactual thinking together to understand whether and how they could jointly explain causal judgments, and saw in the potency results that it was impacted by knowledge, outcome valence, and the interaction between the two. This measure integrates perceived likelihood of counterfactual antecedent with the perceived likelihood of counterfactual consequence. The higher it is, the easier it should be for participants to think of such counterfactuals. Based on the observed effects, we conclude that knowledge status, outcome valuence, and their interaction, all contribute to potency. More specifically, when causal agents acted knowingly as opposed to ignorantly or when secondary outcomes were negative as opposed to positive, counterfactual reasoning had a larger impact on causal judgments, and the said knowledge effect was even more prominent when secondary outcomes were unwelcome. It is also worth noting that potency did not interact with outcome valence or knowledge in predicting causal selection (?: are these still worth including??), suggesting a unidirectional influence coming from outcome valence to potency, eventually to causal judgments. Taken together, our findings support a model where prescriptive normality influences causal judgments through counterfactual reasoning. 
+
+
+
+# Experiment 4b: Modality and counterfactuality judgments in cases of probable/improbable outcomes and norm violations
+
+Following Experiment 4a's exploration of modality and counterfactual judgments with different prescriptive normality, Experiment 4b seeks to extend this investigation into the realm of descriptive normality. The current study used scenarios where secondary outcomes were either likely or unlikely, with a 2 (Harm Type) $\times$ 2 (Agent Knowledge) $\times$ 2 (Outcome Probability) $\times$ 16 (Scenario) design that was administered in a mixed within- and between-subjects fashion, such that participants saw all 16 scenarios and on each trial were randomly assigned to read 1 of the 8 different versions of that scenario. 
+
+Once again, we multiplied modality and counterfactual ratings to capture potency, namely the influence of counterfactual reasoning on causal judgments. We then drew causal judgment data from Experiment 3a which used comparable scenarios and varied outcome probability to further evaluate the relationship between the two.
+
+
+## Methods
+
+```{r study4b participants, echo=FALSE, warning=FALSE, message=FALSE}
+
+# ProbNor CounterFactual demo (age, gender, education, ethnicity, ses):
+d4.pb_demo <- read.csv("../data/probnor_CounterFactuals_txt.csv")
+d4.pb_demo <- d4.pb_demo[-c(1:2),] %>%
+  dplyr::select(c("age", "edu", "gender", "ethn", "ses"))
+d4.pb_demo$gender <- as.factor(d4.pb_demo$gender)
+d4.pb_demo$edu <- as.factor(d4.pb_demo$edu)
+d4.pb_demo$ethn <- as.factor(d4.pb_demo$ethn)
+d4.pb_demo$ses <- as.factor(d4.pb_demo$ses)
+
+d4pb <- read.csv("../data/d4pb.csv", check.names = F) %>%
+  mutate(`CF responses` = as.numeric(`CF responses`)) %>%
+  mutate(outcome = case_when(outcome == "Abnormal" ~ "Improbable",
+                             outcome == "Normal" ~ "Probable"))
+```
+
+### Participants
+
+In Experiment 4b, `r length(unique(d4pb$ResponseId))` participants were recruited (*M*~age~=`r round(mean(as.numeric(d4.pb_demo$age), na.rm=T),digits=2)`, *SD*~age~=`r round(sd(as.numeric(d4.pb_demo$age), na.rm=T),digits=2)`; `r length(which(d4.pb_demo$gender=="Female"))` females), among which `r sum(d4.pb_demo$ethn != "")` answered all our demographic questions. All participants were recruited through Amazon Mechanical Turk <http://www.mturk.com>.
+
+```{r study4b dataset, echo=FALSE, warning=FALSE, message=FALSE}
+d4pb <- read.csv("../data/d4pb.csv", check.names = F) %>%
+  mutate(`CF responses` = as.numeric(`CF responses`)) %>%
+  mutate(outcome = case_when(outcome == "Abnormal" ~ "Improbable",
+                             outcome == "Normal" ~ "Probable"))
+```
+
+### Materials
+
+Participants completed 16 trials which each involved reading a vignette where an agent's action resulted in an outcome that was normal or abnormal (defined by probability of occurrence). The action would have violated a moral or a rational norm. In addition, the agent was either ignorant or knowledgeable about the norm violated.
+
+For instance, participants may read a vignette as follows:
+
+> **Other-Harm / Knowledgeable Agent / Improbable Outcome** : The owner of a construction company, who was hired to remodel a skyscraper, decided to use a new material called Plyvex to cover the inner walls of the building. When the building inspector reviewed the plans, she realized that Plyvex was one of the least efficient choices for this project. She told the owner of the construction company about this. Although the owner of the construction company understood this, he decided to use Plyvex anyway, like he originally planned. It turns out that Plyvex creates a scent that smells almost exactly like ripe kiwis. Because of this, a number of people in the company noticed that the entire building smelled of kiwis after the Plyvex had been installed.
+
+### Procedure
+
+After reading each vignette, participants answered two questions: one modal and one counterfactual. More specifically, they rated their agreement with a statement about whether the agent could have refrained from the action, and their belief about the relevance of another statement regarding whether the absence of the agent's action could have prevented the outcome, as in the following example:
+
+> *Modal question*: The owner of the construction company could have not used Plyvex.
+
+> *Counterfactual question*: If the owner of the construction company had not used Plyvex, the entire building would not have smelled of kiwis.
+
+\noindent After completing all 16 trials, participants were asked to complete some optional demographic questions.
+
+```{r study4b md & cf interactions, echo=FALSE, warning=FALSE, message=FALSE}
+## 4b Md main effects (knowledge significant <.001, outcome and norm insignificant)
+lmr4pb_md.main <- lmer(`CF responses` ~ knowledge + outcome + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Modal",])
+
+# lmr4pb_md.outcome <- lmer(`CF responses` ~ knowledge + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Modal",])
+# lmr4pb_md.outcome <- anova(lmr4pb_md.main,lmr4pb_md.outcome)
+# saveRDS(lmr4pb_md.outcome,"models/lmr4pb_md.outcome.rds")
+lmr4pb_md.outcome <- readRDS("models/lmr4pb_md.outcome.rds")
+
+# lmr4pb_md.norm <- lmer(`CF responses` ~ knowledge + outcome + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Modal",])
+# lmr4pb_md.norm <- anova(lmr4pb_md.main,lmr4pb_md.norm)
+# saveRDS(lmr4pb_md.norm,"models/lmr4pb_md.norm.rds")
+lmr4pb_md.norm <- readRDS("models/lmr4pb_md.norm.rds")
+
+# lmr4pb_md.knowledge <- lmer(`CF responses` ~ outcome + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Modal",])
+# lmr4pb_md.knowledge <- anova(lmr4pb_md.main,lmr4pb_md.knowledge)
+# saveRDS(lmr4pb_md.knowledge,"models/lmr4pb_md.knowledge.rds")
+lmr4pb_md.knowledge <- readRDS("models/lmr4pb_md.knowledge.rds")
+
+
+## Md: Three-way interaction (insignificant)
+# lm4pb_md.0 <- lmer(`CF responses` ~ outcome*knowledge*norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Modal",])
+# lm4pb_md.1 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*knowledge) + (outcome*norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Modal",], 
+#                    control = lmerControl(optimizer = "bobyqa"))
+# lm4pb_md.3way <- anova(lm4pb_md.0, lm4pb_md.1)
+# saveRDS(lm4pb_md.3way, "models/lm4pb_md.3way.rds")
+lm4pb_md.3way <- readRDS("models/lm4pb_md.3way.rds")
+
+## Md: Outcome x Knowledge interaction (insignificant)
+# lm4pb_md.2 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Modal",])
+# lm4pb_md.OxK <- anova(lm4pb_md.1,lm4pb_md.2)
+# saveRDS(lm4pb_md.OxK,"models/lm4pb_md.OxK.rds")
+lm4pb_md.OxK <- readRDS("models/lm4pb_md.OxK.rds")
+
+## Md: Outcome x Norm interaction (insignificant)
+# lm4pb_md.3 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*knowledge) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Modal",])
+# lm4pb_md.OxN <- anova(lm4pb_md.1,lm4pb_md.3)
+# saveRDS(lm4pb_md.OxN,"models/lm4pb_md.OxN.rds")
+lm4pb_md.OxN <- readRDS("models/lm4pb_md.OxN.rds")
+
+## Md: Norm x Knowledge interaction (insignificant)
+# lm4pb_md.4 <- lmer(`CF responses` ~ (knowledge*outcome) + (outcome*norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Modal",])
+# lm4pb_md.NxK <- anova(lm4pb_md.1,lm4pb_md.4)
+# saveRDS(lm4pb_md.NxK,"models/lm4pb_md.NxK.rds")
+lm4pb_md.NxK <- readRDS("models/lm4pb_md.NxK.rds")
+
+### Modality estimated marginal means
+# d4pbmd.emsumK <- summary(emmeans::emmeans(lm4pb_md.0, ~ knowledge, pbkrtest.limit = 3326))
+# saveRDS(d4pbmd.emsumK,"models/d4pbmd.emsumK.rds")
+d4pbmd.emsumK <- readRDS("models/d4pbmd.emsumK.rds")
+# d4pbmd.empairK <- summary(pairs(emmeans(lm4pb_md.0, ~ knowledge, pbkrtest.limit = 3326)))
+# saveRDS(d4pbmd.empairK,"models/d4pbmd.empairK.rds")
+d4pbmd.empairK <- readRDS("models/d4pbmd.empairK.rds")
+
+
+
+## Cf main effects (knowledge significant .025, norm significant .05, outcome insignificant; used knowledge+outcome for convergence)
+# lmr4pb_cf.main <- lmer(`CF responses` ~ knowledge + outcome + norm + (knowledge+outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Counterfactual",],
+#                        control = lmerControl(optimizer = "optimx", optCtrl = list(method = "nlminb")))
+# 
+# lmr4pb_cf.outcome <- lmer(`CF responses` ~ knowledge + norm + (knowledge+outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Counterfactual",],
+#                           control = lmerControl(optimizer = "optimx", optCtrl = list(method = "nlminb")))
+# lmr4pb_cf.outcome <- anova(lmr4pb_cf.main,lmr4pb_cf.outcome)
+# saveRDS(lmr4pb_cf.outcome,"models/lmr4pb_cf.outcome.rds")
+lmr4pb_cf.outcome <- readRDS("models/lmr4pb_cf.outcome.rds")
+
+# lmr4pb_cf.norm <- lmer(`CF responses` ~ knowledge + outcome + (knowledge+outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Counterfactual",],
+#                        control = lmerControl(optimizer = "optimx", optCtrl = list(method = "nlminb")))
+# lmr4pb_cf.norm <- anova(lmr4pb_cf.main,lmr4pb_cf.norm)
+# saveRDS(lmr4pb_cf.norm,"models/lmr4pb_cf.norm.rds")
+lmr4pb_cf.norm <- readRDS("models/lmr4pb_cf.norm.rds")
+
+# lmr4pb_cf.knowledge <- lmer(`CF responses` ~ outcome + norm + (knowledge+outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Counterfactual",],
+#                             control = lmerControl(optimizer = "optimx", optCtrl = list(method = "nlminb")))
+# lmr4pb_cf.knowledge <- anova(lmr4pb_cf.main,lmr4pb_cf.knowledge)
+# saveRDS(lmr4pb_cf.knowledge,"models/lmr4pb_cf.knowledge.rds")
+lmr4pb_cf.knowledge <- readRDS("models/lmr4pb_cf.knowledge.rds")
+
+
+## Cf: Three-way interaction (insignificant; used knowledge+outcome and optimizer for convergence)
+# lm4pb_cf.0 <- lmer(`CF responses` ~ outcome*knowledge*norm + (knowledge+outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Counterfactual",],
+#                    control = lmerControl(optimizer ='optimx', optCtrl=list(method='nlminb')))
+# lm4pb_cf.1 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*knowledge) + (outcome*norm) + (knowledge+outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Counterfactual",],
+#                    control = lmerControl(optimizer ='optimx', optCtrl=list(method='nlminb')))
+# lm4pb_cf.3way <- anova(lm4pb_cf.0, lm4pb_cf.1)
+# saveRDS(lm4pb_cf.3way, "models/lm4pb_cf.3way.rds")
+lm4pb_cf.3way <- readRDS("models/lm4pb_cf.3way.rds")
+
+## Cf: Outcome x Knowledge interaction (insignificant)
+# lm4pb_cf.2 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*norm) + (knowledge+outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Counterfactual",],
+#                    control = lmerControl(optimizer ='optimx', optCtrl=list(method='nlminb')))
+# lm4pb_cf.OxK <- anova(lm4pb_cf.1,lm4pb_cf.2)
+# saveRDS(lm4pb_cf.OxK,"models/lm4pb_cf.OxK.rds")
+lm4pb_cf.OxK <- readRDS("models/lm4pb_cf.OxK.rds")
+
+## Cf: Outcome x Norm interaction (insignificant)
+# lm4pb_cf.3 <- lmer(`CF responses` ~ (knowledge*norm) + (outcome*knowledge) + (knowledge+outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Counterfactual",],
+#                    control = lmerControl(optimizer ='optimx', optCtrl=list(method='nlminb')))
+# lm4pb_cf.OxN <- anova(lm4pb_cf.1,lm4pb_cf.3)
+# saveRDS(lm4pb_cf.OxN,"models/lm4pb_cf.OxN.rds")
+lm4pb_cf.OxN <- readRDS("models/lm4pb_cf.OxN.rds")
+
+## Cf: Norm x Knowledge interaction (insignificant)
+# lm4pb_cf.4 <- lmer(`CF responses` ~ (knowledge*outcome) + (outcome*norm) + (knowledge+outcome|scenario) + (1|ResponseId), data=d4pb[d4pb$question=="Counterfactual",],
+#                    control = lmerControl(optimizer ='optimx', optCtrl=list(method='nlminb')))
+# lm4pb_cf.NxK <- anova(lm4pb_cf.1,lm4pb_cf.4)
+# saveRDS(lm4pb_cf.NxK,"models/lm4pb_cf.NxK.rds")
+lm4pb_cf.NxK <- readRDS("models/lm4pb_cf.NxK.rds")
+
+
+### Counterfactural estimated marginal means
+# d4pbcf.emsumK <- summary(emmeans::emmeans(lm4pb_cf.0, ~ knowledge, pbkrtest.limit = 3327))
+# saveRDS(d4pbcf.emsumK,"models/d4pbcf.emsumK.rds")
+d4pbcf.emsumK <- readRDS("models/d4pbcf.emsumK.rds")
+# d4pbcf.empairK <- summary(pairs(emmeans(lm4pb_cf.0, ~ knowledge, pbkrtest.limit = 3327)))
+# saveRDS(d4pbcf.empairK,"models/d4pbcf.empairK.rds")
+d4pbcf.empairK <- readRDS("models/d4pbcf.empairK.rds")
+
+# d4pbcf.emsumN <- summary(emmeans::emmeans(lm4pb_cf.0, ~ norm, pbkrtest.limit = 3327))
+# saveRDS(d4pbcf.emsumN,"models/d4pbcf.emsumN.rds")
+d4pbcf.emsumN <- readRDS("models/d4pbcf.emsumN.rds")
+# d4pbcf.empairN <- summary(pairs(emmeans(lm4pb_cf.0, ~ norm, pbkrtest.limit = 3327)))
+# saveRDS(d4pbcf.empairN,"models/d4pbcf.empairN.rds")
+d4pbcf.empairN <- readRDS("models/d4pbcf.empairN.rds")
+
+```
+
+### Data analysis
+
+No participants were excluded from the analyses as long as they answered both questions in each of the 16 scenarios. The primary analyses were conducted with linear mixed-effects models and estimated marginal means. More specifically, we included a random intercept for each participant and a random slope for the interaction between *Knowledge* and *Outcome* (or *Knowledge* and *Outcome* as separate covariates for model convergence) nested in each scenario. We did not include *Harm Type* in the random slope due to its minimal effect. Based on estimated marginal means analyses, we report both the estimated marginal means and the 95% confidence intervals.
+
+
+## Results
+
+### Main effects and interactions effects
+
+We first looked at participants' modal ratings and found a significant main effect of *Knowledge*, $\chi^2(1)$ = `r round(lmr4pb_md.knowledge$Chisq[2], digits=2)`, *p* <.001, such that participants thought it was less plausible for ignorant agents to have not acted in the way they did (*M* = `r round(d4pbmd.emsumK$emmean[1],digits=2)`, 95% CI = [`r round(d4pbmd.emsumK$lower.CL[1], digits=2)`, `r round(d4pbmd.emsumK$upper.CL[1], digits=2)`]) than knowledgeable agents (*M* = `r round(d4pbmd.emsumK$emmean[2],digits=2)`, 95% CI = [`r round(d4pbmd.emsumK$lower.CL[2],digits=2)`, `r round(d4pbmd.emsumK$upper.CL[2],digits=2)`]), *t*(`r round(d4pbmd.empairK$df, digits=2)`) = `r round(d4pbmd.empairK$t.ratio[1], 2)`, *p* `r ifelse(d4pbmd.empairK$p.value < 0.001, "< .001", paste0("= ", round(d4pbmd.empairK$p.value, 3)))`. There was no significant main effect in *Outcome*, $\chi^2(1)$ = `r round(lmr4pb_md.outcome$Chisq[2],2)`, *p* = `r round(lmr4pb_md.outcome$'Pr(>Chisq)'[2],digits=3)`, or *Harm Type*, $\chi^2(1)$ = `r round(lmr4pb_md.norm$Chisq[2],digits=2)`, *p* = `r round(lmr4pb_md.norm$'Pr(>Chisq)'[2], 3)`. Analyses of interaction effects in modality ratings did not yield any significant results, including the *Knowledge* $\times$ *Harm Type* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lm4pb_md.3way$Chisq[2],digits=2)`, *p* = `r round(lm4pb_md.3way$'Pr(>Chisq)'[2],digits=3)`,  *Knowledge* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lm4pb_md.OxK$Chisq[2],digits=2)`, *p* = `r round(lm4pb_md.OxK$'Pr(>Chisq)'[2], digits=3)`. We omitted interactions involving the *Harm Type* condition due to its minimal effect.
+
+Then, we explored counterfactual ratings, and discovered once again a significant main effect of *Knowledge*, $\chi^2(1)$ = `r round(lmr4pb_cf.knowledge$Chisq[2],digits=2)`, *p* = `r round(lmr4pb_cf.knowledge$'Pr(>Chisq)'[2],digits=3)`, such that participants were more inclined to believe that things could have been different if a knowledgeable agent had acted differently  (*M* = `r round(d4pbcf.emsumK$emmean[1],digits=2)`, 95% CI = [`r round(d4pbcf.emsumK$lower.CL[1],digits=2)`, `r round(d4pbcf.emsumK$upper.CL[1],digits=2)`]) than when an ignorant agent was involved (*M* = `r round(d4pbcf.emsumK$emmean[2],digits=2)`, 95% CI = [`r round(d4pbcf.emsumK$lower.CL[2],2)`, `r round(d4pbcf.emsumK$upper.CL[2],digits=2)`]), *t*(`r round(d4pbcf.empairK$df, digits=2)`) = `r round(d4pbcf.empairK$t.ratio[1], 2)`, *p* `r ifelse(d4pbcf.empairK$p.value < 0.001, "< .001", paste0("= ", round(d4pbcf.empairK$p.value, 3)))`. There was also a marginally significant effect of *Harm Type*, $\chi^2(1)$ = `r round(lmr4pb_cf.norm$Chisq[2],digits=2)`, *p* = `r round(lmr4pb_cf.norm$'Pr(>Chisq)'[2],digits=3)`: when an action harmed the agent themself, participants considered it more likely that the outcome could have been circumvented if the agent acted differently (*M* = `r round(d4pbcf.emsumN$emmean[2],digits=2)`, 95% CI = [`r round(d4pbcf.emsumN$lower.CL[2],2)`, `r round(d4pbcf.emsumN$upper.CL[2],digits=2)`]) than when the action brought harm to others (*M* = `r round(d4pbcf.emsumN$emmean[1],digits=2)`, 95% CI = [`r round(d4pbcf.emsumN$lower.CL[1],digits=2)`, `r round(d4pbcf.emsumN$upper.CL[1],digits=2)`]), *t*(`r round(d4pbcf.empairN$df, digits=2)`) = `r round(d4pbcf.empairN$t.ratio[1], 2)`, *p* `r ifelse(d4pbcf.empairN$p.value < 0.001, "< .001", paste0("= ", round(d4pbcf.empairN$p.value, 3)))`. There was no significant effect of *Outcome* in counterfactual judgments, $\chi^2(1)$ = `r round(lmr4pb_cf.outcome$Chisq[2],digits=2)`, *p* `r ifelse(lmr4pb_cf.outcome$'Pr(>Chisq)' < 0.001, "< .001", paste0("= ", round(lmr4pb_cf.outcome$'Pr(>Chisq)', 3)))`. In addition, we did not find any interaction effects, including the three-way *Knowledge* $\times$ *Harm Type* $\times$ *Outcome* interaction effect, $\chi^2(1)$ = `r round(lm4pb_cf.3way$Chisq[2],digits=2)`, *p* = `r sprintf("%.3f", lm4pb_cf.3way$'Pr(>Chisq)'[2])` and the two-way *Knowledge* $\times$ *Outcome* interaction effect, $\chi^2(1)$ = `r round(lm4pb_cf.OxK$Chisq[2],digits=2)`, *p* = `r round(lm4pb_cf.OxK$'Pr(>Chisq)'[2], 3)`.
+
+
+
+```{r, study4b plots, fig.width=8.5, fig.height=7, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Participants' modality ratings (top) and counterfactuality ratings (bottom) regarding knowledgeable/ignorant agents who violated moral/rational norms when a separate outcome occurred that is normal/abnormal."}
+
+### d4b modality plot
+d4pb.md <- d4pb %>%
+  filter(question=="Modal") %>%
+  dplyr::select(ResponseId, `CF responses`, question, norm, outcome, knowledge) %>%
+  group_by(`ResponseId`, norm, outcome, knowledge) %>%
+  summarise(N = length(`CF responses`),
+            mean = mean(as.numeric(`CF responses`), na.rm=TRUE)) %>%
+  dplyr::rename(mdN = N) %>%
+  dplyr::rename(mdMean = mean) 
+
+d4pb.md.sum <- d4pb.md %>%
+  dplyr::select(mdMean, norm, outcome, knowledge) %>%
+  group_by(norm, outcome, knowledge) %>% 
+  summarise(N = length(mdMean),
+            mean = mean(as.numeric(mdMean), na.rm=TRUE),
+            sd = sd(as.numeric(mdMean),na.rm=TRUE),
+            se = sd / sqrt(N)) %>%
+  dplyr::rename(mdsumN = N) %>%
+  rename(mdMean = mean) %>%
+  rename(mdsumSD = sd) %>%
+  rename(mdsumSE = se)
+
+d4pb.modality <- ggplot(data=d4pb.md, aes(x=knowledge, y=mdMean, fill=knowledge)) +
+  geom_violin(alpha=.6, linewidth=.1) +
+  scale_fill_manual(values=c("#bdd7e7", "#2171b5")) + ###bdd7e7 #6baed6
+  geom_point(stat="identity",position=position_jitterdodge(jitter.width=.1,dodge.width=.9),alpha=.05, color="black") +
+  geom_point(data=d4pb.md.sum, aes(x=knowledge, y=mdMean, fill=knowledge), shape=17, size=2,position=position_dodge(.9), color="black") +
+  geom_line(data=d4pb.md.sum, aes(x=knowledge, y=mdMean, group=norm),linewidth=1) +
+  geom_errorbar(data=d4pb.md.sum,aes(ymin=mdMean-mdsumSE, ymax=mdMean+mdsumSE), width=.2, position=position_dodge(.9),color="black") +
+  facet_grid(outcome~norm) +
+  ylab("Modality rating") +
+  xlab("") +
+  theme_bw() +
+  theme(
+    plot.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    strip.text.x = element_text(size=rel(2)),
+    strip.text.y = element_text(size=rel(2)),
+    legend.title=element_blank(),
+    legend.text=element_text(size=rel(1)),
+    legend.justification=c(1,1),
+    legend.position="top",
+    legend.key.width = unit(0.8, "cm"),
+    legend.key.height = unit(0.4, "cm"),
+    axis.text.x=element_text(size=rel(2)),
+    axis.text.y=element_text(size=rel(1)),
+    axis.title.y=element_text(size=rel(2),vjust=.9),
+    axis.title.x=element_blank(),
+    axis.ticks = element_blank()) +
+  scale_y_continuous(breaks=c(1, 3, 5, 7))
+#ggsave("d4pb.modality.pdf", width=8, height=12, path="figures")
+d4pb.modality
+
+
+### d4b counterfactual plot
+d4pb.cf <- d4pb %>%
+  filter(question=="Counterfactual") %>%
+  dplyr::select(ResponseId, `CF responses`, question, norm, outcome, knowledge) %>%
+  group_by(`ResponseId`, norm, outcome, knowledge) %>%
+  summarise(N = length(`CF responses`),
+            mean = mean(as.numeric(`CF responses`), na.rm=TRUE)) %>%
+  dplyr::rename(cfN = N) %>%
+  dplyr::rename(cfMean = mean) 
+
+d4pb.cf.sum <- d4pb.cf %>%
+  dplyr::select(cfMean, norm, outcome, knowledge) %>%
+  group_by(norm, outcome, knowledge) %>% 
+  summarise(N = length(cfMean),
+            mean = mean(as.numeric(cfMean), na.rm=TRUE),
+            sd = sd(as.numeric(cfMean),na.rm=TRUE),
+            se = sd / sqrt(N)) %>%
+  dplyr::rename(cfsumN = N) %>%
+  rename(cfMean = mean) %>%
+  rename(cfsumSD = sd) %>%
+  rename(cfsumSE = se)
+
+d4pb.counterfactual <- ggplot(data=d4pb.cf, aes(x=knowledge, y=cfMean, fill=knowledge)) +
+  geom_violin(alpha=.6, linewidth=.1) +
+  scale_fill_manual(values=c("#bdd7e7", "#2171b5")) + ###bdd7e7 #6baed6
+  geom_point(stat="identity",position=position_jitterdodge(jitter.width=.1,dodge.width=.9),alpha=.05, color="black") +
+  geom_point(data=d4pb.cf.sum, aes(x=knowledge, y=cfMean, fill=knowledge), shape=17, size=2,position=position_dodge(.9), color="black") +
+  geom_line(data=d4pb.cf.sum, aes(x=knowledge, y=cfMean, group=norm),size=1) +
+  geom_errorbar(data=d4pb.cf.sum,aes(ymin=cfMean-cfsumSE, ymax=cfMean+cfsumSE), width=.2, position=position_dodge(.9),color="black") +
+  facet_grid(outcome~norm) +
+  ylab("Counterfactual rating") +
+  xlab("") +
+  theme_bw() +
+  theme(
+    plot.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    strip.text.x = element_text(size=rel(2)),
+    strip.text.y = element_text(size=rel(2)),
+    legend.title=element_blank(),
+    legend.text=element_text(size=rel(1)),
+    legend.justification=c(1,1),
+    legend.position="top",
+    legend.key.width = unit(0.8, "cm"),
+    legend.key.height = unit(0.4, "cm"),
+    axis.text.x=element_text(size=rel(2)),
+    axis.text.y=element_text(size=rel(1)),
+    axis.title.y=element_text(size=rel(2),vjust=.9),
+    axis.title.x=element_blank(),
+    axis.ticks = element_blank()) +
+  scale_y_continuous(breaks=c(1, 3, 5, 7))
+#ggsave("d4pb.counterfactual.pdf", width=8, height=12, path="figures")
+d4pb.counterfactual
+
+```
+
+```{r study4b potency & study3c causation, echo=FALSE, warning=FALSE, message=FALSE}
+#Study 4b potency & causation
+
+## 4b potency: for each condition in a scenario, use causal to predict cf*md --> create a new column potency
+d4pb_pot <- d4pb %>%
+  dplyr::select(-condCod) %>%
+  pivot_wider(values_from = `CF responses`, names_from = "question") %>%
+  mutate(Potency = as.numeric(Modal)*as.numeric(Counterfactual)) %>%
+  drop_na()
+
+## main effects (knowledge significant <.001, outcome and norm insignificant)
+# lmr4pbpot.main <- lmer(Potency ~ knowledge + outcome + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb_pot,
+#                        control = lmerControl(optimizer = "bobyqa"))
+# 
+# lmr4pbpot.outcome <- lmer(Potency ~ knowledge + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb_pot,
+#                           control = lmerControl(optimizer = "bobyqa"))
+# lmr4pbpot.outcome <- anova(lmr4pbpot.main,lmr4pbpot.outcome)
+# saveRDS(lmr4pbpot.outcome,"models/lmr4pbpot.outcome.rds")
+lmr4pbpot.outcome <- readRDS("models/lmr4pbpot.outcome.rds")
+
+# lmr4pbpot.norm <- lmer(Potency ~ knowledge + outcome + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb_pot,
+#                        control = lmerControl(optimizer = "bobyqa"))
+# lmr4pbpot.norm <- anova(lmr4pbpot.main,lmr4pbpot.norm)
+# saveRDS(lmr4pbpot.norm,"models/lmr4pbpot.norm.rds")
+lmr4pbpot.norm <- readRDS("models/lmr4pbpot.norm.rds")
+
+# lmr4pbpot.knowledge <- lmer(Potency ~ outcome + norm + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb_pot,
+#                             control = lmerControl(optimizer = "bobyqa"))
+# lmr4pbpot.knowledge <- anova(lmr4pbpot.main,lmr4pbpot.knowledge)
+# saveRDS(lmr4pbpot.knowledge,"models/lmr4pbpot.knowledge.rds")
+lmr4pbpot.knowledge <- readRDS("models/lmr4pbpot.knowledge.rds")
+
+
+## three-way interaction (insignificant)
+# lmr4pbpot.i0 <- lmer(Potency ~ knowledge * norm * outcome + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb_pot,
+#                      control = lmerControl(optimizer = "bobyqa"))
+# lmr4pbpot.i1 <- lmer(Potency ~ (knowledge * norm) + (outcome * knowledge) + (outcome * norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb_pot,
+#                      control = lmerControl(optimizer = "bobyqa"))
+# lmr4pbpot.3way <- anova(lmr4pbpot.i0,lmr4pbpot.i1)
+# saveRDS(lmr4pbpot.3way,"models/lmr4pbpot.3way.rds")
+lmr4pbpot.3way <- readRDS("models/lmr4pbpot.3way.rds")
+
+
+## two-way: Norm x Knowledge interaction (insignificant)
+# lmr4pbpot.NK <- lmer(Potency ~ (knowledge * outcome) + (outcome * norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb_pot,
+#                      control = lmerControl(optimizer = "bobyqa"))
+# lmr4pbpot.NxK <- anova(lmr4pbpot.i1, lmr4pbpot.NK)
+# saveRDS(lmr4pbpot.NxK,"models/lmr4pbpot.NxK.rds")
+lmr4pbpot.NxK <- readRDS("models/lmr4pbpot.NxK.rds")
+
+## two-way: Norm x Outcome interaction (insignificant)
+# lmr4pbpot.NO <- lmer(Potency ~ (knowledge * outcome) + (knowledge * norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb_pot,
+#                      control = lmerControl(optimizer = "bobyqa"))
+# lmr4pbpot.NxO <- anova(lmr4pbpot.i1, lmr4pbpot.NO)
+# saveRDS(lmr4pbpot.NxO,"models/lmr4pbpot.NxO.rds")
+lmr4pbpot.NxO <- readRDS("models/lmr4pbpot.NxO.rds")
+
+# two-way: Outcome x Knowledge interaction (insignificant)
+# lmr4pbpot.OK <- lmer(Potency ~ (norm * outcome) + (knowledge * norm) + (knowledge*outcome|scenario) + (1|ResponseId), data=d4pb_pot,
+#                      control = lmerControl(optimizer = "bobyqa"))
+# lmr4pbpot.OxK <- anova(lmr4pbpot.i1,lmr4pbpot.OK)
+# saveRDS(lmr4pbpot.OxK,"models/lmr4pbpot.OxK.rds")
+lmr4pbpot.OxK <- readRDS("models/lmr4pbpot.OxK.rds")
+
+### study4_pb potency estimated marginal means
+
+# d4pb_pot.emsumK <- summary(emmeans::emmeans(lmr4pbpot.i0, ~ knowledge, pbkrtest.limit = 3321))
+# saveRDS(d4pb_pot.emsumK,"models/d4pb_pot.emsumK.rds")
+d4pb_pot.emsumK <- readRDS("models/d4pb_pot.emsumK.rds")
+# d4pb_pot.empairK <- summary(pairs(emmeans(lmr4pbpot.i0, ~ knowledge, pbkrtest.limit = 3321)))
+# saveRDS(d4pb_pot.empairK,"models/d4pb_pot.empairK.rds")
+d4pb_pot.empairK <- readRDS("models/d4pb_pot.empairK.rds")
+
+
+### d4b potency & study 3a causation
+
+d4pb_pot <- d4pb %>% # same as above
+  dplyr::select(-condCod) %>%
+  pivot_wider(values_from = `CF responses`, names_from = "question") %>%
+  mutate(Potency = as.numeric(Modal)*as.numeric(Counterfactual)) %>%
+  drop_na()
+
+d4_pbpotsum <- d4pb_pot %>%
+  dplyr::select(Potency, norm, outcome, knowledge, scenario, condition) %>%
+  group_by(knowledge,norm,outcome,scenario,condition) %>% 
+  summarise(N = length(Potency),
+            mean = mean(as.numeric(Potency), na.rm=TRUE),
+            sd = sd(as.numeric(Potency),na.rm=TRUE),
+            se = sd / sqrt(N)) %>%
+  dplyr::rename(potencyN = N) %>%
+  rename(potencyMean = mean) %>%
+  rename(potencySD = sd) %>%
+  rename(potencySE = se) %>%
+  mutate(condition = case_when(
+    outcome == "Improbable" ~ gsub("B", "U", condition),
+    outcome == "Probable" ~ gsub("G", "P", condition),
+    TRUE ~ condition))
+
+#### merge summaries of potency and corresponding causal judgments
+d3a.potsum <- d3.cspb %>%   # 2*2*2 by 16 scenarios
+  dplyr::select(`causation.response`, norm, outcome, knowledge, scenario, condition) %>%
+  group_by(knowledge,norm,outcome, scenario, condition) %>% 
+  summarise(N = length(`causation.response`),
+            mean = mean(as.numeric(`causation.response`), na.rm=TRUE),
+            sd = sd(as.numeric(`causation.response`),na.rm=TRUE),
+            se = sd / sqrt(N)) %>%
+  dplyr::rename(causation_N = N) %>%
+  rename(causation_Mean = mean) %>%
+  rename(causation_SD = sd) %>%
+  rename(causation_SE = se)
+d3a.potsum$outcome <- dplyr::recode(d3a.potsum$outcome, "Abnormal"="Improbable", "Normal"="Probable")
+
+d4pb.cspot_sum <- merge(d3a.potsum, d4_pbpotsum, by=c("knowledge", "norm", "outcome", "scenario", "condition")) # 128*13, combining 4b (d4pb) potency with 3a causation
+
+#### d4b potency interaction: is there an interaction between potency and outcome probability in predicting causal judgments
+# ##### (significant, 0.02059)
+# lmr4b.potoutint0 <- lmer(causation_Mean ~ outcome*potencyMean + (1|scenario), data=d4pb.cspot_sum)
+# lmr4b.potoutint1 <- lmer(causation_Mean ~ outcome + potencyMean + (1|scenario), data=d4pb.cspot_sum)
+# lmr4b.potoutint <- anova(lmr4b.potoutint0, lmr4b.potoutint1)
+# saveRDS(lmr4b.potoutint, "models/lmr4b.potoutint.rds")
+lmr4b.potoutint <- readRDS("models/lmr4b.potoutint.rds")
+
+
+#### d4b potency mediation: is potency a mediator between (just) knowledge and causation?
+# still weird in terms of identical results across levels...
+d4b.m <- d4pb.cspot_sum %>%
+  mutate(Knowledge = factor(knowledge, levels = c("Ignorance","Knowledge"), labels = c(0, 1)),
+         Outcome = factor(outcome, levels = c("Improbable","Probable"), labels = c(0, 1)),
+         # recoding interaction term explicitly
+         Interaction = case_when(Knowledge == 1 & Outcome == 0 ~ 0, ## Knowledge + Improbable
+                                 Knowledge == 1 & Outcome == 1 ~ 1, ## Knowledge + Probable
+                                 Knowledge == 0 & Outcome == 0 ~ 1, ## Ignorance + Improbable
+                                 Knowledge == 0 & Outcome == 1 ~ 0 ## Ignorance + Probable
+         ))
+d4bfull.fit <- lme4::lmer(causation_Mean ~ potencyMean + Knowledge + (1|scenario), data=d4b.m)
+d4bmed.fit <- lme4::lmer(potencyMean ~ Knowledge + (1|scenario), data=d4b.m)
+d4bmed.out <- mediate(d4bfull.fit, d4bmed.fit, sims=1000, treat="Knowledge", mediator="potencyMean")
+d4bmed <- summary(d4bmed.out)
+
+```
+
+### Potency and its relationship with causal judgments
+
+Like in the previous study, we constructed a measure of potency by calculating the product of participants' modal and counterfactual ratings. This approach sheds light on the impact of counterfactual reasoning on causal judgments, using data from both the current study and Experiment 3a.
+
+Examining main effects of *Knowledge*, *Harm Type*, and *Outcome* on potency, we found statistical significance only in *Knowledge*, $\chi^2(1)$ = `r round(lmr4pbpot.knowledge$Chisq[2],digits=2)`, *p* `r ifelse(lmr4pbpot.knowledge$'Pr(>Chisq)' < 0.001, "< .001", paste0("= ", round(lmr4pbpot.knowledge$'Pr(>Chisq)', 3)))`, which is to say that counterfactual reasoning has a bigger impact on causal judgment when the agents involved knew the consequence of their actions (*M* = `r round(d4pb_pot.emsumK$emmean[2],digits=2)`, 95% CI = [`r round(d4pb_pot.emsumK$lower.CL[2],digits=2)`, `r round(d4pb_pot.emsumK$upper.CL[2],digits=2)`]) than when they did not (*M* = `r round(d4pb_pot.emsumK$emmean[1],digits=2)`, 95% CI = [`r round(d4pb_pot.emsumK$lower.CL[1],digits=2)`, `r round(d4pb_pot.emsumK$upper.CL[1],digits=2)`]), *t*(`r round(d4pb_pot.empairK$df, digits=2)`) = `r round(d4pb_pot.empairK$t.ratio, 2)`, *p* `r ifelse(d4pb_pot.empairK$p.value < 0.001, "< .001", paste0("= ", round(d4pb_pot.empairK$p.value, 3)))`. Other than that, we did not see a main effect in either *Outcome*, $\chi^2(1)$ = `r round(lmr4pbpot.outcome$Chisq[2],digits=2)`, *p* `r ifelse(lmr4pbpot.outcome$'Pr(>Chisq)' < 0.001, "< .001", paste0("= ", round(lmr4pbpot.outcome$'Pr(>Chisq)', 3)))`, or *Harm Type*, $\chi^2(1)$ = `r round(lmr4pbpot.norm$Chisq[2],digits=2)`, *p* `r ifelse(lmr4pbpot.norm$'Pr(>Chisq)' < 0.001, "< .001", paste0("= ", round(lmr4pbpot.norm$'Pr(>Chisq)', 3)))`. No significant interaction effects were observed, including the three-way *Knowledge* $\times$ *Harm Type* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lmr4pbpot.3way$Chisq[2],digits=2)`, *p* = `r sprintf("%.3f",lmr4pbpot.3way$'Pr(>Chisq)'[2])`,  and the *Knowledge* $\times$ *Outcome* interaction, $\chi^2(1)$ = `r round(lmr4pbpot.OxK$Chisq[2],digits=2)`, *p* = `r round(lmr4pbpot.OxK$'Pr(>Chisq)'[2],digits=3)`. We omitted interactions involving the *Harm Type* condition due to its minimal effect.
+
+
+[[[To further corroborate the role of potency measure in causal cognition, we looked into its relationship with causal judgment collected in a similar study (i.e., Experiment 3a). Our analysis shows that potency is a mediator between *Knowledge*, *Outcome Normality* and *Causal Judgment*, (*ACME* = .034, *p* $<$ .001???). We also found an interaction between potency and the probability of outcome in predicting causal judgments, $\chi^2(1)$ = `r round(lmr4b.potoutint$Chisq[2],digits=2)`, *p* = `r round(lmr4b.potoutint$'Pr(>Chisq)'[2],digits=3)`.]]]
+
+
+```{r, 4b pot and cspot plots in case of use, fig.width=8.5, fig.height=7, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Participants' potency ratings regarding knowledgeable/ignorant agents who violated moral/rational norms when a separate outcome occurred that is normal/abnormal."}
+
+### d4b potency plots
+d4pb.pot <- d4pb_pot  %>%   # averaged across scenarios
+  dplyr::select(ResponseId, Potency, norm, outcome, knowledge) %>%
+  group_by(`ResponseId`, norm, outcome, knowledge) %>%
+  summarise(N = length(Potency),
+            mean = mean(as.numeric(Potency), na.rm=TRUE)) %>%
+  dplyr::rename(potN = N) %>%
+  dplyr::rename(potMean = mean) 
+
+d4pb.pot.sum <- d4pb.pot %>%
+  dplyr::select(potMean, norm, outcome, knowledge) %>%
+  group_by(norm, outcome, knowledge) %>% 
+  summarise(N = length(potMean),
+            mean = mean(as.numeric(potMean), na.rm=TRUE),
+            sd = sd(as.numeric(potMean),na.rm=TRUE),
+            se = sd / sqrt(N)) %>%
+  dplyr::rename(potsumN = N) %>%
+  rename(potMean = mean) %>%
+  rename(potsumSD = sd) %>%
+  rename(potsumSE = se)
+
+d4pb.potfig <- d4pb.pot %>%
+  ggplot(., aes(x=knowledge, y=potMean, fill=knowledge)) +
+  geom_violin(alpha=.6, linewidth=.1) +
+  scale_fill_manual(values=c("#bdd7e7", "#2171b5")) + ###bdd7e7 #6baed6
+  geom_point(stat="identity",position=position_jitterdodge(jitter.width=.1,dodge.width=.9),alpha=.05, color="black") +
+  geom_point(data=d4pb.pot.sum, aes(x=knowledge, y=potMean, fill=knowledge), shape=17, size=2,position=position_dodge(.9), color="black") +
+  geom_line(data=d4pb.pot.sum, aes(x=knowledge, y=potMean, group=norm),size=1) +
+  geom_errorbar(data=d4pb.pot.sum,aes(ymin=potMean-potsumSE, ymax=potMean+potsumSE), width=.2, position=position_dodge(.9),color="black") +
+  facet_grid(outcome~norm) +
+  ylab("Potency score") +
+  xlab("") +
+  theme_bw() +
+  theme(
+    plot.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    strip.text.x = element_text(size=rel(2)),
+    strip.text.y = element_text(size=rel(2)),
+    legend.title=element_blank(),
+    legend.text=element_text(size=rel(1)),
+    legend.justification=c(1,1),
+    legend.position="top",
+    legend.key.width = unit(0.8, "cm"),
+    legend.key.height = unit(0.4, "cm"),
+    axis.text.x=element_text(size=rel(2)),
+    axis.text.y=element_text(size=rel(1)),
+    axis.title.y=element_text(size=rel(2),vjust=.9),
+    axis.title.x=element_blank(),
+    axis.ticks = element_blank()) +
+  scale_y_continuous(breaks=c(7,21,35,49))
+#ggsave("d4pb.potfig.pdf", width=8, height=12, path="figures")
+d4pb.potfig
+
+
+d4pb_cspot.plot <- d4pb.cspot_sum %>%
+  dplyr::select(potencyMean, causation_Mean, knowledge, norm, outcome) %>%
+  ggplot(aes(x=causation_Mean, y=potencyMean, color=knowledge)) +
+  facet_grid(outcome~norm) +
+  geom_point() +
+  geom_smooth(method="lm") +
+  scale_fill_manual(values=wes_palette("Royal1",3)) + 
+  ylab("Potency") +
+  xlab("Causal Judgment") +
+  theme_bw() +
+  theme(
+    plot.background = element_blank()
+    ,panel.grid.major = element_blank()
+    ,panel.grid.minor = element_blank()
+    #,legend.position = "null"
+    ,strip.text.x = element_text(size=rel(2)),
+    strip.text.y = element_text(size=rel(2))
+    ,legend.title=element_blank()
+    ,legend.text=element_text(size=rel(1))
+    ,axis.text.x=element_text(size=rel(2))
+    ,axis.text.y=element_text(size=rel(1))
+    ,axis.title.y=element_text(vjust=.9)
+    ,axis.ticks = element_blank()
+    ,axis.title=element_text(size=rel(1.5))
+  ) 
+d4pb_cspot.plot
 
 #grid.arrange(d4pot.plot, d3d4cspot.plot, ncol=2)       ESW: check and see if this looks ok
 
@@ -4072,15 +4489,12 @@ d3d4cspot.plot
 
 ## Discussion
 
-Experiment 4 expands on our understanding of causal cognition by examining modal and counterfactual judgments, that is, how participants assess the plausibility of alternative antecedent events and the likelihood of different outcomes under such hypothetical alternatives. 
+Experiment 4b examined modality and counterfactual judgments, as well as the magnitude of counterfactual potency, in event chains where the final outcome was either likely or unlikely. Our analyses revealed a consistent *Knowledge* effect through all three measures, indicating that participants reliably associated knowledgeable agents with increased possibility in alternative antecedents and different consequences stemming from said antecedents. Furthermore, when agents acted with knowledge, counterfactual reasoning exerts more influence on assignment of causation. (NOTE: you said no need to test interaction between potency and outcome normality anymore but i tried it out and it's significant in this case, i.e., there's interaction between outcome probability and mean potency in predicting mean causation rating.) The findings resonate with those related to causal judgments in the comparable Experiment 3a where knowledgeable agents were deemed more causal of consequences. Taken together, the results point to an account where knowledge heavily contributes to causal and counterfactual reasoning when actions give rise to descriptively normal or abnormal outcomes. 
 
-[We should start by talking about the effect of knowledge, and then also say that interesting it was somewhat affected by outcome normality. But no interaction. Iterim summary: this suggests that the availability of alternatives was primarily driven by whether the agent knowingly cauased harm. 
 
-Switch to counterfactual judgments: Main effect of outcome, but no effect of knowledge. Interestingly we also found a small but significant interaction effect, between outcome and knowledge, so that only for abnormal outcomes, participants thought that the outcome depended more on the antecedent event when that antecedent event involved the agent knowingly causing harm.
 
-Critically, we put these two pieces together to ask whether they could jointly explain causal judgments, and more specifically the strong and persistent interaction between knowledge and outcome normality. This is the counterfactual potency measure... ]
 
-Consistent with previous studies, we found that outcome normality played a crucial role in shaping participants' judgments, such that when secondary outcomes were abnormal (i.e., bad or improbable), participants were less inclined to believe that agents could have acted differently or that alternative consequences could have occurred if antecedent conditions had been altered. Importantly, we also observed a *Knowledge* $\times$ *Outcome* interaction in counterfactual judgment which revealed that participants were more likely to consider an alternative outcome plausible when the causal agent was knowledgeable rather than ignorant, especially in cases of abnormal outcomes. Tying this effect back to the same *Knowledge* $\times$ *Outcome* interaction previously found studies involving causal judgments prompted us to consider the underlying role of counterfactual reasoning in causal attribution. To explore this link, we probed potency, a concept intended to capture the combined impact of the perceived likelihood of counterfactual antecedent and the perceived likelihood of counterfactual consequence on causal judgments. This combined measure speaks to both the antecedent and the consequent of counterfactual alternatives, and the higher it is, the easier it should be for participants to think of such counterfactuals. Based on the results, we conclude that knowledge status, outcome normality, and their interaction, all contribute to potency. More specifically, when causal agents acted knowingly as opposed to ignorantly or when secondary outcomes were abnormal as opposed to normal, counterfactual reasoning had a larger impact on causal judgments, and the said knowledge effect was even more prominent when secondary outcomes were abnormal. It is also worth noting that potency did not interact with outcome probability in predicting causal selection, suggesting a unidirectional influence coming from outcome probability to potency, to causal judgments (it's just probability, not normality though...?). Taken together, our findings support a model where normality influences causal judgments through counterfactual reasoning. 
+
 
 
 
